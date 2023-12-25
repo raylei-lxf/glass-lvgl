@@ -1,0 +1,120 @@
+{
+    "lvgl": {
+        "name": "photo.lvgl",
+        "resolution": {
+            "height": 360,
+            "width": 480
+        },
+        "widgets": [
+            {
+                "children": [
+                    {
+                        "children": [
+                            {
+                                "class": "lv_img",
+                                "name": "img_photo_ing",
+                                "widget": "img",
+                                "偏移offset": {
+                                    "X": 0,
+                                    "Y": 0
+                                },
+                                "全局global": true,
+                                "可拖动drag": false,
+                                "名字name": "img_photo_ing",
+                                "坐标geometry": {
+                                    "height": 24,
+                                    "width": 21,
+                                    "x": 5,
+                                    "y": 6
+                                },
+                                "显示visible": true,
+                                "源图source": "photo_playing.png",
+                                "自动大小auto size": true,
+                                "锁住locked": false
+                            },
+                            {
+                                "class": "lv_img",
+                                "name": "img_photo_line",
+                                "widget": "img",
+                                "偏移offset": {
+                                    "X": 0,
+                                    "Y": 0
+                                },
+                                "全局global": true,
+                                "可拖动drag": false,
+                                "名字name": "img_photo_line",
+                                "坐标geometry": {
+                                    "height": 2,
+                                    "width": 30,
+                                    "x": 37,
+                                    "y": 17
+                                },
+                                "显示visible": true,
+                                "源图source": "photo_playing_line.png",
+                                "自动大小auto size": true,
+                                "锁住locked": false
+                            }
+                        ],
+                        "class": "lv_img",
+                        "name": "img_photo_show",
+                        "widget": "img",
+                        "偏移offset": {
+                            "X": 0,
+                            "Y": 0
+                        },
+                        "全局global": true,
+                        "可拖动drag": false,
+                        "名字name": "img_photo_show",
+                        "坐标geometry": {
+                            "height": 35,
+                            "width": 71,
+                            "x": 397,
+                            "y": 13
+                        },
+                        "显示visible": true,
+                        "源图source": "photo_playering_baground.png",
+                        "自动大小auto size": true,
+                        "锁住locked": false
+                    }
+                ],
+                "class": "lv_cont",
+                "name": "cont_photo",
+                "styles": [
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "border": {
+                                "color": "#4456c6",
+                                "opa": 255,
+                                "width": 0
+                            },
+                            "grad_color": "#4456c6",
+                            "main_color": "#4456c6",
+                            "radius": 0
+                        },
+                        "type": "LV_CONT_STYLE_MAIN"
+                    }
+                ],
+                "widget": "cont",
+                "全局global": true,
+                "可拖动drag": false,
+                "名字name": "cont_photo",
+                "坐标geometry": {
+                    "height": 360,
+                    "width": 480,
+                    "x": 0,
+                    "y": 0
+                },
+                "布局layout": "Off",
+                "显示visible": true,
+                "自动调整策略fit": {
+                    "cont_bottom_fit": 0,
+                    "cont_left_fit": 0,
+                    "cont_right_fit": 0,
+                    "cont_top_fit": 0
+                },
+                "锁住locked": false
+            }
+        ]
+    }
+}

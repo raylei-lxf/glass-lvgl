@@ -1,0 +1,26 @@
+if PACKAGE_xrm
+
+config lvgl
+    bool "Enabel lvgl core"
+    default y
+        help
+	lvgl core
+
+config lv_drivers
+    bool "Enabel lvgl drivers"
+    default y
+        help
+	lvgl drivers
+
+config lv_examples
+    bool "Enabel lvgl examples"
+    default y
+        help
+	lvgl examples
+
+config evba
+    bool "Enabel evba"
+    default y
+        help
+	evba: 1024X600 screen
+endif
