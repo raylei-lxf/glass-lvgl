@@ -14,6 +14,8 @@
 #include "sha256.h"
 #include "mbedtls_md5.h"
 #include "uart.h"
+#include "player_int.h"
+
 lv_task_t *window_task_id = NULL; 
 static lv_indev_t *key_dev = NULL;
 
@@ -31,6 +33,7 @@ void lcd_state_task(lv_task_t * param);
 static lv_task_t *key_task_id = NULL;
 void key_task(lv_task_t * param);
 
+player_t *t113_play =  NULL;
 /***************************系统看门狗********************************/
 
 
@@ -404,6 +407,7 @@ int main(int argc, char **argv)
 
     lv_dev_init();
     window_head_init();
+    t113_play = tplayer_pthread_create();
 	//fbdev_set_brightness(0);
 
     REGISTER_WINDOW(WINDOW_HOME);
@@ -432,7 +436,7 @@ int main(int argc, char **argv)
 	//lcd_mode_set(LCD_STA_DOING, LCD_BRIGHT_REMAIN_TIME);
 	//init_watch_dog(1);
 		
-	key_callback_register(LV_KEY_1, key_menu_callback);
+	// key_callback_register(LV_KEY_1, key_menu_callback);
 	
     while(1) 
 	{

@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <string.h>
-
-
+#include "player_int.h"
+#include "debug.h"
 /******************************************************************************
 *    datas
 ******************************************************************************/
@@ -24,7 +24,7 @@ typedef struct
 	player_ue_t ue;
 } player_para_t;
 static player_para_t *para = NULL;
-
+extern player_t *t113_play;
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -52,10 +52,62 @@ static void key_right_callback(void)
 	
 }
 
+static void key_back_callback(void)
+{
+    app_info("......\n");
+    if (t113_play != NULL) {
+        // tplayer_pause(t113_play);
+        // tplayer_exit(t113_play);
+    }
+    switch_window(WINDOW_PLAYER, WINDOW_HOME);
+}
+
 static void player_ue_destory(player_para_t *para)
 {
 	(void)para;
 	return;
+}
+
+#define MAX_FILES 100
+static int fileCount = 0;
+static char* filePaths[MAX_FILES];
+
+int get_mp4(void)
+{
+    const char* folderPath = "/mnt/app/";  
+    const char* extension = ".mp4";
+    
+
+    DIR* dir = opendir(folderPath);
+    if (dir == NULL) {
+        app_info("can't open  folderPath = %s\n", folderPath);
+        return -1;
+    }
+
+    struct dirent* entry;
+    while ((entry = readdir(dir)) != NULL && fileCount < MAX_FILES) {
+        if (entry->d_type == DT_REG) {  
+            const char* fileName = entry->d_name;
+            size_t len = strlen(fileName);
+
+            if (len >= strlen(extension) && strcmp(fileName + len - strlen(extension), extension) == 0) {
+                char* filePath = malloc(strlen(folderPath) + 1 + len + 1);
+                sprintf(filePath, "%s/%s", folderPath, fileName);
+                filePaths[fileCount] = filePath;
+                fileCount++;
+            }
+        }
+    }
+
+    closedir(dir);
+
+    // 打印文件路径数组
+    for (int i = 0; i < fileCount; i++) {
+        app_info("files: %s\n", filePaths[i]);
+    }
+
+
+    return 0;
 }
 
 static int player_create(void)
@@ -69,7 +121,17 @@ static int player_create(void)
 	para->ui.parent = lv_scr_act();
 	player_ui_create(&para->ui);
 	player_ue_create(para);
+    
+    get_mp4();
+    if (fileCount > 0 && t113_play != NULL) {
+        app_info("..........");
+        tplayer_init(t113_play, CEDARX_PLAYER);
+        tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
+        tplayer_play_url(t113_play, filePaths[0]);
+        tplayer_play(t113_play);
+    }
 
+    key_callback_register(LV_KEY_2, key_back_callback);
 
 	key_callback_register(LV_KEY_3, key_left_callback);
 	key_callback_register(LV_KEY_4, key_right_callback);
@@ -85,6 +147,9 @@ static int player_destory(void)
 	para = NULL;
 	
 	key_callback_unregister();
+    for (int i = 0; i < fileCount; i++) {
+        free(filePaths[i]);
+    }
 
 	return 0;
 }

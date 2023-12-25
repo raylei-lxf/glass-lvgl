@@ -6,6 +6,10 @@
 #include "public.h"
 #include "debug.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <string.h>
 
 /******************************************************************************
 *    datas
@@ -77,6 +81,12 @@ lv_obj_t *get_guanbiao_widget(int gb)
 
 void start_player_test(void);
 
+static void key_confirm_callback(void)
+{
+	app_info("......\n");
+	// start_player_test();
+    switch_window(WINDOW_HOME, WINDOW_PLAYER);
+}
 static void key_left_callback(void)
 {
 
@@ -91,10 +101,6 @@ static void key_left_callback(void)
 	
 	app_info("guangbiao = %d\n", guangbiao);
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
-    
-    if (guangbiao == 3) {
-        start_player_test();
-    }
 
 }
 
@@ -309,8 +315,64 @@ int CallbackForTPlayer_test(void* pUserData, int msg, int param0, void* param1)
     return 0;
 }
 
+
+#define MAX_FILES 100
+static int fileCount = 0;
+static char* filePaths[MAX_FILES] = { 0 };
+
+int get_file_mp4(void)
+{
+    const char* folderPath = "/mnt/app/";  
+    const char* extension = ".mp4";
+    
+    DIR* dir = opendir(folderPath);
+    if (dir == NULL) {
+        app_info("can't open  folderPath = %s\n", folderPath);
+        return -1;
+    }
+
+    struct dirent* entry;
+    while ((entry = readdir(dir)) != NULL && fileCount < MAX_FILES) {
+        if (entry->d_type == DT_REG) {  
+            const char* fileName = entry->d_name;
+            size_t len = strlen(fileName);
+
+            if (len >= strlen(extension) && strcmp(fileName + len - strlen(extension), extension) == 0) {
+                char* filePath = malloc(strlen(folderPath) + 1 + len + 1);
+                sprintf(filePath, "%s/%s", folderPath, fileName);
+                filePaths[fileCount] = filePath;
+                fileCount++;
+            }
+        }
+    }
+
+    closedir(dir);
+
+    for (int i = 0; i < fileCount; i++) {
+        app_info("files: %s\n", filePaths[i]);
+    }
+
+
+
+    return 0;
+}
+
 void start_player_test(void) 
 {
+	int gScreenWidth = 480;
+	int gScreenHeight = 360;
+	char *url = "/mnt/app/test3.mp4";
+	
+    get_file_mp4();
+	if (fileCount <= 0) {
+		app_info("can't find video\n");
+		return ;
+	}
+	if(((access("/dev/zero",F_OK)) < 0)||((access("/dev/fb0",F_OK)) < 0)){
+        app_info("/dev/zero OR /dev/fb0 is not exit\n");
+    }else{
+        system("dd if=/dev/zero of=/dev/fb0");//clean the framebuffer
+    }
 
 	memset(&playercontext, 0, sizeof(T113_PlayerContext));
 	playercontext.mTPlayer = TPlayerCreate(CEDARX_PLAYER);
@@ -322,9 +384,7 @@ void start_player_test(void)
     sem_init(&playercontext.mPreparedSem, 0, 0);
 	app_info("...........start\n");
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
-	int gScreenWidth = 480;
-	int gScreenHeight = 360;
-	char *url = "/mnt/app/test3.mp4";
+	
 
 	if (playercontext.mTPlayer ==NULL) {
 		printf("playercontext.mTPlayer == NULL");
@@ -346,7 +406,7 @@ void start_player_test(void)
     	TPlayerGetDisplayRect(playercontext.mTPlayer, &tmpRect);	
 	}
 
-	if(TPlayerSetDataSource(playercontext.mTPlayer, url, NULL)!= 0)
+	if(TPlayerSetDataSource(playercontext.mTPlayer, filePaths[0], NULL)!= 0)
 	{
 	    printf("TPlayerSetDataSource return fail.\n");
 	    return -1;
@@ -409,6 +469,8 @@ static int home_create(void)
 	load_image();
 	
 
+	key_callback_register(LV_KEY_1, key_confirm_callback);
+
 	key_callback_register(LV_KEY_3, key_left_callback);
 	key_callback_register(LV_KEY_4, key_right_callback);
 	return 0;
@@ -427,6 +489,11 @@ static int home_destory(void)
 		TPlayerDestroy(playercontext.mTPlayer);
 		playercontext.mTPlayer = NULL;
 	}
+
+	for (int i = 0; i < fileCount; i++) {
+        free(filePaths[i]);
+    }
+	
 	unload_image();
 	return 0;
 }
