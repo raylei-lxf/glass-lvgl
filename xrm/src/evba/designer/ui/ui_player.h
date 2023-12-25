@@ -17,13 +17,11 @@ extern "C" {
 typedef struct
 {
 	lv_obj_t *parent;
-	lv_obj_t *cont_player;
+	lv_obj_t *cont_main;
 	lv_obj_t *bar_player_pro;
-	lv_obj_t *bar_player_pro_bak;
-	lv_obj_t *bar_3;
-	lv_obj_t *bar_4;
 	lv_obj_t *label_player_start;
 	lv_obj_t *label_player_total;
+	lv_obj_t *label_1;
 } player_ui_t;
 
 

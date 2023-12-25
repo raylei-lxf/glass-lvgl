@@ -10,20 +10,12 @@
 *    datas
 ******************************************************************************/
 static lv_style_t style0_cont_main;
-static lv_style_t style0_img_player;
-static lv_style_t style0_img_photo;
-static lv_style_t style0_img_music;
-static lv_style_t style0_img_file;
-static lv_style_t style0_img_setting;
-static lv_style_t style0_img_phone;
-static lv_style_t style0_label_setting;
 static lv_style_t style0_cont_botton;
 static lv_style_t style0_label_vol;
 static lv_style_t style0_bar_vol_bag;
 static lv_style_t style0_bar_vol_blue;
 static lv_style_t style0_cont_tip;
 static lv_style_t style0_cont_tip_line;
-static lv_style_t style0_label_tip_content;
 
 static void *img_player_video_png = NULL;
 static void *img_photo_photo_png = NULL;
@@ -56,15 +48,12 @@ void home_ui_create(home_ui_t *ui)
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_IMG
-	lv_style_copy(&style0_img_player, &lv_style_plain);
-
 	ui->img_player = lv_img_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->img_player, 40, 20);
 	lv_obj_set_size(ui->img_player, 95, 95);
 	img_player_video_png = (void *)mal_load_image(LV_IMAGE_PATH"video.png");
 	lv_img_set_src(ui->img_player, img_player_video_png);
 
-	lv_img_set_style(ui->img_player, LV_IMG_STYLE_MAIN, &style0_img_player);
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_LABEL
@@ -76,63 +65,48 @@ void home_ui_create(home_ui_t *ui)
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_IMG
-	lv_style_copy(&style0_img_photo, &lv_style_plain);
-
 	ui->img_photo = lv_img_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->img_photo, 188, 20);
 	lv_obj_set_size(ui->img_photo, 95, 95);
 	img_photo_photo_png = (void *)mal_load_image(LV_IMAGE_PATH"photo.png");
 	lv_img_set_src(ui->img_photo, img_photo_photo_png);
 
-	lv_img_set_style(ui->img_photo, LV_IMG_STYLE_MAIN, &style0_img_photo);
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_IMG
-	lv_style_copy(&style0_img_music, &lv_style_plain);
-
 	ui->img_music = lv_img_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->img_music, 345, 20);
 	lv_obj_set_size(ui->img_music, 95, 94);
 	img_music_music_png = (void *)mal_load_image(LV_IMAGE_PATH"music.png");
 	lv_img_set_src(ui->img_music, img_music_music_png);
 
-	lv_img_set_style(ui->img_music, LV_IMG_STYLE_MAIN, &style0_img_music);
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_IMG
-	lv_style_copy(&style0_img_file, &lv_style_plain);
-
 	ui->img_file = lv_img_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->img_file, 52, 175);
 	lv_obj_set_size(ui->img_file, 78, 79);
 	img_file_wenjiajia_png = (void *)mal_load_image(LV_IMAGE_PATH"wenjiajia.png");
 	lv_img_set_src(ui->img_file, img_file_wenjiajia_png);
 
-	lv_img_set_style(ui->img_file, LV_IMG_STYLE_MAIN, &style0_img_file);
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_IMG
-	lv_style_copy(&style0_img_setting, &lv_style_plain);
-
 	ui->img_setting = lv_img_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->img_setting, 204, 179);
 	lv_obj_set_size(ui->img_setting, 74, 76);
 	img_setting_shezhi_png = (void *)mal_load_image(LV_IMAGE_PATH"shezhi.png");
 	lv_img_set_src(ui->img_setting, img_setting_shezhi_png);
 
-	lv_img_set_style(ui->img_setting, LV_IMG_STYLE_MAIN, &style0_img_setting);
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_IMG
-	lv_style_copy(&style0_img_phone, &lv_style_plain);
-
 	ui->img_phone = lv_img_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->img_phone, 358, 178);
 	lv_obj_set_size(ui->img_phone, 56, 79);
 	img_phone_shoujihulian_png = (void *)mal_load_image(LV_IMAGE_PATH"shoujihulian.png");
 	lv_img_set_src(ui->img_phone, img_phone_shoujihulian_png);
 
-	lv_img_set_style(ui->img_phone, LV_IMG_STYLE_MAIN, &style0_img_phone);
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_LABEL
@@ -160,14 +134,11 @@ void home_ui_create(home_ui_t *ui)
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LABEL
-	lv_style_copy(&style0_label_setting, &lv_style_transp);
-
 	ui->label_setting = lv_label_create(ui->cont_main, NULL);
 	lv_label_set_text(ui->label_setting, "Test");
 	lv_label_set_long_mode(ui->label_setting, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_setting, 227, 261);
 	lv_obj_set_size(ui->label_setting, 94, 31);
-	lv_label_set_style(ui->label_setting, LV_LABEL_STYLE_MAIN, &style0_label_setting);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LABEL
@@ -283,14 +254,11 @@ void home_ui_create(home_ui_t *ui)
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_LABEL
-	lv_style_copy(&style0_label_tip_content, &lv_style_transp);
-
 	ui->label_tip_content = lv_label_create(ui->cont_tip, NULL);
 	lv_label_set_text(ui->label_tip_content, "Text");
 	lv_label_set_long_mode(ui->label_tip_content, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_tip_content, 104, 103);
 	lv_obj_set_size(ui->label_tip_content, 145, 69);
-	lv_label_set_style(ui->label_tip_content, LV_LABEL_STYLE_MAIN, &style0_label_tip_content);
 #endif // LV_USE_LABEL
 
 }

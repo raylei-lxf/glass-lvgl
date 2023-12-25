@@ -85,7 +85,8 @@ static void key_confirm_callback(void)
 {
 	app_info("......\n");
 	// start_player_test();
-    switch_window(WINDOW_HOME, WINDOW_PLAYER);
+	if(guangbiao == 0)
+    	switch_window(WINDOW_HOME, WINDOW_PLAYER);
 }
 static void key_left_callback(void)
 {

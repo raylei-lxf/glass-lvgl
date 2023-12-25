@@ -54,11 +54,7 @@ static void key_right_callback(void)
 
 static void key_back_callback(void)
 {
-    app_info("......\n");
-    if (t113_play != NULL) {
-        // tplayer_pause(t113_play);
-        // tplayer_exit(t113_play);
-    }
+
     switch_window(WINDOW_PLAYER, WINDOW_HOME);
 }
 
@@ -110,6 +106,22 @@ int get_mp4(void)
     return 0;
 }
 
+static void key_confirm_callback(void)
+{
+    get_mp4();
+
+    if (fileCount > 0 && t113_play != NULL) {
+		system("dd if=/dev/zero of=/dev/fb0");
+        app_info("..........%s ", filePaths[0]);
+       	tplayer_play_url(t113_play, filePaths[0]);
+		tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
+		tplayer_play(t113_play);
+
+    }
+	app_info("......\n");
+}
+
+
 static int player_create(void)
 {
 	para = (player_para_t *)malloc(sizeof(player_para_t));
@@ -122,16 +134,11 @@ static int player_create(void)
 	player_ui_create(&para->ui);
 	player_ue_create(para);
     
-    get_mp4();
-    if (fileCount > 0 && t113_play != NULL) {
-        app_info("..........");
-        tplayer_init(t113_play, CEDARX_PLAYER);
-        tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
-        tplayer_play_url(t113_play, filePaths[0]);
-        tplayer_play(t113_play);
-    }
+	 tplayer_init(t113_play, CEDARX_PLAYER);
+
 
     key_callback_register(LV_KEY_2, key_back_callback);
+	key_callback_register(LV_KEY_1, key_confirm_callback);
 
 	key_callback_register(LV_KEY_3, key_left_callback);
 	key_callback_register(LV_KEY_4, key_right_callback);
@@ -150,20 +157,21 @@ static int player_destory(void)
     for (int i = 0; i < fileCount; i++) {
         free(filePaths[i]);
     }
-
+	tplayer_pause(t113_play);
+	tplayer_exit(t113_play);
 	return 0;
 }
 
 static int player_show(void)
 {
-	lv_obj_set_hidden(para->ui.cont_player, 0);
+	lv_obj_set_hidden(para->ui.cont_main, 0);
 
 	return 0;
 }
 
 static int player_hide(void)
 {
-	lv_obj_set_hidden(para->ui.cont_player, 1);
+	lv_obj_set_hidden(para->ui.cont_main, 1);
 
 	return 0;
 }
