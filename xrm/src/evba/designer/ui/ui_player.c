@@ -77,7 +77,7 @@ void player_ui_create(player_ui_t *ui)
 	style0_label_1.text.line_space = 2;
 
 	ui->label_1 = lv_label_create(ui->cont_main, NULL);
-	lv_label_set_text(ui->label_1, "Text");
+	lv_label_set_text(ui->label_1, "Text.mp4");
 	lv_label_set_long_mode(ui->label_1, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_1, 23, 33);
 	lv_obj_set_size(ui->label_1, 386, 40);

@@ -108,7 +108,6 @@ int get_mp4(void)
 
 static void key_confirm_callback(void)
 {
-    get_mp4();
 
     if (fileCount > 0 && t113_play != NULL) {
 		system("dd if=/dev/zero of=/dev/fb0");
@@ -133,7 +132,13 @@ static int player_create(void)
 	para->ui.parent = lv_scr_act();
 	player_ui_create(&para->ui);
 	player_ue_create(para);
-    
+
+	
+    get_mp4();
+	if(fileCount > 0)
+	{
+		ui_set_lable(para->ui.label_1, filePaths[0]);
+	}
 	 tplayer_init(t113_play, CEDARX_PLAYER);
 
 
@@ -157,6 +162,7 @@ static int player_destory(void)
     for (int i = 0; i < fileCount; i++) {
         free(filePaths[i]);
     }
+	fileCount = 0;
 	tplayer_pause(t113_play);
 	tplayer_exit(t113_play);
 	return 0;

@@ -469,7 +469,7 @@ static int home_create(void)
 
 	load_image();
 	
-
+	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
 	key_callback_register(LV_KEY_1, key_confirm_callback);
 
 	key_callback_register(LV_KEY_3, key_left_callback);
