@@ -17,7 +17,7 @@ extern "C" {
 typedef struct
 {
 	lv_obj_t *parent;
-	lv_obj_t *cont_photo;
+	lv_obj_t *cont_main;
 	lv_obj_t *img_photo_show;
 	lv_obj_t *img_photo_ing;
 	lv_obj_t *img_photo_line;

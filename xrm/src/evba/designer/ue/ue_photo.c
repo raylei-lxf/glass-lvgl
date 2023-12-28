@@ -72,14 +72,14 @@ static int photo_destory(void)
 
 static int photo_show(void)
 {
-	lv_obj_set_hidden(para->ui.cont_photo, 0);
+	lv_obj_set_hidden(para->ui.cont_main, 0);
 
 	return 0;
 }
 
 static int photo_hide(void)
 {
-	lv_obj_set_hidden(para->ui.cont_photo, 1);
+	lv_obj_set_hidden(para->ui.cont_main, 1);
 
 	return 0;
 }

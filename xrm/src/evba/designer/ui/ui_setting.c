@@ -38,11 +38,11 @@ void setting_ui_create(setting_ui_t *ui)
 	style0_cont_setting.body.border.width = 0;
 	style0_cont_setting.body.shadow.color = lv_color_hex(0x4456c6);
 
-	ui->cont_setting = lv_cont_create(ui->parent, NULL);
-	lv_obj_set_pos(ui->cont_setting, 0, 0);
-	lv_obj_set_size(ui->cont_setting, 480, 360);
-	lv_cont_set_fit4(ui->cont_setting, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
-	lv_cont_set_style(ui->cont_setting, LV_CONT_STYLE_MAIN, &style0_cont_setting);
+	ui->cont_main = lv_cont_create(ui->parent, NULL);
+	lv_obj_set_pos(ui->cont_main, 0, 0);
+	lv_obj_set_size(ui->cont_main, 480, 360);
+	lv_cont_set_fit4(ui->cont_main, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
+	lv_cont_set_style(ui->cont_main, LV_CONT_STYLE_MAIN, &style0_cont_setting);
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_CONT
@@ -50,7 +50,7 @@ void setting_ui_create(setting_ui_t *ui)
 	style0_cont_setting_line.body.grad_color = lv_color_hex(0xffffff);
 	style0_cont_setting_line.body.radius = 0;
 
-	ui->cont_setting_line = lv_cont_create(ui->cont_setting, NULL);
+	ui->cont_setting_line = lv_cont_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->cont_setting_line, 0, 48);
 	lv_obj_set_size(ui->cont_setting_line, 480, 5);
 	lv_cont_set_fit4(ui->cont_setting_line, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
@@ -60,7 +60,7 @@ void setting_ui_create(setting_ui_t *ui)
 #ifdef LV_USE_IMG
 	lv_style_copy(&style0_img_setting_title, &lv_style_plain);
 
-	ui->img_setting_title = lv_img_create(ui->cont_setting, NULL);
+	ui->img_setting_title = lv_img_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->img_setting_title, 15, 8);
 	lv_obj_set_size(ui->img_setting_title, 34, 34);
 	img_setting_title_shezhitubiao_png = (void *)mal_load_image(LV_IMAGE_PATH"shezhitubiao.png");
@@ -72,7 +72,7 @@ void setting_ui_create(setting_ui_t *ui)
 #ifdef LV_USE_LABEL
 	lv_style_copy(&style0_label_setting_title, &lv_style_transp);
 
-	ui->label_setting_title = lv_label_create(ui->cont_setting, NULL);
+	ui->label_setting_title = lv_label_create(ui->cont_main, NULL);
 	lv_label_set_text(ui->label_setting_title, "Text");
 	lv_label_set_long_mode(ui->label_setting_title, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_setting_title, 60, 8);
@@ -89,7 +89,7 @@ void setting_ui_create(setting_ui_t *ui)
 	style0_cont_setting_language.body.border.width = 4;
 	style0_cont_setting_language.body.border.opa = 0;
 
-	ui->cont_setting_language = lv_cont_create(ui->cont_setting, NULL);
+	ui->cont_setting_language = lv_cont_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->cont_setting_language, 9, 73);
 	lv_obj_set_size(ui->cont_setting_language, 465, 43);
 	lv_cont_set_fit4(ui->cont_setting_language, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
@@ -125,7 +125,7 @@ void setting_ui_create(setting_ui_t *ui)
 	style0_cont_setting_factory.body.radius = 0;
 	style0_cont_setting_factory.body.border.width = 0;
 
-	ui->cont_setting_factory = lv_cont_create(ui->cont_setting, NULL);
+	ui->cont_setting_factory = lv_cont_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->cont_setting_factory, 8, 130);
 	lv_obj_set_size(ui->cont_setting_factory, 465, 43);
 	lv_cont_set_fit4(ui->cont_setting_factory, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
@@ -151,7 +151,7 @@ void setting_ui_create(setting_ui_t *ui)
 	style0_cont_upgrade.body.border.color = lv_color_hex(0x4456c6);
 	style0_cont_upgrade.body.border.width = 0;
 
-	ui->cont_upgrade = lv_cont_create(ui->cont_setting, NULL);
+	ui->cont_upgrade = lv_cont_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->cont_upgrade, 7, 184);
 	lv_obj_set_size(ui->cont_upgrade, 465, 43);
 	lv_cont_set_fit4(ui->cont_upgrade, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
@@ -173,6 +173,6 @@ void setting_ui_create(setting_ui_t *ui)
 
 void setting_ui_destory(setting_ui_t *ui)
 {
-	lv_obj_del(ui->cont_setting);
+	lv_obj_del(ui->cont_main);
 	mal_unload_image(img_setting_title_shezhitubiao_png);
 }

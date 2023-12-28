@@ -12,6 +12,9 @@
 #include <string.h>
 
 /******************************************************************************
+*   marc 
+******************************************************************************/
+/******************************************************************************
 *    datas
 ******************************************************************************/
 typedef struct
@@ -53,8 +56,16 @@ static void home_ue_destory(home_para_t *para)
 }
 
 
-static int guangbiao = 0;
+#define FOCUS_PLAYER  0
+#define FOCUS_PHOTO  1
+#define FOCUS_MUSIC  2
+#define FOCUS_FILE  3
+#define FOCUS_SETTING  4
+#define FOCUS_HPONE  5
 #define gbMax  6
+
+static int guangbiao = 0;
+
 
 lv_obj_t *get_guanbiao_widget(int gb)
 {
@@ -63,37 +74,47 @@ lv_obj_t *get_guanbiao_widget(int gb)
 	
 	switch(guangbiao)
 	{
-		case 0:
+		case FOCUS_PLAYER:
 		return ui->img_player;
-		case 1:
+		case FOCUS_PHOTO:
 		return ui->img_photo;
-		case 2:
+		case FOCUS_MUSIC:
 		return ui->img_music;
-		case 3:
+		case FOCUS_FILE:
 		return ui->img_file;
-		case 4:
+		case FOCUS_SETTING:
 		return ui->img_setting;
-		case 5:
+		case FOCUS_HPONE:
 		return ui->img_phone;
 		default: return NULL;
 	}
 }
 
-void start_player_test(void);
-
 static void key_confirm_callback(void)
 {
-	app_info("......\n");
-	// start_player_test();
-	if(guangbiao == 0)
+	app_info("......guangbiao = %d\n", guangbiao);
+	if (guangbiao == FOCUS_PLAYER) {
     	switch_window(WINDOW_HOME, WINDOW_PLAYER);
+	} else if (guangbiao == FOCUS_PHOTO) {
+		switch_window(WINDOW_HOME, WINDOW_PHOTO);
+	} else if (guangbiao == FOCUS_MUSIC) {
+		switch_window(WINDOW_HOME, WINDOW_MUSIC);
+	} else if (guangbiao == FOCUS_FILE) {
+		switch_window(WINDOW_HOME, WINDOW_FILE);
+	} else if (guangbiao == FOCUS_SETTING) {
+	    app_info("....... setting ");
+		switch_window(WINDOW_HOME, WINDOW_FILE);
+		// switch_window(WINDOW_HOME, WINDOW_SETTING);
+	} else if (guangbiao == FOCUS_HPONE) {
+		// switch_window(WINDOW_HOME, WINDOW_PHOTO);
+	}	
 }
+
 static void key_left_callback(void)
 {
 
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_src[guangbiao]);
 
-	
 	guangbiao--;
 	if(guangbiao < 0)
 	{
@@ -122,7 +143,6 @@ static void key_right_callback(void)
 
 }
 
-
 void load_image()
 {
 	home_ui_t *ui = &para->ui;
@@ -150,309 +170,6 @@ void unload_image()
 	mal_unload_image(img_srcxz[3]);
 	mal_unload_image(img_srcxz[4]);
 	mal_unload_image(img_srcxz[5]);
-}
-
-#include <tplayer.h>
-
-#define TOTAL_VIDEO_AUDIO_NUM 100
-#define MAX_FILE_NAME_LEN 256
-#define FILE_TYPE_NUM 29
-#define FILE_TYPE_LEN 10
-#define VIDEO_TYPE_NUM 11
-#define VIDEO_TYPE_LEN 10
-#define USE_REPEAT_RESET_MODE 1
-#define HOLD_LAST_PICTURE 1
-#define LOOP_PLAY_FLAG 1
-
-
-typedef struct T113_PlayerContext
-{
-    TPlayer*          mTPlayer;
-    int               mSeekable;
-    int               mError;
-    int               mVideoFrameNum;
-    bool              mPreparedFlag;
-    bool              mLoopFlag;
-    bool              mSetLoop;
-    bool              mComplete;
-    char              mUrl[512];
-    MediaInfo*        mMediaInfo;
-    char              mVideoAudioList[TOTAL_VIDEO_AUDIO_NUM][MAX_FILE_NAME_LEN];
-    int               mCurPlayIndex;
-    int               mRealFileNum;
-    sem_t             mPreparedSem;
-}T113_PlayerContext;
-
-static T113_PlayerContext playercontext;
-
-//* a callback for tplayer.
-int CallbackForTPlayer_test(void* pUserData, int msg, int param0, void* param1)
-{
-    T113_PlayerContext* pDemoPlayer = (T113_PlayerContext*)pUserData;
-
-    CEDARX_UNUSE(param1);
-    switch(msg)
-    {
-        case TPLAYER_NOTIFY_PREPARED:
-        {
-            printf("TPLAYER_NOTIFY_PREPARED,has prepared.\n");
-            sem_post(&pDemoPlayer->mPreparedSem);
-            pDemoPlayer->mPreparedFlag = 1;
-            break;
-        }
-
-        case TPLAYER_NOTIFY_PLAYBACK_COMPLETE:
-        {
-            printf("TPLAYER_NOTIFY_PLAYBACK_COMPLETE\n");
-            pDemoPlayer->mComplete = 1;
-            if(pDemoPlayer->mSetLoop == 1){
-                pDemoPlayer->mLoopFlag = 1;
-            }else{
-                pDemoPlayer->mLoopFlag = 0;
-            }
-            //PowerManagerReleaseWakeLock("tplayerdemo");
-            break;
-        }
-
-        case TPLAYER_NOTIFY_SEEK_COMPLETE:
-        {
-            printf("TPLAYER_NOTIFY_SEEK_COMPLETE>>>>info: seek ok.\n");
-            break;
-        }
-
-        case TPLAYER_NOTIFY_MEDIA_ERROR:
-        {
-            switch (param0)
-            {
-                case TPLAYER_MEDIA_ERROR_UNKNOWN:
-                {
-                    printf("erro type:TPLAYER_MEDIA_ERROR_UNKNOWN\n");
-                    break;
-                }
-                case TPLAYER_MEDIA_ERROR_UNSUPPORTED:
-                {
-                    printf("erro type:TPLAYER_MEDIA_ERROR_UNSUPPORTED\n");
-                    break;
-                }
-                case TPLAYER_MEDIA_ERROR_IO:
-                {
-                    printf("erro type:TPLAYER_MEDIA_ERROR_IO\n");
-                    break;
-                }
-            }
-            printf("TPLAYER_NOTIFY_MEDIA_ERROR\n");
-            pDemoPlayer->mError = 1;
-            if(pDemoPlayer->mPreparedFlag == 0){
-                printf("recive err when preparing\n");
-                sem_post(&pDemoPlayer->mPreparedSem);
-            }
-            if(pDemoPlayer->mSetLoop == 1){
-                pDemoPlayer->mLoopFlag = 1;
-            }else{
-                pDemoPlayer->mLoopFlag = 0;
-            }
-            printf("error: open media source fail.\n");
-            break;
-        }
-
-        case TPLAYER_NOTIFY_NOT_SEEKABLE:
-        {
-            pDemoPlayer->mSeekable = 0;
-            printf("info: media source is unseekable.\n");
-            break;
-        }
-
-        case TPLAYER_NOTIFY_BUFFER_START:
-        {
-            printf("have no enough data to play\n");
-            break;
-        }
-
-        case TPLAYER_NOTIFY_BUFFER_END:
-        {
-            printf("have enough data to play again\n");
-            break;
-        }
-
-        case TPLAYER_NOTIFY_VIDEO_FRAME:
-        {
-            //printf("get the decoded video frame\n");
-            break;
-        }
-
-        case TPLAYER_NOTIFY_AUDIO_FRAME:
-        {
-            //printf("get the decoded audio frame\n");
-            break;
-        }
-
-        case TPLAYER_NOTIFY_SUBTITLE_FRAME:
-        {
-            //printf("get the decoded subtitle frame\n");
-            break;
-        }
-        case TPLAYER_NOTYFY_DECODED_VIDEO_SIZE:
-        {
-            int w, h;
-            w   = ((int*)param1)[0];   //real decoded video width
-            h  = ((int*)param1)[1];   //real decoded video height
-            printf("*****tplayerdemo:video decoded width = %d,height = %d",w,h);
-            //int divider = 1;
-            //if(w>400){
-            //    divider = w/400+1;
-            //}
-            //w = w/divider;
-            //h = h/divider;
-            printf("real set to display rect:w = %d,h = %d\n",w,h);
-            //TPlayerSetSrcRect(pDemoPlayer->mTPlayer, 0, 0, w, h);
-        }
-
-        default:
-        {
-            printf("warning: unknown callback from Tinaplayer.\n");
-            break;
-        }
-    }
-    return 0;
-}
-
-
-#define MAX_FILES 100
-static int fileCount = 0;
-static char* filePaths[MAX_FILES] = { 0 };
-
-int get_file_mp4(void)
-{
-    const char* folderPath = "/mnt/app/";  
-    const char* extension = ".mp4";
-    
-    DIR* dir = opendir(folderPath);
-    if (dir == NULL) {
-        app_info("can't open  folderPath = %s\n", folderPath);
-        return -1;
-    }
-
-    struct dirent* entry;
-    while ((entry = readdir(dir)) != NULL && fileCount < MAX_FILES) {
-        if (entry->d_type == DT_REG) {  
-            const char* fileName = entry->d_name;
-            size_t len = strlen(fileName);
-
-            if (len >= strlen(extension) && strcmp(fileName + len - strlen(extension), extension) == 0) {
-                char* filePath = malloc(strlen(folderPath) + 1 + len + 1);
-                sprintf(filePath, "%s/%s", folderPath, fileName);
-                filePaths[fileCount] = filePath;
-                fileCount++;
-            }
-        }
-    }
-
-    closedir(dir);
-
-    for (int i = 0; i < fileCount; i++) {
-        app_info("files: %s\n", filePaths[i]);
-    }
-
-
-
-    return 0;
-}
-
-void start_player_test(void) 
-{
-	int gScreenWidth = 480;
-	int gScreenHeight = 360;
-	char *url = "/mnt/app/test3.mp4";
-	
-    get_file_mp4();
-	if (fileCount <= 0) {
-		app_info("can't find video\n");
-		return ;
-	}
-	if(((access("/dev/zero",F_OK)) < 0)||((access("/dev/fb0",F_OK)) < 0)){
-        app_info("/dev/zero OR /dev/fb0 is not exit\n");
-    }else{
-        system("dd if=/dev/zero of=/dev/fb0");//clean the framebuffer
-    }
-
-	memset(&playercontext, 0, sizeof(T113_PlayerContext));
-	playercontext.mTPlayer = TPlayerCreate(CEDARX_PLAYER);
-	if (playercontext.mTPlayer == NULL) {
-		printf("[%s-%d][error]\n", __func__, __LINE__);
-		TPlayerDestroy(playercontext.mTPlayer);
-		playercontext.mTPlayer = NULL;
-	}
-    sem_init(&playercontext.mPreparedSem, 0, 0);
-	app_info("...........start\n");
-	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
-	
-
-	if (playercontext.mTPlayer ==NULL) {
-		printf("playercontext.mTPlayer == NULL");
-		return;
-	}
-	if(((access("/dev/zero",F_OK)) < 0)||((access("/dev/fb0",F_OK)) < 0)){
-        printf("/dev/zero OR /dev/fb0 is not exit\n");
-    }else{
-        system("dd if=/dev/zero of=/dev/fb0");//clean the framebuffer
-    }
-
-
-	TPlayerSetNotifyCallback(playercontext.mTPlayer, CallbackForTPlayer_test, (void*)&playercontext);
-
-	if ((gScreenWidth == 0 || gScreenHeight == 0)){
-		VoutRect tmpRect;
-		gScreenWidth = tmpRect.width;
-		gScreenHeight = tmpRect.height;
-    	TPlayerGetDisplayRect(playercontext.mTPlayer, &tmpRect);	
-	}
-
-	if(TPlayerSetDataSource(playercontext.mTPlayer, filePaths[0], NULL)!= 0)
-	{
-	    printf("TPlayerSetDataSource return fail.\n");
-	    return -1;
-	} else {
-	    printf("setDataSource end\n");
-	}
-	if(TPlayerPrepare(playercontext.mTPlayer)!= 0)
-	{
-	    printf("TPlayerPrepare return fail.\n");
-	    return -1;
-	} else {
-	    printf("TPlayerPrepare end\n");
-	}
-
-	#if LOOP_PLAY_FLAG
-	#if !USE_REPEAT_RESET_MODE
-	TPlayerSetLooping(playerContext.mTPlayer,1);
-	#endif
-	#endif
-	#if HOLD_LAST_PICTURE
-	printf("TPlayerSetHoldLastPicture()\n");
-	TPlayerSetHoldLastPicture(playercontext.mTPlayer,1);
-	#else
-	TPlayerSetHoldLastPicture(playercontext.TPlayer,0);
-	#endif
-
-	TPlayerSetDisplayRect(playercontext.mTPlayer, 0, 0, gScreenWidth, gScreenHeight);
-
-	TPlayerSetAudioEQType(playercontext.mTPlayer, AUD_EQ_TYPE_NORMAL);
-
-	if(TPlayerStart(playercontext.mTPlayer) != 0)
-	{
-	    printf("TPlayerStart() return fail.\n");
-	    return -1;
-	}else{
-	    printf("started.\n");
-	}
-    #if 0
-	sem_destroy(&playercontext.mPreparedSem);
-	if(playercontext.mTPlayer != NULL) {
-		TPlayerDestroy(playercontext.mTPlayer);
-		playercontext.mTPlayer = NULL;
-	}
-    #endif
-	app_info("end\n");
 }
 
 static int home_create(void)
@@ -485,17 +202,8 @@ static int home_destory(void)
 	para = NULL;
 	key_callback_unregister();
 
-	sem_destroy(&playercontext.mPreparedSem);
-	if(playercontext.mTPlayer != NULL) {
-		TPlayerDestroy(playercontext.mTPlayer);
-		playercontext.mTPlayer = NULL;
-	}
-
-	for (int i = 0; i < fileCount; i++) {
-        free(filePaths[i]);
-    }
-	
 	unload_image();
+	app_info("home_destory ........");
 	return 0;
 }
 

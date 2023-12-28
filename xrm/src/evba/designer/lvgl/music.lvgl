@@ -817,7 +817,7 @@
                     }
                 ],
                 "class": "lv_cont",
-                "name": "cont_music",
+                "name": "cont_main",
                 "styles": [
                     {
                         "base": "lv_style_pretty",
@@ -837,7 +837,7 @@
                 "widget": "cont",
                 "全局global": true,
                 "可拖动drag": false,
-                "名字name": "cont_music",
+                "名字name": "cont_main",
                 "坐标geometry": {
                     "height": 360,
                     "width": 480,

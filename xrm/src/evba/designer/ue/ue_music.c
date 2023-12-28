@@ -72,14 +72,14 @@ static int music_destory(void)
 
 static int music_show(void)
 {
-	lv_obj_set_hidden(para->ui.cont_music, 0);
+	lv_obj_set_hidden(para->ui.cont_main, 0);
 
 	return 0;
 }
 
 static int music_hide(void)
 {
-	lv_obj_set_hidden(para->ui.cont_music, 1);
+	lv_obj_set_hidden(para->ui.cont_main, 1);
 
 	return 0;
 }

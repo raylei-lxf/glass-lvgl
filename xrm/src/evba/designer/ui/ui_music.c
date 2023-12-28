@@ -9,7 +9,7 @@
 /******************************************************************************
 *    datas
 ******************************************************************************/
-static lv_style_t style0_cont_music;
+static lv_style_t style0_cont_main;
 static lv_style_t style0_cont_1;
 static lv_style_t style0_cont_music_list;
 static lv_style_t style0_cont_music_process;
@@ -39,19 +39,19 @@ void music_ui_create(music_ui_t *ui)
 {
 
 #ifdef LV_USE_CONT
-	lv_style_copy(&style0_cont_music, &lv_style_pretty);
-	style0_cont_music.body.main_color = lv_color_hex(0x4456c6);
-	style0_cont_music.body.grad_color = lv_color_hex(0x4456c6);
-	style0_cont_music.body.radius = 0;
-	style0_cont_music.body.border.color = lv_color_hex(0x4456c6);
-	style0_cont_music.body.border.width = 0;
-	style0_cont_music.body.border.opa = 255;
+	lv_style_copy(&style0_cont_main, &lv_style_pretty);
+	style0_cont_main.body.main_color = lv_color_hex(0x4456c6);
+	style0_cont_main.body.grad_color = lv_color_hex(0x4456c6);
+	style0_cont_main.body.radius = 0;
+	style0_cont_main.body.border.color = lv_color_hex(0x4456c6);
+	style0_cont_main.body.border.width = 0;
+	style0_cont_main.body.border.opa = 255;
 
-	ui->cont_music = lv_cont_create(ui->parent, NULL);
-	lv_obj_set_pos(ui->cont_music, 0, 0);
-	lv_obj_set_size(ui->cont_music, 480, 360);
-	lv_cont_set_fit4(ui->cont_music, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
-	lv_cont_set_style(ui->cont_music, LV_CONT_STYLE_MAIN, &style0_cont_music);
+	ui->cont_main = lv_cont_create(ui->parent, NULL);
+	lv_obj_set_pos(ui->cont_main, 0, 0);
+	lv_obj_set_size(ui->cont_main, 480, 360);
+	lv_cont_set_fit4(ui->cont_main, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
+	lv_cont_set_style(ui->cont_main, LV_CONT_STYLE_MAIN, &style0_cont_main);
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_CONT
@@ -62,7 +62,7 @@ void music_ui_create(music_ui_t *ui)
 	style0_cont_1.body.border.width = 0;
 	style0_cont_1.body.border.opa = 255;
 
-	ui->cont_1 = lv_cont_create(ui->cont_music, NULL);
+	ui->cont_1 = lv_cont_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->cont_1, 224, 27);
 	lv_obj_set_size(ui->cont_1, 4, 296);
 	lv_cont_set_fit4(ui->cont_1, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
@@ -76,7 +76,7 @@ void music_ui_create(music_ui_t *ui)
 	style0_cont_music_list.body.border.color = lv_color_hex(0x4456c6);
 	style0_cont_music_list.body.border.width = 0;
 
-	ui->cont_music_list = lv_cont_create(ui->cont_music, NULL);
+	ui->cont_music_list = lv_cont_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->cont_music_list, 14, 33);
 	lv_obj_set_size(ui->cont_music_list, 198, 45);
 	lv_cont_set_fit4(ui->cont_music_list, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
@@ -108,7 +108,7 @@ void music_ui_create(music_ui_t *ui)
 	style0_cont_music_process.body.border.width = 0;
 	style0_cont_music_process.body.border.opa = 255;
 
-	ui->cont_music_process = lv_cont_create(ui->cont_music, NULL);
+	ui->cont_music_process = lv_cont_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->cont_music_process, 240, 281);
 	lv_obj_set_size(ui->cont_music_process, 215, 4);
 	lv_cont_set_fit4(ui->cont_music_process, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
@@ -131,7 +131,7 @@ void music_ui_create(music_ui_t *ui)
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_LABEL
-	ui->label_music_start = lv_label_create(ui->cont_music, NULL);
+	ui->label_music_start = lv_label_create(ui->cont_main, NULL);
 	lv_label_set_text(ui->label_music_start, "00:16");
 	lv_label_set_long_mode(ui->label_music_start, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_music_start, 237, 261);
@@ -139,7 +139,7 @@ void music_ui_create(music_ui_t *ui)
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LABEL
-	ui->label_music_totle = lv_label_create(ui->cont_music, NULL);
+	ui->label_music_totle = lv_label_create(ui->cont_main, NULL);
 	lv_label_set_text(ui->label_music_totle, "02:58");
 	lv_label_set_long_mode(ui->label_music_totle, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_music_totle, 411, 261);
@@ -153,7 +153,7 @@ void music_ui_create(music_ui_t *ui)
 	style0_cont_5.body.border.color = lv_color_hex(0x4456c6);
 	style0_cont_5.body.border.width = 0;
 
-	ui->cont_5 = lv_cont_create(ui->cont_music, NULL);
+	ui->cont_5 = lv_cont_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->cont_5, 248, 30);
 	lv_obj_set_size(ui->cont_5, 220, 208);
 	lv_cont_set_fit4(ui->cont_5, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
@@ -363,7 +363,7 @@ void music_ui_create(music_ui_t *ui)
 
 void music_ui_destory(music_ui_t *ui)
 {
-	lv_obj_del(ui->cont_music);
+	lv_obj_del(ui->cont_main);
 	mal_unload_image(img_music_title_tubiaoyinyue1_png);
 	mal_unload_image(img_2_xunhuanmoshi_png);
 }
