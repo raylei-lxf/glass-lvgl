@@ -1,5 +1,5 @@
-#ifndef  __COMMON_H__
-#define  __COMMON_H__
+#ifndef  __LV_COMMON_H__
+#define  __LV_COMMON_H__
 
 #include "xrm_conf.h"
 

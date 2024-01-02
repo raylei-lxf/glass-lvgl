@@ -1,6 +1,6 @@
 #ifndef __MAL_WINDOW_H__
 #define __MAL_WINDOW_H__
-#include "common.h"
+#include "lv_common.h"
 
 typedef struct
 {
