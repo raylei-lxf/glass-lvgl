@@ -20,9 +20,7 @@ define Package/$(PKG_NAME)
   SECTION:=gui
   SUBMENU:=Littlevgl
   CATEGORY:=Gui
-  DEPENDS:=libcedarx libstdcpp tplayer
-#  DEPENDS:=+libuapi ENABLE_VIN_ISP:libAWIspApi
-#  DEPENDS:=+libuapi +eyesee-mpp-framework +tslib +libjpeg +libpng
+  DEPENDS:=libcedarx libstdcpp 
   TITLE:= xrm
   MAINTAINER:= xrm
 endef
