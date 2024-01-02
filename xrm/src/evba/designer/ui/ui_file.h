@@ -21,15 +21,7 @@ typedef struct
 	lv_obj_t *cont_file_line;
 	lv_obj_t *img_file_title;
 	lv_obj_t *label_file_title;
-	lv_obj_t *cont_file_photo;
-	lv_obj_t *img_file_photo;
-	lv_obj_t *label_file_photo;
-	lv_obj_t *cont_file_imge;
-	lv_obj_t *img_file_imge;
-	lv_obj_t *label_file_imge;
-	lv_obj_t *cont_file_video;
-	lv_obj_t *img_file_video;
-	lv_obj_t *label_file_video;
+	lv_obj_t *file_list;
 } file_ui_t;
 
 

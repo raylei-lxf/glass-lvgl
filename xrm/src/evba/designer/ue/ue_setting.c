@@ -22,14 +22,11 @@ typedef struct
 } setting_para_t;
 static setting_para_t *para = NULL;
 
-typedef enum
-{
-    Setting_Focus_Language = 0,
-    Setting_focus_Factory = 1,
-    Setting_Focus_upgrade = 2,
-} E_Setting_Focus;
+#define Setting_Focus_Language  0
+#define Setting_focus_Factory   1
+#define Setting_Focus_upgrade   2
 
-static E_Setting_Focus m_setting_focus = Setting_Focus_Language;
+static int  m_setting_focus = 0;
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -74,19 +71,17 @@ static void key_cancel_callback(void)
 	switch_window(WINDOW_SETTING, WINDOW_HOME);
 }
 
-static void key_up_callback(void)
+static void setting_change_focus(int focus)
 {
     lv_style_t style0_cont_setting_language;
 	lv_style_t style0_cont_setting_factory;
 	lv_style_t style0_cont_upgrade;
-	(int)m_setting_focus--;
-	if (m_setting_focus < Setting_Focus_Language) {
-		m_setting_focus = Setting_Focus_upgrade;
-	}
-	switch (m_setting_focus)
+
+    app_info("focus = %d\n", focus);
+	switch (focus)
 	{
-    #if 0
 	case Setting_Focus_Language:
+        app_info("Setting_Focus_Language.......\n");
 		lv_style_copy(&style0_cont_setting_language, &lv_style_pretty);
 		style0_cont_setting_language.body.main_color = lv_color_hex(0x00007f);
 		style0_cont_setting_language.body.grad_color = lv_color_hex(0x00007f);
@@ -109,6 +104,7 @@ static void key_up_callback(void)
 		lv_cont_set_style(para->ui.cont_upgrade, LV_CONT_STYLE_MAIN, &style0_cont_upgrade);
 		break;
 	case Setting_focus_Factory:
+        app_info("Setting_Focus_factory.......\n");
 		lv_style_copy(&style0_cont_setting_language, &lv_style_pretty);
 		style0_cont_setting_language.body.main_color = lv_color_hex(0x4456c6);
 		style0_cont_setting_language.body.grad_color = lv_color_hex(0x4456c6);
@@ -131,6 +127,7 @@ static void key_up_callback(void)
 		lv_cont_set_style(para->ui.cont_upgrade, LV_CONT_STYLE_MAIN, &style0_cont_upgrade);
 		break;
 	case Setting_Focus_upgrade:
+        app_info("Setting_Focus_upgrade.......\n");
 		lv_style_copy(&style0_cont_setting_language, &lv_style_pretty);
 		style0_cont_setting_language.body.main_color = lv_color_hex(0x4456c6);
 		style0_cont_setting_language.body.grad_color = lv_color_hex(0x4456c6);
@@ -152,31 +149,30 @@ static void key_up_callback(void)
 		style0_cont_upgrade.body.border.width = 4;
 		lv_cont_set_style(para->ui.cont_upgrade, LV_CONT_STYLE_MAIN, &style0_cont_upgrade);
 		break;
-    #endif
 	default:
 		app_err("........");
 		break;
 	}
 }
 
+static void key_up_callback(void)
+{
+	m_setting_focus--;
+	if (m_setting_focus < Setting_Focus_Language) {
+		m_setting_focus = Setting_Focus_upgrade;
+        app_info("key_up_callback m_setting_focus = %d\n", m_setting_focus);
+	}
+    setting_change_focus(m_setting_focus);
+}
+
 static void key_down_callback(void)
 {
-	(int)m_setting_focus++;
+	m_setting_focus++;
 	if (m_setting_focus > Setting_Focus_upgrade) {
 		m_setting_focus = Setting_Focus_Language;
+        app_info("key_down_callback m_setting_focus = %d\n", m_setting_focus);
 	}
-	switch (m_setting_focus)
-	{
-	case Setting_Focus_Language:
-		break;
-	case Setting_focus_Factory:
-		break;
-	case Setting_Focus_upgrade:
-		break;
-	default:
-		app_err("........");
-		break;
-	}
+    setting_change_focus(m_setting_focus);
 }
 
 static int setting_create(void)
@@ -194,12 +190,10 @@ static int setting_create(void)
 	setting_ui_create(&para->ui);
 	setting_ue_create(para);
 
-    #if 0
 	key_callback_register(LV_KEY_1, key_confirm_callback);
 	key_callback_register(LV_KEY_2, key_cancel_callback);
 	key_callback_register(LV_KEY_3, key_up_callback);
 	key_callback_register(LV_KEY_4, key_down_callback);
-    #endif
 
 	app_info("........");
 	return 0;

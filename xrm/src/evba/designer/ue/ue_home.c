@@ -102,9 +102,7 @@ static void key_confirm_callback(void)
 	} else if (guangbiao == FOCUS_FILE) {
 		switch_window(WINDOW_HOME, WINDOW_FILE);
 	} else if (guangbiao == FOCUS_SETTING) {
-	    app_info("....... setting ");
-		switch_window(WINDOW_HOME, WINDOW_FILE);
-		// switch_window(WINDOW_HOME, WINDOW_SETTING);
+		switch_window(WINDOW_HOME, WINDOW_SETTING);
 	} else if (guangbiao == FOCUS_HPONE) {
 		// switch_window(WINDOW_HOME, WINDOW_PHOTO);
 	}	
