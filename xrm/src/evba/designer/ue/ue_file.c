@@ -82,6 +82,7 @@ static void file_unload_image()
 #define FILE_MP4    0
 #define FILE_JPG    1
 #define FILE_PIC    2
+static int m_foucs = 0;
 static int fileCount = 0;
 static char* filePaths[MAX_FILES];
 
@@ -163,14 +164,51 @@ void set_file_list(void)
     }
     
 }
+
+void file_set_list_focus(lv_obj_t *list, int index)
+{
+    lv_obj_t *focus_btn;
+
+    focus_btn = lv_list_get_next_btn(list, NULL);
+    for(int i = 0; i < index; i++){
+        focus_btn = lv_list_get_next_btn(list, focus_btn);
+    }
+    lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
+    lv_list_set_btn_selected(list, focus_btn);
+}
+
+
 static void key_left_callback(void)
 {
+    m_foucs++;
+    if (m_foucs < 0) {
+        m_foucs = fileCount - 1;
+    } else if (m_foucs >= fileCount) {
+        m_foucs = 0;
+    }
+    app_info(".......m_foucs = %d\n", m_foucs);
+    if (fileCount > 0) {
+        file_ui_t *ui = &para->ui;
+        file_set_list_focus(ui->file_list,m_foucs);
 
+    }
 }
 
 static void key_right_callback(void)
 {
-	
+    m_foucs--;
+    if (m_foucs < 0) {
+        m_foucs = fileCount - 1;
+    } else if (m_foucs >= fileCount) {
+        m_foucs = 0;
+    }
+
+    app_info(".......m_foucs = %d\n", m_foucs);
+    
+    if (fileCount > 0) {
+        file_ui_t *ui = &para->ui;
+        file_set_list_focus(ui->file_list, m_foucs);
+    }
 }
 
 static void file_ue_destory(file_para_t *para)
@@ -195,6 +233,10 @@ static int file_create(void)
     get_file_list();
     set_file_list();    
 
+    if (fileCount > 0) {
+        file_ui_t *ui = &para->ui;
+        file_set_list_focus(ui->file_list, m_foucs);
+    }
 	key_callback_register(LV_KEY_3, key_left_callback);
 	key_callback_register(LV_KEY_4, key_right_callback);
 
@@ -213,6 +255,7 @@ static int file_destory(void)
         free(filePaths[i]);
     }
 	fileCount = 0;
+    m_foucs = 0;
 	key_callback_unregister();
 
 	return 0;
