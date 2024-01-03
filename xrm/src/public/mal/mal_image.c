@@ -1,5 +1,5 @@
 #include "mal_image.h"
-#include "common.h"
+#include "lv_common.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
