@@ -57,10 +57,12 @@ static void file_load_image(void)
     file_ui_t *ui = &para->ui;
         
    	file_img_srcxz[0] = (void *)mal_load_image(LV_IMAGE_PATH"pictubiao.png");
-	file_img_srcxz[1] = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao.png");
-	file_img_srcxz[2] = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue.png");
-   	file_img_srcxz[3] = (void *)mal_load_image(LV_IMAGE_PATH"pictubiao1.png");
-	file_img_srcxz[4] = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao1.png");
+   	file_img_srcxz[1] = (void *)mal_load_image(LV_IMAGE_PATH"pictubiao1.png");
+
+	file_img_srcxz[2] = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao.png");
+	file_img_srcxz[3] = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao1.png");
+
+	file_img_srcxz[4] = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue.png");
 	file_img_srcxz[5] = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue1.png");
     #if 0
     file_img_src[0] = lv_img_get_src(ui->img_player);
@@ -81,7 +83,7 @@ static void file_unload_image()
 #define MAX_FILES 100
 #define FILE_MP4    0
 #define FILE_JPG    1
-#define FILE_PIC    2
+#define FILE_MUS    2
 static int m_foucs = 0;
 static int fileCount = 0;
 static char* filePaths[MAX_FILES];
@@ -155,7 +157,7 @@ void set_file_list(void)
         void *file_list = NULL;
         if (file_number[i].file_type == FILE_MP4) {
             file_list = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao.png");        
-        } else if (file_number[i].file_type == FILE_MP4) {
+        } else if (file_number[i].file_type == FILE_MUS) {
             file_list = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue.png");        
         } else {
             file_list = (void *)mal_load_image(LV_IMAGE_PATH"pictubiao.png");        
@@ -165,21 +167,62 @@ void set_file_list(void)
     
 }
 
+void file_set_list_unfocus(lv_obj_t *list, int index)
+{
+    lv_obj_t *focus_btn = NULL;
+    lv_obj_t *focus_img = NULL;
+    int i = 0;
+    focus_btn = lv_list_get_next_btn(list, NULL);
+    for(i = 0; i < index; i++){
+        focus_btn = lv_list_get_next_btn(list, focus_btn);
+    }
+    focus_img = lv_list_get_btn_img(focus_btn);
+    if (file_number[i].file_type == FILE_JPG) {
+        lv_img_set_src(focus_img, file_img_srcxz[0]);
+    } else if (file_number[i].file_type == FILE_MP4) {
+        lv_img_set_src(focus_img, file_img_srcxz[2]);
+    } else {
+        lv_img_set_src(focus_img, file_img_srcxz[4]);
+    }
+}
+
 void file_set_list_focus(lv_obj_t *list, int index)
 {
-    lv_obj_t *focus_btn;
+    lv_obj_t *focus_btn = NULL;
+    lv_obj_t *focus_img = NULL;
+    int i = 0;
 
     focus_btn = lv_list_get_next_btn(list, NULL);
-    for(int i = 0; i < index; i++){
+    for(i = 0; i < index; i++){
         focus_btn = lv_list_get_next_btn(list, focus_btn);
+    }
+    focus_img = lv_list_get_btn_img(focus_btn);
+    if (file_number[i].file_type == FILE_JPG) {
+        lv_img_set_src(focus_img, file_img_srcxz[1]);
+    } else if (file_number[i].file_type == FILE_MP4) {
+        lv_img_set_src(focus_img, file_img_srcxz[3]);
+    } else {
+        lv_img_set_src(focus_img, file_img_srcxz[5]);
     }
     lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
     lv_list_set_btn_selected(list, focus_btn);
 }
 
+static void file_key_confire_callback(void)
+{
+    
+}
+
+static void file_key_canel_callback(void)
+{
+    switch_window(WINDOW_FILE, WINDOW_HOME);    
+}
 
 static void key_left_callback(void)
 {
+    file_ui_t *ui = &para->ui;
+    file_set_list_unfocus(ui->file_list, m_foucs);
+
     m_foucs++;
     if (m_foucs < 0) {
         m_foucs = fileCount - 1;
@@ -188,14 +231,16 @@ static void key_left_callback(void)
     }
     app_info(".......m_foucs = %d\n", m_foucs);
     if (fileCount > 0) {
-        file_ui_t *ui = &para->ui;
-        file_set_list_focus(ui->file_list,m_foucs);
+        file_set_list_focus(ui->file_list, m_foucs);
 
     }
 }
 
 static void key_right_callback(void)
 {
+    file_ui_t *ui = &para->ui;
+    file_set_list_unfocus(ui->file_list, m_foucs);
+
     m_foucs--;
     if (m_foucs < 0) {
         m_foucs = fileCount - 1;
@@ -237,6 +282,10 @@ static int file_create(void)
         file_ui_t *ui = &para->ui;
         file_set_list_focus(ui->file_list, m_foucs);
     }
+
+	key_callback_register(LV_KEY_1, file_key_confire_callback);
+	key_callback_register(LV_KEY_2, file_key_canel_callback);
+
 	key_callback_register(LV_KEY_3, key_left_callback);
 	key_callback_register(LV_KEY_4, key_right_callback);
 
