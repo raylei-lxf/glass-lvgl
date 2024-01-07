@@ -26,7 +26,7 @@ static setting_para_t *para = NULL;
 #define Setting_focus_Factory   1
 #define Setting_Focus_upgrade   2
 
-static int  m_setting_focus = 0;
+static int  m_setting_focus = Setting_Focus_Language;
 /******************************************************************************
 *    functions
 ******************************************************************************/

@@ -4,6 +4,12 @@
 #include "ui_music.h"
 #include "ui_resource.h"
 #include "public.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <string.h>
+#include <ctype.h>
+#include "debug.h"
 
 
 /******************************************************************************
@@ -20,7 +26,8 @@ typedef struct
 	music_ue_t ue;
 } music_para_t;
 static music_para_t *para = NULL;
-
+static *music_img_src[2] = { NULL };
+static *music_img_srcxz[2] = { NULL };
 
 /******************************************************************************
 *    functions
@@ -45,6 +52,162 @@ static void music_ue_destory(music_para_t *para)
 	return;
 }
 
+static void music_load_image(void)
+{
+    music_ui_t *ui = &para->ui;
+    music_img_srcxz[0] = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue.png");
+    music_img_srcxz[1] = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue1.png");
+
+}
+
+static void music_unload_image(void)
+{
+    mal_unload_image(music_img_srcxz[0]);
+    mal_unload_image(music_img_srcxz[1]);
+}
+
+#define MAX_MUSIC 100
+static int m_foucs_music = 0;
+static int music_Count = 0;
+static char* music_Paths[MAX_MUSIC];
+
+
+int get_music_list(void)
+{
+    const char* directory = "/mnt/app";  
+    const char* formats[] = { ".mp3" }; 
+    
+    DIR* dir = opendir(directory);
+    if (dir == NULL) {
+        app_info("can't open  folderPath：%s\n", directory);
+        return -11;
+    }
+    
+    struct dirent* entry;
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_type == DT_REG) {
+            char* extension = strrchr(entry->d_name, '.');
+            if (extension != NULL) {
+                int i;
+                for (i = 0; extension[i]; i++) {
+                    extension[i] = tolower(extension[i]);
+                }
+                
+                int num_formats = sizeof(formats) / sizeof(formats[0]);
+                int found = 0;
+                
+                for (i = 0; i < num_formats; i++) {
+                    if (strcasecmp(extension, formats[i]) == 0) {
+                        found = i+1;
+                        break;
+                    }
+                }
+                
+                if (found != 0) {
+                    music_Paths[music_Count] = strdup(entry->d_name);
+                    music_Count++;
+                    if (music_Count >= MAX_MUSIC) {
+                        app_info("file max\n");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    closedir(dir);
+    
+    for (int i = 0; i < music_Count; i++) {
+        app_info("files: %s\n", music_Paths[i]);
+    }
+
+    return 0;
+}
+void set_music_list(void)
+{
+    music_ui_t *ui = &para->ui;
+    
+    for (int i = 0; i < music_Count; i++) {
+        void *music_list = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue.png"); 
+        // void *music_list = music_img_srcxz[0];
+        lv_list_add_btn(ui->list_mp3, music_list, music_Paths[i]);
+    }
+
+}
+
+void music_set_list_unfocus(lv_obj_t *list, int index)
+{
+    lv_obj_t *focus_btn = NULL;
+    lv_obj_t *focus_img = NULL;
+    int i = 0;
+    focus_btn = lv_list_get_next_btn(list, NULL);
+    for(i = 0; i < index; i++){
+        focus_btn = lv_list_get_next_btn(list, focus_btn);
+    }
+    focus_img = lv_list_get_btn_img(focus_btn);
+    lv_img_set_src(focus_img, music_img_srcxz[0]);
+}
+
+void music_set_list_focus(lv_obj_t *list, int index)
+{
+    lv_obj_t *focus_btn = NULL;
+    lv_obj_t *focus_img = NULL;
+    int i = 0;
+
+    focus_btn = lv_list_get_next_btn(list, NULL);
+    for(i = 0; i < index; i++){
+        focus_btn = lv_list_get_next_btn(list, focus_btn);
+    }
+    focus_img = lv_list_get_btn_img(focus_btn);
+    lv_img_set_src(focus_img, music_img_srcxz[1]);
+    lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
+    lv_list_set_btn_selected(list, focus_btn);
+}
+
+static music_key_confire_callback(void)
+{
+
+}
+
+static music_key_canel_callback(void)
+{
+	switch_window(WINDOW_MUSIC, WINDOW_HOME);
+}
+
+static music_key_left_callback(void)
+{
+    music_ui_t *ui = &para->ui;
+    music_set_list_unfocus(ui->list_mp3, m_foucs_music);
+
+    m_foucs_music++;
+    if (m_foucs_music < 0) {
+        m_foucs_music = music_Count - 1;
+    } else if (m_foucs_music >= music_Count) {
+        m_foucs_music = 0;        
+    }
+    app_info(".......m_foucs_music = %d\n", m_foucs_music);
+    if (music_Count > 0) {
+        music_set_list_focus(ui->list_mp3, m_foucs_music);
+    }
+}
+
+static music_key_right_callback(void)
+{
+    music_ui_t *ui = &para->ui;
+    music_set_list_unfocus(ui->list_mp3, m_foucs_music);
+
+    m_foucs_music--;
+    if (m_foucs_music < 0) {
+        m_foucs_music = music_Count - 1;
+    } else if (m_foucs_music >= music_Count) {
+        m_foucs_music = 0;        
+    }
+    app_info(".......m_foucs_music = %d\n", m_foucs_music);
+    if (music_Count > 0) {
+        music_set_list_focus(ui->list_mp3, m_foucs_music);
+    }
+}
+
 static int music_create(void)
 {
 	para = (music_para_t *)malloc(sizeof(music_para_t));
@@ -57,6 +220,22 @@ static int music_create(void)
 	music_ui_create(&para->ui);
 	music_ue_create(para);
 
+    music_load_image();
+
+    get_music_list();
+    set_music_list();
+
+    if (music_Count > 0) {
+        music_ui_t *ui = &para->ui;
+        music_set_list_focus(ui->list_mp3, m_foucs_music);
+    }
+
+	key_callback_register(LV_KEY_1, music_key_confire_callback);
+	key_callback_register(LV_KEY_2, music_key_canel_callback);
+
+	key_callback_register(LV_KEY_3, music_key_left_callback);
+	key_callback_register(LV_KEY_4, music_key_right_callback);
+
 	return 0;
 }
 
@@ -67,6 +246,14 @@ static int music_destory(void)
 	free(para);
 	para = NULL;
 
+    for (int i = 0; i < music_Count; i++) {
+        free(music_Paths[i]);
+    }
+    m_foucs_music = 0;
+    music_Count = 0;
+
+    music_unload_image();
+    key_callback_unregister();
 	return 0;
 }
 

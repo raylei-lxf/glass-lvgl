@@ -71,7 +71,7 @@ static void file_load_image(void)
     #endif
 }
 
-static void file_unload_image()
+static void file_unload_image(void)
 {
     mal_unload_image(file_img_srcxz[0]);
 	mal_unload_image(file_img_srcxz[1]);
