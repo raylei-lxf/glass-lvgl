@@ -14,46 +14,55 @@
 
 typedef enum
 {
-	DEFAULAT_CMD = 0,
-	INIT_CMD = 1,
-	EXIT_CMD = 2,
-	PREPARE_CMD = 3,
-	PLAY_CMD = 4,
-	PAUSE_CMD = 5,
-	STOP_CMD = 6,
-	SEEK_TO = 7,
-	SETTING,
+	DEFAULAT_CMD    = 0,
+	INIT_CMD        = 1,
+	EXIT_CMD        = 2,
+	PREPARE_CMD     = 3,
+	PLAY_CMD        = 4,
+	PAUSE_CMD       = 5,
+	STOP_CMD        = 6,
+	SEEK_TO         = 7,
+	SETTING         = 8,
 }playerCmd;
 
 enum playerSetParam
 {
-	SET_VOLUME = 0,
-	SET_LOOP,
-	SET_SCALE,
-	SET_DISPLAY,
-	SET_SPEED,
-	SET_ROTATE,
-	SET_AUDIO,
-	SET_SOUND_CHANNEL,
-	SET_AUDIO_EQ,
+	SET_VOLUME      = 0,
+	SET_LOOP        = 1,
+	SET_SCALE       = 2,
+	SET_DISPLAY     = 3,
+	SET_SPEED       = 4,
+	SET_ROTATE      = 5,
+	SET_AUDIO       = 6,
+	SET_SOUND_CHANNEL = 7,
+	SET_AUDIO_EQ    = 8,
 };
 
 typedef enum
 {
-	EXIT_STATUS = 0,
-	INIT_STATUS,
-	STOP_STATUS,
-	ERROR_STATUS,
-	PREPARING_STATUS,
-	PREPARED_STATUS,///5
-	PAUSE_STATUS,
-	PLAY_STATUS,
-	SEEKTO_STATUS,
-	SETTING_STATUS,
-	COMPLETE_STATUS,///10
-	PRE_COMPLETE_STATUS,
-	FIRST_FRAME_SHOW_STATUS,
+	EXIT_STATUS      = 0,
+	INIT_STATUS      = 1,
+	STOP_STATUS      = 2,
+	ERROR_STATUS     = 3,
+	PREPARING_STATUS = 4,
+	PREPARED_STATUS  = 5,
+	PAUSE_STATUS     = 6,
+	PLAY_STATUS      = 7,
+	SEEKTO_STATUS    = 8,
+	SETTING_STATUS   = 9,
+	COMPLETE_STATUS  = 10,
+	PRE_COMPLETE_STATUS = 11,
+	FIRST_VIDEO_FRAME_SHOW_STATUS = 12,
+	FIRST_AUDIO_FRAME_PLAY_STATUS = 13,
 }playerStatus;
+
+typedef enum
+{
+    RESOLUTION_360P_PIXEL     = 230400, //640*360
+    RESOLUTION_480P_PIXEL     = 345600, //720*480
+    RESOLUTION_720P_PIXEL     = 921600, //1280*720
+    RESOLUTION_1080P_PIXEL    = 2073600,//1920*1080
+}resolutionPixel;
 
 #define QUEUE_MAX_SIZE    10
 
@@ -61,8 +70,10 @@ typedef struct PLAYER_T
 {
     TPlayer*          mTPlayer;
     int               mSeekable;
+    int               mStopping;
     int               mError;
     int               mVideoFrameNum;
+    int               mExceedVideoLimit;
     MediaInfo*		  mMediaInfo;
 	playerStatus	  mpstatus;
 	pthread_t		  id;

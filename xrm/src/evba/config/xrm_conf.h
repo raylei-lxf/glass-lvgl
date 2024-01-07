@@ -15,6 +15,7 @@
 #define COM_WARN_ENABLE		1
 #define COM_INFO_ENABLE		1
 
+#define BYTE_PER_PIXEL	4
 /* add windowns */
 typedef enum
 {
@@ -30,7 +31,26 @@ typedef enum
     WINDOW_VERIFY,
     WINDOW_MAX
 } window_id_t;
+
+#if COM_ERR_ENABLE
+#define com_err(fmt,...) printf("err:<%s:%d>"fmt"\n",__func__, __LINE__, ##__VA_ARGS__)
+#else
+#define com_err(fmt,...) 
+#endif
+
+#if COM_WARN_ENABLE
+#define com_warn(fmt,...) printf("warn:<%s:%d>"fmt"\n",__func__, __LINE__, ##__VA_ARGS__)
+#else
+#define com_warn(fmt,...) 
+#endif
+
+#if COM_INFO_ENABLE
+#define com_info(fmt,...) printf("info:<%s:%d>"fmt"\n",__func__, __LINE__, ##__VA_ARGS__)
+#else
+#define com_info(fmt,...) 
 #endif
 
 /* select image path */
 #define LV_IMAGE_PATH	"/usr/res/image/"
+
+#endif

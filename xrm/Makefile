@@ -20,7 +20,7 @@ define Package/$(PKG_NAME)
   SECTION:=gui
   SUBMENU:=Littlevgl
   CATEGORY:=Gui
-  DEPENDS:=libcedarx libstdcpp 
+  DEPENDS:=+libcedarx +libstdcpp +libspeexdsp 
   TITLE:= xrm
   MAINTAINER:= xrm
 endef
@@ -49,7 +49,7 @@ CONFIGURE_PRJ += ./../lv_examples
 endif
 
 CONFIGURE_PRJ += ./src/public
-
+CONFIGURE_PRJ += ./src/common
 #ifeq ($(CONFIG_evba),y)
 CONFIGURE_APP += ./src/evba
 CONFIGURE_BIN += evba_bin

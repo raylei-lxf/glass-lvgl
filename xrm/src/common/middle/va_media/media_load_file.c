@@ -55,7 +55,7 @@ media_file_list_t *media_load_file(rat_media_type_t media_type, char *path)
 		goto error;
 	}
 	if (media_list == NULL) {
-		media_list = db_list_create();
+		media_list = db_list_create("media_load", 0);
 		if (media_list == NULL) {
 			com_err("db_list_create fail\n");
 			return NULL;

@@ -1,5 +1,5 @@
 #include "player_int.h"
-#include "public.h"
+#include "xrm_conf.h"
 #include "dbList.h"
 
 #define ISNULL(x) if(!x){return -1;}
@@ -53,9 +53,8 @@ static int CallbackForTPlayer(void* pUserData, int msg, int param0, void* param1
 	                break;
 	            }
 	        }
-			pPlayer->mpstatus = ERROR_STATUS;
-			pPlayer->mError = 1;
-	        sem_post(&pPlayer->mPreparedSem);
+			//pPlayer->mpstatus = ERROR_STATUS;
+			//pPlayer->mError = 1;
 	        printf("error: open media source fail.\n");
 	        break;
 	    case TPLAYER_NOTIFY_NOT_SEEKABLE:
@@ -83,18 +82,17 @@ static int CallbackForTPlayer(void* pUserData, int msg, int param0, void* param1
 			videoFormat = ((int *)param1)[0];
 
 			if ((videoFormat == VIDEO_CODEC_FORMAT_H264) || (videoFormat == VIDEO_CODEC_FORMAT_H265))
-			{
 				TPlayerSetScaleDownRatio(pPlayer->mTPlayer,TPLAYER_VIDEO_SCALE_DOWN_1, TPLAYER_VIDEO_SCALE_DOWN_1);
-				com_err("TPLAYER_VIDEO_SCALE_DOWN_1+++++++++");
-			}else
-			{
-				com_err("TPLAYER_VIDEO_SCALE_DOWN_2+++++++++");
+			else
 				TPlayerSetScaleDownRatio(pPlayer->mTPlayer,TPLAYER_VIDEO_SCALE_DOWN_2, TPLAYER_VIDEO_SCALE_DOWN_2);
-			}
+
 			break;
 		case TPLAYER_NOTIFY_PICTURE_STARTING_SHOW:
             com_info("TPLAYER_NOTIFY_PICTURE_STARTING_SHOW!");
 		    break;
+	//	case TPLAYER_NOTIFY_AUDIO_STARTING_SHOW:
+      //      com_info("TPLAYER_NOTIFY_AUDIO_STARTING_SHOW!");
+		//    break;
 		case TPLAYER_NOTIFY_PLAYBACK_PRE_COMPLETE:
             com_info("TPLAYER_NOTIFY_PLAYBACK_PRE_COMPLETE!");
 		    break;
@@ -146,10 +144,7 @@ static int tplayer_queue(player_t *tplayer, void *param)
 			tplayer->mpstatus = INIT_STATUS;
 			TPlayerSetNotifyCallback(tplayer->mTPlayer,CallbackForTPlayer, (void*)tplayer);
 			TPlayerSetDebugFlag(tplayer->mTPlayer, 0);
-            		sem_init(&tplayer->mPreparedSem, 0, 0);
-			//////////zddll视频旋转设置,这里是VE旋转,还有G2D硬件旋转方法///////////////
-			//TPlayerSetRotate(tplayer->mTPlayer,TPLAYER_VIDEO_ROTATE_DEGREE_180);///zddll
-			
+            sem_init(&tplayer->mPreparedSem, 0, 0);
 			com_info("init finished\n");
 			break;
 		case EXIT_CMD:
@@ -160,7 +155,9 @@ static int tplayer_queue(player_t *tplayer, void *param)
 			com_info("exit finished\n");
 			break;
 		case STOP_CMD:
+		    tplayer->mStopping = 1;
 			TPlayerStop(tplayer->mTPlayer);
+			tplayer->mStopping = 0;
 			tplayer->mpstatus = STOP_STATUS;
 			com_info("stop finished\n");
 			break;
@@ -169,7 +166,7 @@ static int tplayer_queue(player_t *tplayer, void *param)
 			TPlayerReset(tplayer->mTPlayer);
 			tplayer->mpstatus = PREPARING_STATUS;
 			if(TPlayerSetDataSource(tplayer->mTPlayer, (const char *)p->param[0], (CdxKeyedVectorT *)p->param[1])){
-				tplayer->mpstatus = ERROR_STATUS;
+				tplayer->mpstatus = INIT_STATUS;
                 sem_post(&tplayer->mPreparedSem);
 				goto end;
 			}else{
@@ -183,12 +180,12 @@ static int tplayer_queue(player_t *tplayer, void *param)
                     tplayer->mMediaInfo->pVideoStreamInfo->nHeight);
                 video_resolution[0] = tplayer->mMediaInfo->pVideoStreamInfo->nWidth;
                 video_resolution[1] = tplayer->mMediaInfo->pVideoStreamInfo->nHeight;
-		#if 0 ///zddll
-                if (video_resolution[0] > 1280 && video_resolution[1] > 720)
+                if ((video_resolution[0] * video_resolution[1]) > RESOLUTION_720P_PIXEL)
                 {
                     com_info("more than 720P\r\n");
                     TPlayerStop(tplayer->mTPlayer);
                     tplayer->mpstatus = STOP_STATUS;
+                    tplayer->mExceedVideoLimit = 1;
                     sem_post(&tplayer->mPreparedSem);
                     if(tplayer->callback)
                     {
@@ -196,7 +193,6 @@ static int tplayer_queue(player_t *tplayer, void *param)
                     }
                     goto end;
                 }
-		#endif
             }
             sem_post(&tplayer->mPreparedSem);
 			break;
@@ -218,9 +214,7 @@ static int tplayer_queue(player_t *tplayer, void *param)
 				com_warn("not prepared!\n");
 				goto end;
 			}
-			//////////////////////////////////////////////////
-			 TPlayerSetHoldLastPicture(tplayer->mTPlayer, 1);///zddll 视频->图片切换,视频停留在最后一帧///
-			//////////////////////////////////////////////////
+			// TPlayerSetHoldLastPicture(tplayer->mTPlayer, 1);
 			TPlayerStart(tplayer->mTPlayer);
 			if(TPlayerIsPlaying(tplayer->mTPlayer)){
 				com_info("play finished\n");
@@ -253,8 +247,7 @@ static int tplayer_queue(player_t *tplayer, void *param)
 					TPlayerSetDisplayRect(tplayer->mTPlayer, DisplayRect[0], DisplayRect[1],DisplayRect[2], DisplayRect[3]);
 					break;
 				case SET_ROTATE:
-					printf("设置旋转参数HHHHHHHHHHHHH\r\n");
-					//TPlayerSetRotate(tplayer->mTPlayer, (TplayerVideoRotateType)p->param[1]);
+					// TPlayerSetRotate(tplayer->mTPlayer, (TplayerVideoRotateType)p->param[1]);
 					TPlayerSetG2dRotate(tplayer->mTPlayer, (TplayerVideoRotateType)p->param[1]);
 					break;
 				case SET_VOLUME:
@@ -322,7 +315,7 @@ static void *tplayer_pthread(void *arg)
 	while(1) {
 		queue = (struct player_param *)__db_list_pop(tplayer->queue_head);
 		if (NULL == queue) {
-			// com_info("queue null");
+			com_info("queue null");
 			continue;
 		}
 		com_info("cmd = %u\n", queue->cmd);
@@ -345,7 +338,7 @@ player_t *tplayer_pthread_create(void)
 		goto end;
 	}
 	memset(tplayer, 0, sizeof(player_t));
-	tplayer->queue_head = db_list_create();
+	tplayer->queue_head = db_list_create("tplayer_list", 1);
 
 	pthread_attr_init(&attr);
 	pthread_attr_setstacksize(&attr, 0x4000);
@@ -401,7 +394,7 @@ int tplayer_play_url(player_t *tplayer, const char *path)
 
 	if(tplayer_get_status(tplayer) != PREPARED_STATUS)
 	{
-		com_err("this is invaild, prepare fail\n");
+		com_err("this is invaild, prepare fail");
 		return -1;
 	}
 	return 0;
@@ -496,6 +489,7 @@ int tplayer_get_duration(player_t *tplayer, int* sec)
 		com_info("not prepared!\n");
 		return -1;
 	}
+
     TPlayerGetDuration(tplayer->mTPlayer, &msec);
     tmp_sec = msec / 1000;
     *sec = tmp_sec;
@@ -514,6 +508,13 @@ int tplayer_get_current_pos(player_t *tplayer, int* sec)
 		com_info("not prepared!\n");
 		return -1;
 	}
+
+	if (tplayer->mStopping == 1)
+	{
+        com_info ("tplayer stopping...");
+        return -1;
+	}
+
 	TPlayerGetCurrentPosition(tplayer->mTPlayer, &msec);
     tmp_sec = msec / 1000;
     *sec = tmp_sec;

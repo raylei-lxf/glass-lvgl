@@ -44,7 +44,7 @@ int message_sys_init(void)
     int ret = -1;
 
     pmsg("msg sys init..............");
-	msg_info_list = db_list_create();
+	msg_info_list = db_list_create("message_sys", 0);
 	if (NULL == msg_info_list) {
 		perr("db_list_create Error!\n");
 		return -1;

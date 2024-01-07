@@ -38,23 +38,6 @@ typedef __s32 s32;
 typedef __u32 u32;
 #endif
 
-#if COM_ERR_ENABLE
-#define com_err(fmt,...) printf("err:<%s:%d>"fmt"\n",__func__, __LINE__, ##__VA_ARGS__)
-#else
-#define com_err(fmt,...) 
-#endif
-
-#if COM_WARN_ENABLE
-#define com_warn(fmt,...) printf("warn:<%s:%d>"fmt"\n",__func__, __LINE__, ##__VA_ARGS__)
-#else
-#define com_warn(fmt,...) 
-#endif
-
-#if COM_INFO_ENABLE
-#define com_info(fmt,...) printf("info:<%s:%d>"fmt"\n",__func__, __LINE__, ##__VA_ARGS__)
-#else
-#define com_info(fmt,...) 
-#endif
 
 #endif
 

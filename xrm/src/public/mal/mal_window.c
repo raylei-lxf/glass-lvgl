@@ -30,8 +30,8 @@ static void *find_window(window_id_t id)
 
 void window_head_init()
 {
-	window_head = db_list_create();
-	window_msg_head = db_list_create();
+	window_head = db_list_create("lv_win", 0);
+	window_msg_head = db_list_create("lv_msg", 0);
 }
 
 void window_head_uninit()
