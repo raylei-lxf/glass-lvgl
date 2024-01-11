@@ -21,6 +21,9 @@ typedef struct
 	setting_ue_t ue;
 } setting_para_t;
 static setting_para_t *para = NULL;
+static lv_style_t *style0_cont_setting_language;
+static lv_style_t *style0_cont_setting_factory;
+static lv_style_t *style0_cont_upgrade;
 
 #define Setting_Focus_Language  0
 #define Setting_focus_Factory   1
@@ -73,81 +76,68 @@ static void key_cancel_callback(void)
 
 static void setting_change_focus(int focus)
 {
-    lv_style_t style0_cont_setting_language;
-	lv_style_t style0_cont_setting_factory;
-	lv_style_t style0_cont_upgrade;
 
     app_info("focus = %d\n", focus);
 	switch (focus)
 	{
 	case Setting_Focus_Language:
         app_info("Setting_Focus_Language.......\n");
-		lv_style_copy(&style0_cont_setting_language, &lv_style_pretty);
-		style0_cont_setting_language.body.main_color = lv_color_hex(0x00007f);
-		style0_cont_setting_language.body.grad_color = lv_color_hex(0x00007f);
-		style0_cont_setting_language.body.border.color = lv_color_hex(0xffffff);
-		style0_cont_setting_language.body.border.width = 4;
-		lv_cont_set_style(para->ui.cont_setting_language, LV_CONT_STYLE_MAIN, &style0_cont_setting_language);
+		style0_cont_setting_language->body.main_color = lv_color_hex(0x00007f);
+		style0_cont_setting_language->body.grad_color = lv_color_hex(0x00007f);
+		style0_cont_setting_language->body.border.color = lv_color_hex(0xffffff);
+		style0_cont_setting_language->body.border.width = 4;
+		lv_cont_set_style(para->ui.cont_setting_language, LV_CONT_STYLE_MAIN, style0_cont_setting_language);
 
-		lv_style_copy(&style0_cont_setting_factory, &lv_style_pretty);
-		style0_cont_setting_factory.body.main_color = lv_color_hex(0x4456c6);
-		style0_cont_setting_factory.body.grad_color = lv_color_hex(0x4456c6);
-		style0_cont_setting_factory.body.border.color = lv_color_hex(0x4456c6);
-		style0_cont_setting_factory.body.border.width = 0;
-		lv_cont_set_style(para->ui.cont_setting_factory, LV_CONT_STYLE_MAIN, &style0_cont_setting_factory);
+		style0_cont_setting_factory->body.main_color = lv_color_hex(0x4456c6);
+		style0_cont_setting_factory->body.grad_color = lv_color_hex(0x4456c6);
+		style0_cont_setting_factory->body.border.color = lv_color_hex(0x4456c6);
+		style0_cont_setting_factory->body.border.width = 0;
+		lv_cont_set_style(para->ui.cont_setting_factory, LV_CONT_STYLE_MAIN, style0_cont_setting_factory);
 
-		lv_style_copy(&style0_cont_upgrade, &lv_style_pretty);
-		style0_cont_upgrade.body.main_color = lv_color_hex(0x4456c6);
-		style0_cont_upgrade.body.grad_color = lv_color_hex(0x4456c6);
-		style0_cont_upgrade.body.border.color = lv_color_hex(0x4456c6);
-		style0_cont_upgrade.body.border.width = 0;
-		lv_cont_set_style(para->ui.cont_upgrade, LV_CONT_STYLE_MAIN, &style0_cont_upgrade);
+		style0_cont_upgrade->body.main_color = lv_color_hex(0x4456c6);
+		style0_cont_upgrade->body.grad_color = lv_color_hex(0x4456c6);
+		style0_cont_upgrade->body.border.color = lv_color_hex(0x4456c6);
+		style0_cont_upgrade->body.border.width = 0;
+		lv_cont_set_style(para->ui.cont_upgrade, LV_CONT_STYLE_MAIN, style0_cont_upgrade);
 		break;
 	case Setting_focus_Factory:
         app_info("Setting_Focus_factory.......\n");
-		lv_style_copy(&style0_cont_setting_language, &lv_style_pretty);
-		style0_cont_setting_language.body.main_color = lv_color_hex(0x4456c6);
-		style0_cont_setting_language.body.grad_color = lv_color_hex(0x4456c6);
-		style0_cont_setting_language.body.border.color = lv_color_hex(0x4456c6);
-		style0_cont_setting_language.body.border.width = 0;
-		lv_cont_set_style(para->ui.cont_setting_language, LV_CONT_STYLE_MAIN, &style0_cont_setting_language);
+		style0_cont_setting_language->body.main_color = lv_color_hex(0x4456c6);
+		style0_cont_setting_language->body.grad_color = lv_color_hex(0x4456c6);
+		style0_cont_setting_language->body.border.color = lv_color_hex(0x4456c6);
+		style0_cont_setting_language->body.border.width = 0;
+		lv_cont_set_style(para->ui.cont_setting_language, LV_CONT_STYLE_MAIN, style0_cont_setting_language);
 
-		lv_style_copy(&style0_cont_setting_factory, &lv_style_pretty);
-		style0_cont_setting_factory.body.main_color = lv_color_hex(0x00007f);
-		style0_cont_setting_factory.body.grad_color = lv_color_hex(0x00007f);
-		style0_cont_setting_factory.body.border.color = lv_color_hex(0xffffff);
-		style0_cont_setting_factory.body.border.width = 4;
-		lv_cont_set_style(para->ui.cont_setting_factory, LV_CONT_STYLE_MAIN, &style0_cont_setting_factory);
+		style0_cont_setting_factory->body.main_color = lv_color_hex(0x00007f);
+		style0_cont_setting_factory->body.grad_color = lv_color_hex(0x00007f);
+		style0_cont_setting_factory->body.border.color = lv_color_hex(0xffffff);
+		style0_cont_setting_factory->body.border.width = 4;
+		lv_cont_set_style(para->ui.cont_setting_factory, LV_CONT_STYLE_MAIN, style0_cont_setting_factory);
 
-		lv_style_copy(&style0_cont_upgrade, &lv_style_pretty);
-		style0_cont_upgrade.body.main_color = lv_color_hex(0x4456c6);
-		style0_cont_upgrade.body.grad_color = lv_color_hex(0x4456c6);
-		style0_cont_upgrade.body.border.color = lv_color_hex(0x4456c6);
-		style0_cont_upgrade.body.border.width = 0;
-		lv_cont_set_style(para->ui.cont_upgrade, LV_CONT_STYLE_MAIN, &style0_cont_upgrade);
+		style0_cont_upgrade->body.grad_color = lv_color_hex(0x4456c6);
+		style0_cont_upgrade->body.border.color = lv_color_hex(0x4456c6);
+		style0_cont_upgrade->body.border.width = 0;
+		lv_cont_set_style(para->ui.cont_upgrade, LV_CONT_STYLE_MAIN, style0_cont_upgrade);
 		break;
 	case Setting_Focus_upgrade:
         app_info("Setting_Focus_upgrade.......\n");
-		lv_style_copy(&style0_cont_setting_language, &lv_style_pretty);
-		style0_cont_setting_language.body.main_color = lv_color_hex(0x4456c6);
-		style0_cont_setting_language.body.grad_color = lv_color_hex(0x4456c6);
-		style0_cont_setting_language.body.border.color = lv_color_hex(0x4456c6);
-		style0_cont_setting_language.body.border.width = 0;
-		lv_cont_set_style(para->ui.cont_setting_language, LV_CONT_STYLE_MAIN, &style0_cont_setting_language);
+		style0_cont_setting_language->body.main_color = lv_color_hex(0x4456c6);
+		style0_cont_setting_language->body.grad_color = lv_color_hex(0x4456c6);
+		style0_cont_setting_language->body.border.color = lv_color_hex(0x4456c6);
+		style0_cont_setting_language->body.border.width = 0;
+		lv_cont_set_style(para->ui.cont_setting_language, LV_CONT_STYLE_MAIN, style0_cont_setting_language);
 
-		lv_style_copy(&style0_cont_setting_factory, &lv_style_pretty);
-		style0_cont_setting_factory.body.main_color = lv_color_hex(0x4456c6);
-		style0_cont_setting_factory.body.grad_color = lv_color_hex(0x4456c6);
-		style0_cont_setting_factory.body.border.color = lv_color_hex(0x4456c6);
-		style0_cont_setting_factory.body.border.width = 0;
-		lv_cont_set_style(para->ui.cont_setting_factory, LV_CONT_STYLE_MAIN, &style0_cont_setting_factory);
+		style0_cont_setting_factory->body.main_color = lv_color_hex(0x4456c6);
+		style0_cont_setting_factory->body.grad_color = lv_color_hex(0x4456c6);
+		style0_cont_setting_factory->body.border.color = lv_color_hex(0x4456c6);
+		style0_cont_setting_factory->body.border.width = 0;
+		lv_cont_set_style(para->ui.cont_setting_factory, LV_CONT_STYLE_MAIN, style0_cont_setting_factory);
 
-		lv_style_copy(&style0_cont_upgrade, &lv_style_pretty);
-		style0_cont_upgrade.body.main_color = lv_color_hex(0x00007f);
-		style0_cont_upgrade.body.grad_color = lv_color_hex(0x00007f);
-		style0_cont_upgrade.body.border.color = lv_color_hex(0xffffff);
-		style0_cont_upgrade.body.border.width = 4;
-		lv_cont_set_style(para->ui.cont_upgrade, LV_CONT_STYLE_MAIN, &style0_cont_upgrade);
+		style0_cont_upgrade->body.main_color = lv_color_hex(0x00007f);
+		style0_cont_upgrade->body.grad_color = lv_color_hex(0x00007f);
+		style0_cont_upgrade->body.border.color = lv_color_hex(0xffffff);
+		style0_cont_upgrade->body.border.width = 4;
+		lv_cont_set_style(para->ui.cont_upgrade, LV_CONT_STYLE_MAIN, style0_cont_upgrade);
 		break;
 	default:
 		app_err("........");
@@ -189,7 +179,12 @@ static int setting_create(void)
 	para->ui.parent = lv_scr_act();
 	setting_ui_create(&para->ui);
 	setting_ue_create(para);
+    setting_ui_t *setting_ui = &para->ui;
 
+    style0_cont_setting_language = lv_cont_get_style(setting_ui->cont_setting_language, 0);
+    style0_cont_setting_factory = lv_cont_get_style(setting_ui->cont_setting_factory, 0);
+    style0_cont_upgrade = lv_cont_get_style(setting_ui->cont_upgrade, 0);
+    
 	key_callback_register(LV_KEY_1, key_confirm_callback);
 	key_callback_register(LV_KEY_2, key_cancel_callback);
 	key_callback_register(LV_KEY_3, key_up_callback);
