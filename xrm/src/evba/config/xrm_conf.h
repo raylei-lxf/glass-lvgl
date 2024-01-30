@@ -29,6 +29,8 @@ typedef enum
     WINDOW_TIP,
     WINDOW_TEST,
     WINDOW_VERIFY,
+    WINDOW_PHOTO_LIST,
+    WINDOW_VIDEO_LIST,    
     WINDOW_MAX
 } window_id_t;
 

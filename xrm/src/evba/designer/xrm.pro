@@ -17,6 +17,12 @@
         },
         {
             "name": "music.lvgl"
+        },
+        {
+            "name": "video_list.lvgl"
+        },
+        {
+            "name": "photo_list.lvgl"
         }
     ],
     "fonts": [
@@ -152,7 +158,7 @@
     ],
     "lvgl": {
         "name": "xrm",
-        "path": "//192.168.184.129/raylei/work/tina-t133/package/gui/littlevgl/xrm/src/evba/designer",
+        "path": "E:/T133/03_AWEI/littlevgl_0115/littlevgl/xrm/src/evba/designer",
         "resolution": {
             "height": 360,
             "width": 480

@@ -94,9 +94,9 @@ static void key_confirm_callback(void)
 {
 	app_info("......guangbiao = %d\n", guangbiao);
 	if (guangbiao == FOCUS_PLAYER) {
-    	switch_window(WINDOW_HOME, WINDOW_PLAYER);
+    	switch_window(WINDOW_HOME, WINDOW_VIDEO_LIST);
 	} else if (guangbiao == FOCUS_PHOTO) {
-		switch_window(WINDOW_HOME, WINDOW_PHOTO);
+		switch_window(WINDOW_HOME, WINDOW_PHOTO_LIST);
 	} else if (guangbiao == FOCUS_MUSIC) {
 		switch_window(WINDOW_HOME, WINDOW_MUSIC);
 	} else if (guangbiao == FOCUS_FILE) {
