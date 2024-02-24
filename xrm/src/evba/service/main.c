@@ -383,7 +383,6 @@ static void key_menu_callback(void)
 
 }
 
-
 int main(int argc, char **argv)
 {
     (void)argc;    /*Unused*/
@@ -408,7 +407,7 @@ int main(int argc, char **argv)
     lv_dev_init();
     window_head_init();
     t113_play = tplayer_pthread_create();
-    tplayer_init(t113_play, CEDARX_PLAYER);
+	tplayer_init(t113_play, CEDARX_PLAYER);
 	//fbdev_set_brightness(0);
 
     REGISTER_WINDOW(WINDOW_HOME);
@@ -436,7 +435,7 @@ int main(int argc, char **argv)
 
 	window_task_id = lv_task_create(window_task, 15, LV_TASK_PRIO_MID, NULL);
 	//ui_lcd_task_id = lv_task_create(lcd_state_task, 50, LV_TASK_PRIO_MID, NULL);
-	key_task_id = lv_task_create(key_task, 15, LV_TASK_PRIO_MID, NULL);
+	key_task_id = lv_task_create(key_task, 10, LV_TASK_PRIO_MID, NULL);
 	//lcd_mode_set(LCD_STA_DOING, LCD_BRIGHT_REMAIN_TIME);
 	//init_watch_dog(1);
 		
@@ -545,8 +544,6 @@ void lcd_state_task(lv_task_t * param)
 #define KEY_NUM			5
 static key_callback  key_func[KEY_NUM] = {NULL};
 
-
-
 void key_callback_register(lv_key_nj_t key_num, key_callback func)
 {
 	if(key_num < KEY_NUM)
@@ -564,40 +561,66 @@ void key_callback_unregister(void)
 	}
 }
 
+#define KEY_STATE_CHECK_PR			0x00
+#define KEY_STATE_PRESSING			0x01
+#define KEY_STATE_WAIT_REL			0x02
+#define KEY_STATE_RELEASE			0x03
+
 static int key_state = LV_INDEV_STATE_REL;
+static int key_state_next = KEY_STATE_CHECK_PR;
+static int key_value = LV_KEY_0;
+static struct timespec key_start;
 
 void key_task(lv_task_t * param)
  {
- 
+
 	struct packet_jiemian *jm = get_machine_data();
-	lv_indev_data_t key_data;
+	lv_indev_data_t key_data ;
+	uint32 key_time = 0;
+
 
 	bool ret = lv_indev_read(key_dev, &key_data);
-	if(key_data.key < KEY_NUM && ret)
-	{
-		app_info("key_data.key %d %d %d\n", key_data.key, ret, key_data.state);
-		switch(key_state)
-		{
-			case LV_INDEV_STATE_REL:
-				app_info("[11111]\n");
-				if(key_data.state == LV_INDEV_STATE_PR && key_func[key_data.key])
-				{
-					app_info("\n");
-					key_func[key_data.key]();
-				}
-				key_state = LV_INDEV_STATE_PR;
-				break;
-			case LV_INDEV_STATE_PR:
-				if(key_data.state == LV_INDEV_STATE_REL)
-				{
-					key_state = LV_INDEV_STATE_REL;
-				}
-			break;
-			default:break;
-				
-		}		
-	}
 
+	//app_info("%d %d \n", key_data.key, key_data.state);
+	switch(key_state_next){
+		case KEY_STATE_CHECK_PR:
+			//检测按下标志
+			if(key_data.state == LV_INDEV_STATE_PR){				
+				get_diff_time(&key_start, 1);
+				key_state_next++;
+				key_value = key_data.key;
+				
+			}
+			break;
+		case KEY_STATE_PRESSING:					
+			key_state_next++;
+			
+			break;
+		case KEY_STATE_WAIT_REL:
+			//等待释放
+			if(key_data.state == LV_INDEV_STATE_REL){	
+				key_state_next = KEY_STATE_RELEASE;
+			}
+			break;
+		case KEY_STATE_RELEASE:
+			//按键释放
+			key_state_next = KEY_STATE_CHECK_PR;
+			
+			key_time = (uint32)(get_diff_time(&key_start, 0)*1000.0);
+			app_info("key_time = %d\n", key_time);
+			if(key_time > 3000 && key_value == LV_KEY_0)
+			{
+				power_off_set(0);
+				break;
+			}
+			if(key_func[key_value])
+			{
+				app_info("\n");
+				key_func[key_value]();
+			}
+			break;
+		default: key_state_next = KEY_STATE_CHECK_PR;	break;
+	}
  }
 
  

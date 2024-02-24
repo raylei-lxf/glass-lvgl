@@ -28,6 +28,7 @@ static pthread_t key_id;
 uint32_t last_key_value;
 lv_indev_state_t last_key_state = LV_INDEV_STATE_REL;
 uint32_t last_key_num = 0;
+int debug = 0;
 
 #define SET_POWER_CMD            _IO(0xEF, 3)
 
@@ -57,6 +58,7 @@ void *keydev_thread(void * data)
 					printf("input info:(%d, %d, %d)\n", in.code, in.type, in.value);
 					last_key_value = in.value;
 					last_key_num = in.code;
+					debug = 1;
 
 				}
 				pthread_mutex_unlock(&keydev_mutex);
@@ -80,17 +82,11 @@ void *power_thread(void * data)
 		}
 
 		pthread_mutex_lock(&keydev_mutex);
-		if(key_value == 0)
-		{
-			last_key_value = 0;
-			last_key_num = 116;
-		}
-		if(key_value == 1)
-		{
-			last_key_value = 1;
-			last_key_num = 116;
+		last_key_value = key_value;
+		last_key_num = 116;
 			//power_off_set(0);
-		}
+
+		debug = 1;
 		printf("power input info:(%d, %d, %d)\n", last_key_num, 0, last_key_value);
 		pthread_mutex_unlock(&keydev_mutex);
 	}
@@ -175,22 +171,32 @@ uint32_t key_switch(uint32_t in)
 	return key;
 }
 
+int last_statue = 0;
 
 bool keydev_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
     (void) indev_drv;      /*Unused*/
+	bool ret = 0;
 
 	pthread_mutex_lock(&keydev_mutex);
     data->state = last_key_value == 0 ? LV_INDEV_STATE_REL:LV_INDEV_STATE_PR;
     data->key = key_switch(last_key_num);
-	last_key_num = 0;
 	
-	//printf("key=%d, state=%d\n", data->key, data->state);
+	if(last_statue != data->state)
+	{
+		ret = true;
+		printf("key=%d, state=%d\n", data->key, data->state);
+	}else{
+		ret = false;
+	}
+	
+	last_statue = data->state;
+
 	pthread_mutex_unlock(&keydev_mutex);
 
 	if(data->key < LV_KEY_5)
 	{
-		return true;
+		return ret;
 	}
 
     return false;
