@@ -10,6 +10,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "debug.h"
+#include "player_int.h"
 
 /******************************************************************************
 *    datas
@@ -27,15 +28,20 @@ typedef struct
 static video_list_para_t *para = NULL;
 
 void *video_img_srcxz[2] = {NULL};
+extern player_t *t113_play;
 /******************************************************************************
 *    functions
 ******************************************************************************/
+static int video_list_show(void);
+static int video_list_hide(void);
 
 #define MAX_VIDEO 100
-
+static int is_playing = 0;
 static int m_video_foucs = 0;
 static int video_count = 0;
 static char* video_Paths[MAX_VIDEO];
+
+extern char player_name[512];
 
 int get_video_list(void)
 {
@@ -137,6 +143,9 @@ void video_set_list_focus(lv_obj_t *list, int index)
 	lv_img_set_src(focus_img, video_img_srcxz[1]);
     lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
     lv_list_set_btn_selected(list, focus_btn);
+
+    sprintf(player_name, "%s%s", "/mnt/app/", video_Paths[index]);
+    app_info("player_name = %s\n", player_name);
 }
 
 static void btn_back_home_event_cb(lv_obj_t * btn, lv_event_t event)
@@ -161,12 +170,30 @@ static void video_list_ue_destory(video_list_para_t *para)
 
 static void video_key_confire_callback(void)
 {
-    
+    // switch_window(WINDOW_VIDEO_LIST, WINDOW_PLAYER);
+    if (t113_play != NULL && access(player_name , F_OK) != -1) {
+		app_info("..........%s ", player_name);
+        // video_list_hide();
+		system("dd if=/dev/zero of=/dev/fb0");
+		tplayer_play_url(t113_play, player_name);
+		tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
+		tplayer_play(t113_play);
+        is_playing = 1;
+	}
 }
 
 static void video_key_canel_callback(void)
 {
-    switch_window(WINDOW_VIDEO_LIST, WINDOW_HOME);
+    app_info("is_playing = %d\n", is_playing);
+    if (is_playing == 0) {
+        switch_window(WINDOW_VIDEO_LIST, WINDOW_HOME);
+    } else {
+        is_playing = 0;
+        // tplayer_stop(t113_play);
+        // tplayer_pause(t113_play);
+		system("dd if=/dev/zero of=/dev/fb0");
+        video_list_show();
+    }
 }
 
 static void video_key_left_callback(void)
@@ -224,6 +251,7 @@ static int video_list_create(void)
         video_set_list_focus(ui->list_video, m_video_foucs);
     }
 
+    tplayer_init(t113_play, CEDARX_PLAYER);
     key_callback_register(LV_KEY_1, video_key_confire_callback);
     key_callback_register(LV_KEY_2, video_key_canel_callback);
 
@@ -286,3 +314,4 @@ void REGISTER_WINDOW_VIDEO_LIST(void)
 {
 	register_window(&video_list_window);
 }
+

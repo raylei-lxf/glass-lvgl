@@ -4,7 +4,12 @@
 #include "ui_photo.h"
 #include "ui_resource.h"
 #include "public.h"
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <string.h>
+#include <ctype.h>
+#include "debug.h"
 
 /******************************************************************************
 *    datas
@@ -21,7 +26,9 @@ typedef struct
 } photo_para_t;
 static photo_para_t *para = NULL;
 
-
+char photo_name[512] = { 0 };
+char photo_play_list[100][512] = { 0 };
+int photo_index = 0;
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -45,6 +52,41 @@ static void photo_ue_destory(photo_para_t *para)
 	return;
 }
 
+static void photo_key_confire_callback(void)
+{
+    
+}
+
+static void photo_key_canel_callback(void)
+{
+    switch_window(WINDOW_PHOTO, WINDOW_PHOTO_LIST);
+}
+
+void *photo_play_srcxz[1] = {NULL};
+
+static void photo_play_load_image(void) 
+{
+    photo_ui_t *ui = &para->ui;
+
+	photo_play_srcxz[0] = (void *)mal_load_image(photo_name);
+}
+
+
+static void photo_play_unload_image(void)
+{
+    mal_unload_image(photo_play_srcxz[0]);
+}
+
+static void photo_key_left_callback(void)
+{
+    
+}
+
+static void photo_key_right_callback(void)
+{
+
+}
+
 static int photo_create(void)
 {
 	para = (photo_para_t *)malloc(sizeof(photo_para_t));
@@ -57,6 +99,22 @@ static int photo_create(void)
 	photo_ui_create(&para->ui);
 	photo_ue_create(para);
 
+    lv_obj_t *tip = para->ui.img_photo_show;
+    lv_obj_set_top(tip, true);
+
+    key_callback_register(LV_KEY_1, photo_key_confire_callback);
+    key_callback_register(LV_KEY_2, photo_key_canel_callback);
+    key_callback_register(LV_KEY_3, photo_key_left_callback);
+    key_callback_register(LV_KEY_4, photo_key_right_callback);
+
+    app_info("photo create......., photo_name = %s\n", photo_name);
+    if (access(photo_name, F_OK) != -1) {
+        photo_play_load_image();
+        lv_obj_t *photo_play = para->ui.img_photo;
+        lv_img_set_src(photo_play, photo_play_srcxz[0]);
+        // lv_obj_set_hidden(photo_play, false);
+    }
+    
 	return 0;
 }
 
@@ -66,6 +124,7 @@ static int photo_destory(void)
 	photo_ui_destory(&para->ui);
 	free(para);
 	para = NULL;
+    photo_play_unload_image();
 
 	return 0;
 }

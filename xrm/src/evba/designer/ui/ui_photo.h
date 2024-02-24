@@ -21,6 +21,7 @@ typedef struct
 	lv_obj_t *img_photo_show;
 	lv_obj_t *img_photo_ing;
 	lv_obj_t *img_photo_line;
+	lv_obj_t *img_photo;
 } photo_ui_t;
 
 

@@ -54,8 +54,7 @@ static void key_right_callback(void)
 
 static void key_back_callback(void)
 {
-
-    switch_window(WINDOW_PLAYER, WINDOW_HOME);
+    switch_window(WINDOW_PLAYER, WINDOW_VIDEO_LIST);
 }
 
 static void player_ue_destory(player_para_t *para)
@@ -67,6 +66,8 @@ static void player_ue_destory(player_para_t *para)
 #define MAX_FILES 100
 static int fileCount = 0;
 static char* filePaths[MAX_FILES];
+
+extern char player_name[512] = { 0 };
 
 int get_mp4(void)
 {
@@ -108,7 +109,7 @@ int get_mp4(void)
 
 static void key_confirm_callback(void)
 {
-
+	#if 0
     if (fileCount > 0 && t113_play != NULL) {
 		system("dd if=/dev/zero of=/dev/fb0");
         app_info("..........%s ", filePaths[0]);
@@ -117,6 +118,14 @@ static void key_confirm_callback(void)
 		tplayer_play(t113_play);
 
     }
+	#endif
+	if (t113_play != NULL && access(player_name , F_OK) != -1) {
+		app_info("..........%s ", player_name);
+		system("dd if=/dev/zero of=/dev/fb0");
+		tplayer_play_url(t113_play, player_name);
+		tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
+		tplayer_play(t113_play);
+	}
 	app_info("......\n");
 }
 
@@ -134,19 +143,29 @@ static int player_create(void)
 	player_ue_create(para);
 
 	
-    get_mp4();
-	if(fileCount > 0)
-	{
-		ui_set_lable(para->ui.label_1, filePaths[0]);
+    // get_mp4();
+	// if(fileCount > 0)
+	// {
+	// 	ui_set_lable(para->ui.label_1, filePaths[0]);
+	// }
+	// tplayer_init(t113_play, CEDARX_PLAYER);
+
+
+    #if 1 
+	app_info("..........%s ", player_name);
+	if (t113_play != NULL /*&& access(player_name , F_OK) != -1*/) {
+		app_info("..........%s ", player_name);
+		system("dd if=/dev/zero of=/dev/fb0");
+		tplayer_play_url(t113_play, player_name);
+		tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
+		tplayer_play(t113_play);
 	}
-	 tplayer_init(t113_play, CEDARX_PLAYER);
-
-
+    #endif
     key_callback_register(LV_KEY_2, key_back_callback);
-	key_callback_register(LV_KEY_1, key_confirm_callback);
+	// key_callback_register(LV_KEY_1, key_confirm_callback);
 
-	key_callback_register(LV_KEY_3, key_left_callback);
-	key_callback_register(LV_KEY_4, key_right_callback);
+	// key_callback_register(LV_KEY_3, key_left_callback);
+	// key_callback_register(LV_KEY_4, key_right_callback);
 
 	return 0;
 }
@@ -163,8 +182,12 @@ static int player_destory(void)
         free(filePaths[i]);
     }
 	fileCount = 0;
-	tplayer_pause(t113_play);
-	tplayer_exit(t113_play);
+    #if 0
+    if (t113_play != NULL) {
+	    tplayer_pause(t113_play);
+	    tplayer_exit(t113_play);
+    }
+    #endif
 	return 0;
 }
 

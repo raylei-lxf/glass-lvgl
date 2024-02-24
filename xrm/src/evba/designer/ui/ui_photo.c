@@ -10,6 +10,8 @@
 *    datas
 ******************************************************************************/
 static lv_style_t style0_cont_main;
+static lv_style_t style0_img_photo_show;
+static lv_style_t style0_img_photo;
 
 static void *img_photo_show_photo_playering_baground_png = NULL;
 static void *img_photo_ing_photo_playing_png = NULL;
@@ -38,12 +40,15 @@ void photo_ui_create(photo_ui_t *ui)
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_IMG
+	lv_style_copy(&style0_img_photo_show, &lv_style_plain);
+
 	ui->img_photo_show = lv_img_create(ui->cont_main, NULL);
-	lv_obj_set_pos(ui->img_photo_show, 397, 13);
+	lv_obj_set_pos(ui->img_photo_show, 396, 12);
 	lv_obj_set_size(ui->img_photo_show, 71, 35);
 	img_photo_show_photo_playering_baground_png = (void *)mal_load_image(LV_IMAGE_PATH"photo_playering_baground.png");
 	lv_img_set_src(ui->img_photo_show, img_photo_show_photo_playering_baground_png);
 
+	lv_img_set_style(ui->img_photo_show, LV_IMG_STYLE_MAIN, &style0_img_photo_show);
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_IMG
@@ -62,6 +67,15 @@ void photo_ui_create(photo_ui_t *ui)
 	img_photo_line_photo_playing_line_png = (void *)mal_load_image(LV_IMAGE_PATH"photo_playing_line.png");
 	lv_img_set_src(ui->img_photo_line, img_photo_line_photo_playing_line_png);
 
+#endif // LV_USE_IMG
+
+#ifdef LV_USE_IMG
+	lv_style_copy(&style0_img_photo, &lv_style_plain);
+
+	ui->img_photo = lv_img_create(ui->cont_main, NULL);
+	lv_obj_set_pos(ui->img_photo, 0, 0);
+	lv_obj_set_size(ui->img_photo, 480, 360);
+	lv_img_set_style(ui->img_photo, LV_IMG_STYLE_MAIN, &style0_img_photo);
 #endif // LV_USE_IMG
 
 }

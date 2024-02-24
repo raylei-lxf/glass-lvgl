@@ -32,14 +32,18 @@ void *photo_img_srcxz[2] = {NULL};
 ******************************************************************************/
 #define MAX_PHOTO 100
 
-static int m_photo_foucs = 0;
-static int photo_count = 0;
-static char* photo_Paths[MAX_PHOTO];
+int m_photo_foucs = 0;
+int photo_count = 0;
+char* photo_Paths[MAX_PHOTO] = { 0 };
+
+extern char photo_name[512];
+extern char photo_play_list[100][512];
+extern int photo_index;
 
 int get_photo_list(void)
 {
     const char* directory = "/mnt/app";  
-    const char* formats[] = { ".jpg" }; 
+    const char* formats[] = { ".jpg", ".png" }; 
     
     DIR* dir = opendir(directory);
     if (dir == NULL) {
@@ -136,6 +140,10 @@ void photo_set_list_focus(lv_obj_t *list, int index)
 	lv_img_set_src(focus_img, photo_img_srcxz[1]);
     lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
     lv_list_set_btn_selected(list, focus_btn);
+
+    photo_index = index;
+    memset(photo_name, 0, sizeof(photo_name));
+    sprintf(photo_name, "%s%s", "/mnt/app/", photo_Paths[index]);
 }
 
 static void btn_back_home_event_cb(lv_obj_t * btn, lv_event_t event)
@@ -160,7 +168,8 @@ static void photo_list_ue_destory(photo_list_para_t *para)
 
 static void photo_key_confire_callback(void)
 {
-    
+    app_info("photo_key_confire......\n");
+    switch_window(WINDOW_PHOTO_LIST, WINDOW_PHOTO);
 }
 
 static void photo_key_canel_callback(void)
@@ -248,7 +257,6 @@ static int photo_list_destory(void)
 	photo_count = 0;
 	m_photo_foucs = 0;
     key_callback_unregister();
-
 
 	return 0;
 }
