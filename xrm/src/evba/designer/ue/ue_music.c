@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include "debug.h"
 
+#include "player_int.h"
 
 /******************************************************************************
 *    datas
@@ -28,6 +29,9 @@ typedef struct
 static music_para_t *para = NULL;
 static *music_img_src[2] = { NULL };
 static *music_img_srcxz[2] = { NULL };
+
+/**********other***************/
+extern player_t *t113_play;
 
 /******************************************************************************
 *    functions
@@ -70,7 +74,8 @@ static void music_unload_image(void)
 static int m_foucs_music = 0;
 static int music_Count = 0;
 static char* music_Paths[MAX_MUSIC];
-
+static char music_name[512] = { 0 };
+static int music_is_playing = 0;
 
 int get_music_list(void)
 {
@@ -108,7 +113,7 @@ int get_music_list(void)
                     music_Count++;
                     if (music_Count >= MAX_MUSIC) {
                         app_info("file max\n");
-                        break;
+             tplayer_init(t113_play, CEDARX_PLAYER);           break;
                     }
                 }
             }
@@ -146,6 +151,7 @@ void music_set_list_unfocus(lv_obj_t *list, int index)
     }
     focus_img = lv_list_get_btn_img(focus_btn);
     lv_img_set_src(focus_img, music_img_srcxz[0]);
+    
 }
 
 void music_set_list_focus(lv_obj_t *list, int index)
@@ -162,16 +168,29 @@ void music_set_list_focus(lv_obj_t *list, int index)
     lv_img_set_src(focus_img, music_img_srcxz[1]);
     lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
     lv_list_set_btn_selected(list, focus_btn);
+
+    sprintf(music_name, "%s%s", "/mnt/app/", music_Paths[index]);
+    app_info("music_name = %s\n", music_name);
 }
 
 static music_key_confire_callback(void)
 {
-
+    if (t113_play != NULL && access(music_name, F_OK) != -1) {
+        app_info("................%s\n", music_name);
+        tplayer_play_url(t113_play, music_name);
+        tplayer_play(t113_play);
+        music_is_playing = 1;
+    }
 }
 
 static music_key_canel_callback(void)
 {
-	switch_window(WINDOW_MUSIC, WINDOW_HOME);
+    app_info("music_is_playing = %d\n", music_is_playing);
+    if (music_is_playing == 0) {
+    	switch_window(WINDOW_MUSIC, WINDOW_HOME);
+    } else {
+        music_is_playing = 0;
+    }
 }
 
 static music_key_left_callback(void)
@@ -230,6 +249,7 @@ static int music_create(void)
         music_set_list_focus(ui->list_mp3, m_foucs_music);
     }
 
+    // tplayer_init(t113_play, CEDARX_PLAYER);
 	key_callback_register(LV_KEY_1, music_key_confire_callback);
 	key_callback_register(LV_KEY_2, music_key_canel_callback);
 

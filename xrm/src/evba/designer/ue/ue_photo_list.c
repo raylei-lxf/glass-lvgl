@@ -39,6 +39,7 @@ char* photo_Paths[MAX_PHOTO] = { 0 };
 extern char photo_name[512];
 extern char photo_play_list[100][512];
 extern int photo_index;
+extern int photo_max;
 
 int get_photo_list(void)
 {
@@ -83,9 +84,19 @@ int get_photo_list(void)
         }
     }
     closedir(dir);
-    for (int i = 0; i < photo_count; i++) {
-        app_info("files: %s\n", photo_Paths[i]);
+
+    for (int i = 0; i < MAX_PHOTO; i++) {
+        memset(photo_play_list[i], 0, sizeof(photo_play_list[i]));
     }
+
+    for (int i = 0; i < photo_count; i++) {
+        memcpy(photo_play_list[i], photo_Paths[i], strlen(photo_Paths[i]));
+        app_info("files: %s\n", photo_Paths[i]);
+        app_info("photo_play_list[i] = %s\n", photo_play_list[i]);
+    }
+
+    photo_max = photo_count;
+
     return 0;
 }
 
@@ -141,7 +152,6 @@ void photo_set_list_focus(lv_obj_t *list, int index)
     lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
     lv_list_set_btn_selected(list, focus_btn);
 
-    photo_index = index;
     memset(photo_name, 0, sizeof(photo_name));
     sprintf(photo_name, "%s%s", "/mnt/app/", photo_Paths[index]);
 }

@@ -408,6 +408,7 @@ int main(int argc, char **argv)
     lv_dev_init();
     window_head_init();
     t113_play = tplayer_pthread_create();
+    tplayer_init(t113_play, CEDARX_PLAYER);
 	//fbdev_set_brightness(0);
 
     REGISTER_WINDOW(WINDOW_HOME);
@@ -578,6 +579,7 @@ void key_task(lv_task_t * param)
 		switch(key_state)
 		{
 			case LV_INDEV_STATE_REL:
+				app_info("[11111]\n");
 				if(key_data.state == LV_INDEV_STATE_PR && key_func[key_data.key])
 				{
 					app_info("\n");

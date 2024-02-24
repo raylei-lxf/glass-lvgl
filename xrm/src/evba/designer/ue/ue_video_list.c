@@ -172,7 +172,7 @@ static void video_key_confire_callback(void)
 {
     // switch_window(WINDOW_VIDEO_LIST, WINDOW_PLAYER);
     if (t113_play != NULL && access(player_name , F_OK) != -1) {
-		app_info("..........%s ", player_name);
+		app_info("..........%s\n", player_name);
         // video_list_hide();
 		system("dd if=/dev/zero of=/dev/fb0");
 		tplayer_play_url(t113_play, player_name);
@@ -251,7 +251,7 @@ static int video_list_create(void)
         video_set_list_focus(ui->list_video, m_video_foucs);
     }
 
-    tplayer_init(t113_play, CEDARX_PLAYER);
+    // tplayer_init(t113_play, CEDARX_PLAYER);
     key_callback_register(LV_KEY_1, video_key_confire_callback);
     key_callback_register(LV_KEY_2, video_key_canel_callback);
 

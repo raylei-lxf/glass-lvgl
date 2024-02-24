@@ -29,6 +29,7 @@ static photo_para_t *para = NULL;
 char photo_name[512] = { 0 };
 char photo_play_list[100][512] = { 0 };
 int photo_index = 0;
+int photo_max = 0;
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -69,6 +70,9 @@ static void photo_play_load_image(void)
     photo_ui_t *ui = &para->ui;
 
 	photo_play_srcxz[0] = (void *)mal_load_image(photo_name);
+
+    lv_obj_t *photo_play = para->ui.img_photo;
+    lv_img_set_src(photo_play, photo_play_srcxz[0]);
 }
 
 
@@ -79,12 +83,30 @@ static void photo_play_unload_image(void)
 
 static void photo_key_left_callback(void)
 {
-    
+    photo_play_unload_image();
+    photo_index--;
+    if (photo_index < 0) {
+        photo_index = photo_max - 1;
+    } else if (photo_index > photo_max) {
+        photo_index = 0;
+    }
+    memset(photo_name, 0, sizeof(photo_name));
+    sprintf(photo_name, "%s%s", "/mnt/app/", photo_play_list[photo_index]);
+    photo_play_load_image();
 }
 
 static void photo_key_right_callback(void)
 {
-
+    photo_play_unload_image();
+    photo_index++;
+    if (photo_index < 0) {
+        photo_index = photo_max - 1;
+    } else if (photo_index > photo_max) {
+        photo_index = 0;
+    }
+    memset(photo_name, 0, sizeof(photo_name));
+    sprintf(photo_name, "%s%s", "/mnt/app/", photo_play_list[photo_index]);
+    photo_play_load_image();
 }
 
 static int photo_create(void)
@@ -110,10 +132,15 @@ static int photo_create(void)
     app_info("photo create......., photo_name = %s\n", photo_name);
     if (access(photo_name, F_OK) != -1) {
         photo_play_load_image();
-        lv_obj_t *photo_play = para->ui.img_photo;
-        lv_img_set_src(photo_play, photo_play_srcxz[0]);
+        // lv_obj_t *photo_play = para->ui.img_photo;
+        // lv_img_set_src(photo_play, photo_play_srcxz[0]);
         // lv_obj_set_hidden(photo_play, false);
     }
+    
+    for (int i = 0; i < photo_max; i++) {
+        app_info("photo_play_list[%d] = %s\n", i, photo_play_list[i]);
+    }
+    app_info("photo_index = %d\n", photo_index);
     
 	return 0;
 }
