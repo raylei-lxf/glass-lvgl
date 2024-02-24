@@ -17,6 +17,8 @@
 /******************************************************************************
 *    datas
 ******************************************************************************/
+LV_FONT_DECLARE(chinese)
+
 typedef struct
 {
 	uint8_t id;
@@ -182,6 +184,23 @@ static int home_create(void)
 	home_ui_create(&para->ui);
 	home_ue_create(para);
 
+    static lv_style_t style_cn;
+    lv_style_copy(&style_cn, &lv_style_pretty_color);
+    style_cn.text.font = &chinese;
+    style_cn.text.color = LV_COLOR_BLACK;
+
+    lv_obj_set_style(para->ui.label_player, &style_cn);
+    lv_obj_set_style(para->ui.label_photo, &style_cn);
+    lv_obj_set_style(para->ui.label_music, &style_cn);
+    lv_obj_set_style(para->ui.label_file, &style_cn);
+    lv_obj_set_style(para->ui.label_setting, &style_cn);
+    lv_obj_set_style(para->ui.label_phone, &style_cn);
+    lv_label_set_text(para->ui.label_player, "视频");
+    lv_label_set_text(para->ui.label_photo, "照片");
+    lv_label_set_text(para->ui.label_music, "音乐");
+    lv_label_set_text(para->ui.label_file, "文件");
+    lv_label_set_text(para->ui.label_setting, "设置");
+    lv_label_set_text(para->ui.label_phone, "手机");
 	load_image();
 	
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
