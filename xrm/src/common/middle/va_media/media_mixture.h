@@ -120,6 +120,12 @@ void media_uninit(player_ui_t *player_ui);
 player_ui_t *media_get_player_data(void);
 
 
+//获得图片或视频或音乐文件列表
+media_file_list_t *media_get_file_list(rat_media_type_t fileType);
+
+//更新列表控件内容
+int media_update_file_list(lv_obj_t * list, media_file_list_t	*media_list, lv_event_cb_t event_cb);
+
 //选中列表中的文件
 void media_set_list_focus(lv_obj_t *list, int index);
 
@@ -140,12 +146,6 @@ void media_progressbar_event(lv_obj_t * btn, lv_event_t event);
 
 //显示视频加载状态
 int media_downloading(lv_obj_t * donwnload);
-
-//获得图片或视频或音乐文件列表
-media_file_list_t *media_get_file_list(rat_media_type_t fileType);
-
-//更新列表控件内容
-int media_update_file_list(lv_obj_t * list, media_file_list_t	*media_list, lv_event_cb_t event_cb);
 
 //在文件浏览器中点击的多媒体文件，实现页面跳转和播放
 int media_external_click(rat_media_type_t media_type, char *file_path, DiskInfo_t *DiskInfo);

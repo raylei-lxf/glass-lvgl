@@ -18,16 +18,18 @@
 /*********************
  *      DEFINES
  *********************/
-int keydev_fd;
-pthread_mutex_t keydev_mutex;
-pthread_t keydev_pthread_id;
-pthread_t key_id;
+static int keydev_fd = -1;
+static int power_fd = -1;
+static pthread_mutex_t keydev_mutex;
+static pthread_t keydev_pthread_id;
+static pthread_t power_pthread_id;
+static pthread_t key_id;
 
 uint32_t last_key_value;
 lv_indev_state_t last_key_state = LV_INDEV_STATE_REL;
-
 uint32_t last_key_num = 0;
 
+#define SET_POWER_CMD            _IO(0xEF, 3)
 
 void *keydev_thread(void * data)
 {
@@ -61,6 +63,46 @@ void *keydev_thread(void * data)
 			}
 		}
 	}
+	return NULL;
+}
+
+void *power_thread(void * data)
+{
+
+	char key_value = 0;
+
+	while(1)
+	{
+		ssize_t ret = read(power_fd, &key_value, 1);
+		if(ret < 0)
+		{
+			printf("input error\n");
+		}
+
+		pthread_mutex_lock(&keydev_mutex);
+		if(key_value == 0)
+		{
+			last_key_value = 0;
+			last_key_num = 116;
+		}
+		if(key_value == 1)
+		{
+			last_key_value = 1;
+			last_key_num = 116;
+			//power_off_set(0);
+		}
+		printf("power input info:(%d, %d, %d)\n", last_key_num, 0, last_key_value);
+		pthread_mutex_unlock(&keydev_mutex);
+	}
+	return NULL;
+}
+
+void power_off_set(uint8_t value)
+{
+	if(power_fd > 0)
+	{
+		ioctl(power_fd, SET_POWER_CMD, value);
+	}
 }
 
 void keydev_init(void)
@@ -84,11 +126,25 @@ void keydev_init(void)
 		printf("create thread fail\n");
 		return ;
 	}
+
+	power_fd = open("/dev/glass_power",  O_RDONLY | O_NONBLOCK);
+    if(power_fd == -1) {
+        perror("unable open evdev interface:");
+        return;
+    }
+	
+	ret = pthread_create(&power_pthread_id, NULL, power_thread, NULL);
+	if (ret == -1) {
+		printf("create thread fail\n");
+		return ;
+	}
+
 }
 
 void keydev_uninit(void)
 {
 	pthread_join(keydev_pthread_id, NULL);
+	pthread_join(power_pthread_id, NULL);
 	pthread_mutex_destroy(&keydev_mutex);
 
 	last_key_value = 0;
@@ -96,6 +152,10 @@ void keydev_uninit(void)
 
 	if (keydev_fd != -1){
 		close(keydev_fd);
+	}
+
+	if (power_fd != -1){
+		close(power_fd);
 	}
 }
 
@@ -109,6 +169,7 @@ uint32_t key_switch(uint32_t in)
 		case 29:	key = LV_KEY_3; break;
 		case 115:	key = LV_KEY_2; break;
 		case 114:	key = LV_KEY_1; break;
+		case 116:	key = LV_KEY_0; break;
 		default:	key = LV_KEY_8;	break;
 	}
 	return key;

@@ -56,6 +56,7 @@ bool keydev_read_d(lv_key_data_t * data);
 void keydev_init(void);
 void keydev_uninit(void);
 bool keydev_read(lv_indev_drv_t * drv, lv_indev_data_t * data);
+void power_off_set(uint8_t value);
 
 #endif
 
