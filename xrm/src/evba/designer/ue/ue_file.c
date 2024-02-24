@@ -294,6 +294,7 @@ static int file_create(void)
 
 static int file_destory(void)
 {
+	key_callback_unregister();
 	file_ue_destory(para);
 	file_ui_destory(&para->ui);
 	free(para);
@@ -305,7 +306,6 @@ static int file_destory(void)
     }
 	fileCount = 0;
     m_foucs = 0;
-	key_callback_unregister();
 
 	return 0;
 }

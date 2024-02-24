@@ -254,6 +254,7 @@ static int photo_list_create(void)
 
 static int photo_list_destory(void)
 {
+    key_callback_unregister();
 	photo_list_ue_destory(para);
 	photo_list_ui_destory(&para->ui);
 	free(para);
@@ -266,7 +267,6 @@ static int photo_list_destory(void)
     }
 	photo_count = 0;
 	m_photo_foucs = 0;
-    key_callback_unregister();
 
 	return 0;
 }

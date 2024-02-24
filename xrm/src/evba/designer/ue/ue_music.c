@@ -261,6 +261,7 @@ static int music_create(void)
 
 static int music_destory(void)
 {
+    key_callback_unregister();
 	music_ue_destory(para);
 	music_ui_destory(&para->ui);
 	free(para);
@@ -273,7 +274,6 @@ static int music_destory(void)
     music_Count = 0;
 
     music_unload_image();
-    key_callback_unregister();
 	return 0;
 }
 

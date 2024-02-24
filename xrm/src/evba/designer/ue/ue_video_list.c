@@ -263,6 +263,7 @@ static int video_list_create(void)
 
 static int video_list_destory(void)
 {
+    key_callback_unregister();
 	video_list_ue_destory(para);
 	video_list_ui_destory(&para->ui);
 	free(para);
@@ -275,7 +276,6 @@ static int video_list_destory(void)
     }
 	video_count = 0;
 	m_video_foucs = 0;
-    key_callback_unregister();
 
 	return 0;
 }

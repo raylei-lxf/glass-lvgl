@@ -172,12 +172,12 @@ static int player_create(void)
 
 static int player_destory(void)
 {
+	key_callback_unregister();
 	player_ue_destory(para);
 	player_ui_destory(&para->ui);
 	free(para);
 	para = NULL;
 	
-	key_callback_unregister();
     for (int i = 0; i < fileCount; i++) {
         free(filePaths[i]);
     }

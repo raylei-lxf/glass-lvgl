@@ -147,6 +147,7 @@ static int photo_create(void)
 
 static int photo_destory(void)
 {
+    key_callback_unregister();
 	photo_ue_destory(para);
 	photo_ui_destory(&para->ui);
 	free(para);

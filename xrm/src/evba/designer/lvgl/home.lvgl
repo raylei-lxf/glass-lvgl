@@ -40,9 +40,9 @@
                         "名字name": "label_player",
                         "坐标geometry": {
                             "height": 30,
-                            "width": 93,
-                            "x": 74,
-                            "y": 119
+                            "width": 90,
+                            "x": 60,
+                            "y": 120
                         },
                         "对齐align": "Left",
                         "文本text": "Test",
@@ -171,10 +171,10 @@
                         "可拖动drag": false,
                         "名字name": "label_photo",
                         "坐标geometry": {
-                            "height": 31,
-                            "width": 94,
-                            "x": 225,
-                            "y": 118
+                            "height": 30,
+                            "width": 90,
+                            "x": 208,
+                            "y": 120
                         },
                         "对齐align": "Left",
                         "文本text": "Test",
@@ -193,10 +193,10 @@
                         "可拖动drag": false,
                         "名字name": "label_music",
                         "坐标geometry": {
-                            "height": 31,
-                            "width": 94,
-                            "x": 371,
-                            "y": 119
+                            "height": 30,
+                            "width": 90,
+                            "x": 365,
+                            "y": 120
                         },
                         "对齐align": "Left",
                         "文本text": "Test",
@@ -215,10 +215,10 @@
                         "可拖动drag": false,
                         "名字name": "label_file",
                         "坐标geometry": {
-                            "height": 31,
-                            "width": 94,
-                            "x": 75,
-                            "y": 262
+                            "height": 30,
+                            "width": 90,
+                            "x": 60,
+                            "y": 260
                         },
                         "对齐align": "Left",
                         "文本text": "Test",
@@ -237,10 +237,10 @@
                         "可拖动drag": false,
                         "名字name": "label_setting",
                         "坐标geometry": {
-                            "height": 31,
-                            "width": 94,
-                            "x": 227,
-                            "y": 261
+                            "height": 30,
+                            "width": 90,
+                            "x": 208,
+                            "y": 260
                         },
                         "对齐align": "Left",
                         "文本text": "Test",
@@ -259,9 +259,9 @@
                         "可拖动drag": false,
                         "名字name": "label_phone",
                         "坐标geometry": {
-                            "height": 31,
-                            "width": 94,
-                            "x": 370,
+                            "height": 30,
+                            "width": 90,
+                            "x": 365,
                             "y": 262
                         },
                         "对齐align": "Left",
@@ -439,8 +439,8 @@
                                 "坐标geometry": {
                                     "height": 30,
                                     "width": 145,
-                                    "x": 5,
-                                    "y": 5
+                                    "x": 0,
+                                    "y": 34
                                 },
                                 "对齐align": "Left",
                                 "文本text": "Text",
@@ -516,8 +516,8 @@
                                 "坐标geometry": {
                                     "height": 69,
                                     "width": 145,
-                                    "x": 104,
-                                    "y": 103
+                                    "x": 0,
+                                    "y": 0
                                 },
                                 "对齐align": "Left",
                                 "文本text": "Text",
@@ -550,8 +550,8 @@
                         "坐标geometry": {
                             "height": 174,
                             "width": 300,
-                            "x": 86,
-                            "y": 82
+                            "x": 88,
+                            "y": 122
                         },
                         "布局layout": "Off",
                         "显示visible": false,

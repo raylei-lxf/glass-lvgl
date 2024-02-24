@@ -213,11 +213,11 @@ static int home_create(void)
 
 static int home_destory(void)
 {
+	key_callback_unregister();
 	home_ue_destory(para);
 	home_ui_destory(&para->ui);
 	free(para);
 	para = NULL;
-	key_callback_unregister();
 
 	unload_image();
 	app_info("home_destory ........");

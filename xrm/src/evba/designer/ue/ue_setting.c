@@ -196,12 +196,12 @@ static int setting_create(void)
 
 static int setting_destory(void)
 {
+	key_callback_unregister();
 	setting_ue_destory(para);
 	setting_ui_destory(&para->ui);
 	free(para);
 	para = NULL;
 
-	key_callback_unregister();
 	m_setting_focus = Setting_Focus_Language;
 	return 0;
 }
