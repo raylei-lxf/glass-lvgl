@@ -15,6 +15,11 @@
                             {
                                 "base": "lv_style_pretty",
                                 "body": {
+                                    "border": {
+                                        "color": "#ffffff",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
                                     "grad_color": "#ffffff",
                                     "radius": 0
                                 },
@@ -26,7 +31,7 @@
                         "可拖动drag": false,
                         "名字name": "cont_setting_line",
                         "坐标geometry": {
-                            "height": 5,
+                            "height": 2,
                             "width": 480,
                             "x": 0,
                             "y": 48
@@ -55,7 +60,7 @@
                         "坐标geometry": {
                             "height": 34,
                             "width": 34,
-                            "x": 15,
+                            "x": 22,
                             "y": 8
                         },
                         "显示visible": true,
@@ -72,13 +77,13 @@
                         "可拖动drag": false,
                         "名字name": "label_setting_title",
                         "坐标geometry": {
-                            "height": 36,
-                            "width": 109,
-                            "x": 60,
-                            "y": 8
+                            "height": 33,
+                            "width": 96,
+                            "x": 65,
+                            "y": 9
                         },
                         "对齐align": "Left",
-                        "文本text": "Text",
+                        "文本text": "Setting",
                         "显示visible": true,
                         "模式mode": "Corp",
                         "背景绘制body draw": false,
@@ -280,7 +285,7 @@
                         "坐标geometry": {
                             "height": 43,
                             "width": 465,
-                            "x": 7,
+                            "x": 8,
                             "y": 184
                         },
                         "布局layout": "Off",

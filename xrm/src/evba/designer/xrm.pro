@@ -158,7 +158,7 @@
     ],
     "lvgl": {
         "name": "xrm",
-        "path": "E:/T133/03_AWEI/littlevgl_0115/littlevgl/xrm/src/evba/designer",
+        "path": "E:/T133/03_AWEI/littlevgl/littlevgl/xrm/src/evba/designer",
         "resolution": {
             "height": 360,
             "width": 480

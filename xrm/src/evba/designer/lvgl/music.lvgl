@@ -33,8 +33,8 @@
                         "坐标geometry": {
                             "height": 296,
                             "width": 4,
-                            "x": 224,
-                            "y": 27
+                            "x": 215,
+                            "y": 28
                         },
                         "布局layout": "Off",
                         "显示visible": true,
@@ -47,52 +47,6 @@
                         "锁住locked": false
                     },
                     {
-                        "children": [
-                            {
-                                "class": "lv_img",
-                                "name": "img_music_title",
-                                "widget": "img",
-                                "偏移offset": {
-                                    "X": 0,
-                                    "Y": 0
-                                },
-                                "全局global": true,
-                                "可拖动drag": false,
-                                "名字name": "img_music_title",
-                                "坐标geometry": {
-                                    "height": 27,
-                                    "width": 24,
-                                    "x": 9,
-                                    "y": 9
-                                },
-                                "显示visible": true,
-                                "源图source": "tubiaoyinyue1.png",
-                                "自动大小auto size": true,
-                                "锁住locked": false
-                            },
-                            {
-                                "class": "lv_label",
-                                "name": "label_music_title",
-                                "widget": "label",
-                                "全局global": true,
-                                "动画速度anim speed": 25,
-                                "可拖动drag": false,
-                                "名字name": "label_music_title",
-                                "坐标geometry": {
-                                    "height": 32,
-                                    "width": 114,
-                                    "x": 47,
-                                    "y": 7
-                                },
-                                "对齐align": "Left",
-                                "文本text": "Text",
-                                "显示visible": true,
-                                "模式mode": "Corp",
-                                "背景绘制body draw": false,
-                                "重着色recolor": false,
-                                "锁住locked": false
-                            }
-                        ],
                         "class": "lv_cont",
                         "name": "cont_music_list",
                         "styles": [
@@ -195,7 +149,7 @@
                             "height": 4,
                             "width": 215,
                             "x": 240,
-                            "y": 281
+                            "y": 300
                         },
                         "布局layout": "Off",
                         "显示visible": true,
@@ -218,8 +172,8 @@
                         "坐标geometry": {
                             "height": 21,
                             "width": 48,
-                            "x": 237,
-                            "y": 261
+                            "x": 238,
+                            "y": 278
                         },
                         "对齐align": "Left",
                         "文本text": "00:16",
@@ -240,8 +194,8 @@
                         "坐标geometry": {
                             "height": 23,
                             "width": 47,
-                            "x": 411,
-                            "y": 261
+                            "x": 416,
+                            "y": 280
                         },
                         "对齐align": "Left",
                         "文本text": "02:58",
@@ -267,8 +221,8 @@
                                 "坐标geometry": {
                                     "height": 26,
                                     "width": 28,
-                                    "x": 59,
-                                    "y": 22
+                                    "x": 58,
+                                    "y": 0
                                 },
                                 "显示visible": true,
                                 "源图source": "xunhuanmoshi.png",
@@ -286,8 +240,8 @@
                                 "坐标geometry": {
                                     "height": 29,
                                     "width": 70,
-                                    "x": 115,
-                                    "y": 23
+                                    "x": 150,
+                                    "y": 0
                                 },
                                 "对齐align": "Left",
                                 "文本text": "01/04",
@@ -298,17 +252,428 @@
                                 "锁住locked": false
                             },
                             {
+                                "children": [
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_2",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_2",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 190
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_3",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_3",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 170
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_4",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_4",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 150
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_5",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_5",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 130
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_6",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_6",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 110
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_7",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_7",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 90
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_8",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_8",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 70
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_9",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_9",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 50
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_10",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_10",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 30
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_11",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffff00",
+                                                    "main_color": "#ffff00",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_11",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 10
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_1_1",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_1_1",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 210
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    }
+                                ],
                                 "class": "lv_cont",
-                                "name": "cont_6",
+                                "name": "cont_music_1",
                                 "styles": [
                                     {
                                         "base": "lv_style_pretty",
                                         "body": {
                                             "border": {
-                                                "color": "#ffffff",
+                                                "color": "#4456c6",
                                                 "width": 0
                                             },
-                                            "grad_color": "#ffffff",
+                                            "grad_color": "#4456c6",
+                                            "main_color": "#4456c6",
                                             "radius": 0
                                         },
                                         "type": "LV_CONT_STYLE_MAIN"
@@ -317,12 +682,12 @@
                                 "widget": "cont",
                                 "全局global": true,
                                 "可拖动drag": false,
-                                "名字name": "cont_6",
+                                "名字name": "cont_music_1",
                                 "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 18,
-                                    "y": 195
+                                    "height": 229,
+                                    "width": 39,
+                                    "x": 3,
+                                    "y": 32
                                 },
                                 "布局layout": "Off",
                                 "显示visible": true,
@@ -335,17 +700,428 @@
                                 "锁住locked": false
                             },
                             {
+                                "children": [
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_2",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_2",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 190
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_3",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_3",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 8,
+                                            "y": 170
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_4",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_4",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 150
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_5",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_5",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 130
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_6",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_6",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 110
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_7",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_7",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 90
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_8",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_8",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 70
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_9",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_9",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 50
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_10",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_10",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 30
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_11",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffff00",
+                                                    "main_color": "#ffff00",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_11",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 10
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_2_1",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_2_1",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 210
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    }
+                                ],
                                 "class": "lv_cont",
-                                "name": "cont_7",
+                                "name": "cont_music_2",
                                 "styles": [
                                     {
                                         "base": "lv_style_pretty",
                                         "body": {
                                             "border": {
-                                                "color": "#ffffff",
+                                                "color": "#4456c6",
                                                 "width": 0
                                             },
-                                            "grad_color": "#ffffff",
+                                            "grad_color": "#4456c6",
+                                            "main_color": "#4456c6",
                                             "radius": 0
                                         },
                                         "type": "LV_CONT_STYLE_MAIN"
@@ -354,12 +1130,12 @@
                                 "widget": "cont",
                                 "全局global": true,
                                 "可拖动drag": false,
-                                "名字name": "cont_7",
+                                "名字name": "cont_music_2",
                                 "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 55,
-                                    "y": 194
+                                    "height": 230,
+                                    "width": 39,
+                                    "x": 50,
+                                    "y": 32
                                 },
                                 "布局layout": "Off",
                                 "显示visible": true,
@@ -372,17 +1148,428 @@
                                 "锁住locked": false
                             },
                             {
+                                "children": [
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_2",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_2",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 190
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_3",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_3",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 170
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_4",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_4",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 150
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_5",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_5",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 130
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_6",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_6",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 110
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_7",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_7",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 90
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_8",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_8",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 70
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_9",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_9",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 50
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_10",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_10",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 30
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_11",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffff00",
+                                                    "main_color": "#ffff00",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_11",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 10
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_3_1",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_3_1",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 210
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    }
+                                ],
                                 "class": "lv_cont",
-                                "name": "cont_8",
+                                "name": "cont_music_3",
                                 "styles": [
                                     {
                                         "base": "lv_style_pretty",
                                         "body": {
                                             "border": {
-                                                "color": "#ffffff",
+                                                "color": "#4456c6",
                                                 "width": 0
                                             },
-                                            "grad_color": "#ffffff",
+                                            "grad_color": "#4456c6",
+                                            "main_color": "#4456c6",
                                             "radius": 0
                                         },
                                         "type": "LV_CONT_STYLE_MAIN"
@@ -391,12 +1578,12 @@
                                 "widget": "cont",
                                 "全局global": true,
                                 "可拖动drag": false,
-                                "名字name": "cont_8",
+                                "名字name": "cont_music_3",
                                 "坐标geometry": {
-                                    "height": 8,
-                                    "width": 30,
-                                    "x": 128,
-                                    "y": 79
+                                    "height": 229,
+                                    "width": 39,
+                                    "x": 94,
+                                    "y": 32
                                 },
                                 "布局layout": "Off",
                                 "显示visible": true,
@@ -409,17 +1596,428 @@
                                 "锁住locked": false
                             },
                             {
+                                "children": [
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_2",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_2",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 190
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_3",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_3",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 170
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_4",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_4",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 150
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_5",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_5",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 130
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_6",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_6",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 110
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_7",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_7",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 90
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_8",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_8",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 70
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_9",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_9",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 50
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_10",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_10",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 30
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_11",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffff00",
+                                                    "main_color": "#ffff00",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_11",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 10
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_4_1",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_4_1",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 210
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    }
+                                ],
                                 "class": "lv_cont",
-                                "name": "cont_9",
+                                "name": "cont_music_4",
                                 "styles": [
                                     {
                                         "base": "lv_style_pretty",
                                         "body": {
                                             "border": {
-                                                "color": "#ffffff",
+                                                "color": "#4456c6",
                                                 "width": 0
                                             },
-                                            "grad_color": "#ffffff",
+                                            "grad_color": "#4456c6",
+                                            "main_color": "#4456c6",
                                             "radius": 0
                                         },
                                         "type": "LV_CONT_STYLE_MAIN"
@@ -428,12 +2026,12 @@
                                 "widget": "cont",
                                 "全局global": true,
                                 "可拖动drag": false,
-                                "名字name": "cont_9",
+                                "名字name": "cont_music_4",
                                 "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 17,
-                                    "y": 71
+                                    "height": 229,
+                                    "width": 39,
+                                    "x": 141,
+                                    "y": 33
                                 },
                                 "布局layout": "Off",
                                 "显示visible": true,
@@ -446,17 +2044,428 @@
                                 "锁住locked": false
                             },
                             {
+                                "children": [
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_2",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_2",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 190
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_3",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_3",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 170
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_4",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_4",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 150
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_5",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_5",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 130
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_6",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_6",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 110
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_7",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_7",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 90
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_8",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_8",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 70
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_9",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_9",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 50
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_10",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_10",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 30
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_11",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffff00",
+                                                    "main_color": "#ffff00",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_11",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 10
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    },
+                                    {
+                                        "class": "lv_cont",
+                                        "name": "cont_music_5_1",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#ffffff",
+                                                        "width": 0
+                                                    },
+                                                    "grad_color": "#ffffff",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_CONT_STYLE_MAIN"
+                                            }
+                                        ],
+                                        "widget": "cont",
+                                        "全局global": true,
+                                        "可拖动drag": false,
+                                        "名字name": "cont_music_5_1",
+                                        "坐标geometry": {
+                                            "height": 10,
+                                            "width": 25,
+                                            "x": 7,
+                                            "y": 210
+                                        },
+                                        "布局layout": "Off",
+                                        "显示visible": true,
+                                        "自动调整策略fit": {
+                                            "cont_bottom_fit": 0,
+                                            "cont_left_fit": 0,
+                                            "cont_right_fit": 0,
+                                            "cont_top_fit": 0
+                                        },
+                                        "锁住locked": false
+                                    }
+                                ],
                                 "class": "lv_cont",
-                                "name": "cont_10",
+                                "name": "cont_music_5",
                                 "styles": [
                                     {
                                         "base": "lv_style_pretty",
                                         "body": {
                                             "border": {
-                                                "color": "#ffffff",
+                                                "color": "#4456c6",
                                                 "width": 0
                                             },
-                                            "grad_color": "#ffffff",
+                                            "grad_color": "#4456c6",
+                                            "main_color": "#4456c6",
                                             "radius": 0
                                         },
                                         "type": "LV_CONT_STYLE_MAIN"
@@ -465,308 +2474,12 @@
                                 "widget": "cont",
                                 "全局global": true,
                                 "可拖动drag": false,
-                                "名字name": "cont_10",
+                                "名字name": "cont_music_5",
                                 "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 14,
-                                    "y": 98
-                                },
-                                "布局layout": "Off",
-                                "显示visible": true,
-                                "自动调整策略fit": {
-                                    "cont_bottom_fit": 0,
-                                    "cont_left_fit": 0,
-                                    "cont_right_fit": 0,
-                                    "cont_top_fit": 0
-                                },
-                                "锁住locked": false
-                            },
-                            {
-                                "class": "lv_cont",
-                                "name": "cont_11",
-                                "styles": [
-                                    {
-                                        "base": "lv_style_pretty",
-                                        "body": {
-                                            "border": {
-                                                "color": "#ffffff",
-                                                "width": 0
-                                            },
-                                            "grad_color": "#ffffff",
-                                            "radius": 0
-                                        },
-                                        "type": "LV_CONT_STYLE_MAIN"
-                                    }
-                                ],
-                                "widget": "cont",
-                                "全局global": true,
-                                "可拖动drag": false,
-                                "名字name": "cont_11",
-                                "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 13,
-                                    "y": 130
-                                },
-                                "布局layout": "Off",
-                                "显示visible": true,
-                                "自动调整策略fit": {
-                                    "cont_bottom_fit": 0,
-                                    "cont_left_fit": 0,
-                                    "cont_right_fit": 0,
-                                    "cont_top_fit": 0
-                                },
-                                "锁住locked": false
-                            },
-                            {
-                                "class": "lv_cont",
-                                "name": "cont_12",
-                                "styles": [
-                                    {
-                                        "base": "lv_style_pretty",
-                                        "body": {
-                                            "border": {
-                                                "color": "#ffffff",
-                                                "width": 0
-                                            },
-                                            "grad_color": "#ffffff",
-                                            "radius": 0
-                                        },
-                                        "type": "LV_CONT_STYLE_MAIN"
-                                    }
-                                ],
-                                "widget": "cont",
-                                "全局global": true,
-                                "可拖动drag": false,
-                                "名字name": "cont_12",
-                                "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 15,
-                                    "y": 158
-                                },
-                                "布局layout": "Off",
-                                "显示visible": true,
-                                "自动调整策略fit": {
-                                    "cont_bottom_fit": 0,
-                                    "cont_left_fit": 0,
-                                    "cont_right_fit": 0,
-                                    "cont_top_fit": 0
-                                },
-                                "锁住locked": false
-                            },
-                            {
-                                "class": "lv_cont",
-                                "name": "cont_13",
-                                "styles": [
-                                    {
-                                        "base": "lv_style_pretty",
-                                        "body": {
-                                            "border": {
-                                                "color": "#ffffff",
-                                                "width": 0
-                                            },
-                                            "grad_color": "#ffffff",
-                                            "radius": 0
-                                        },
-                                        "type": "LV_CONT_STYLE_MAIN"
-                                    }
-                                ],
-                                "widget": "cont",
-                                "全局global": true,
-                                "可拖动drag": false,
-                                "名字name": "cont_13",
-                                "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 56,
-                                    "y": 160
-                                },
-                                "布局layout": "Off",
-                                "显示visible": true,
-                                "自动调整策略fit": {
-                                    "cont_bottom_fit": 0,
-                                    "cont_left_fit": 0,
-                                    "cont_right_fit": 0,
-                                    "cont_top_fit": 0
-                                },
-                                "锁住locked": false
-                            },
-                            {
-                                "class": "lv_cont",
-                                "name": "cont_14",
-                                "styles": [
-                                    {
-                                        "base": "lv_style_pretty",
-                                        "body": {
-                                            "border": {
-                                                "color": "#ffffff",
-                                                "width": 0
-                                            },
-                                            "grad_color": "#ffffff",
-                                            "radius": 0
-                                        },
-                                        "type": "LV_CONT_STYLE_MAIN"
-                                    }
-                                ],
-                                "widget": "cont",
-                                "全局global": true,
-                                "可拖动drag": false,
-                                "名字name": "cont_14",
-                                "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 54,
-                                    "y": 130
-                                },
-                                "布局layout": "Off",
-                                "显示visible": true,
-                                "自动调整策略fit": {
-                                    "cont_bottom_fit": 0,
-                                    "cont_left_fit": 0,
-                                    "cont_right_fit": 0,
-                                    "cont_top_fit": 0
-                                },
-                                "锁住locked": false
-                            },
-                            {
-                                "class": "lv_cont",
-                                "name": "cont_15",
-                                "styles": [
-                                    {
-                                        "base": "lv_style_pretty",
-                                        "body": {
-                                            "border": {
-                                                "color": "#ffffff",
-                                                "width": 0
-                                            },
-                                            "grad_color": "#ffffff",
-                                            "radius": 0
-                                        },
-                                        "type": "LV_CONT_STYLE_MAIN"
-                                    }
-                                ],
-                                "widget": "cont",
-                                "全局global": true,
-                                "可拖动drag": false,
-                                "名字name": "cont_15",
-                                "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 55,
-                                    "y": 103
-                                },
-                                "布局layout": "Off",
-                                "显示visible": true,
-                                "自动调整策略fit": {
-                                    "cont_bottom_fit": 0,
-                                    "cont_left_fit": 0,
-                                    "cont_right_fit": 0,
-                                    "cont_top_fit": 0
-                                },
-                                "锁住locked": false
-                            },
-                            {
-                                "class": "lv_cont",
-                                "name": "cont_16",
-                                "styles": [
-                                    {
-                                        "base": "lv_style_pretty",
-                                        "body": {
-                                            "border": {
-                                                "color": "#ffffff",
-                                                "width": 0
-                                            },
-                                            "grad_color": "#ffffff",
-                                            "radius": 0
-                                        },
-                                        "type": "LV_CONT_STYLE_MAIN"
-                                    }
-                                ],
-                                "widget": "cont",
-                                "全局global": true,
-                                "可拖动drag": false,
-                                "名字name": "cont_16",
-                                "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 98,
-                                    "y": 195
-                                },
-                                "布局layout": "Off",
-                                "显示visible": true,
-                                "自动调整策略fit": {
-                                    "cont_bottom_fit": 0,
-                                    "cont_left_fit": 0,
-                                    "cont_right_fit": 0,
-                                    "cont_top_fit": 0
-                                },
-                                "锁住locked": false
-                            },
-                            {
-                                "class": "lv_cont",
-                                "name": "cont_17",
-                                "styles": [
-                                    {
-                                        "base": "lv_style_pretty",
-                                        "body": {
-                                            "border": {
-                                                "color": "#ffffff",
-                                                "width": 0
-                                            },
-                                            "grad_color": "#ffffff",
-                                            "radius": 0
-                                        },
-                                        "type": "LV_CONT_STYLE_MAIN"
-                                    }
-                                ],
-                                "widget": "cont",
-                                "全局global": true,
-                                "可拖动drag": false,
-                                "名字name": "cont_17",
-                                "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 138,
-                                    "y": 198
-                                },
-                                "布局layout": "Off",
-                                "显示visible": true,
-                                "自动调整策略fit": {
-                                    "cont_bottom_fit": 0,
-                                    "cont_left_fit": 0,
-                                    "cont_right_fit": 0,
-                                    "cont_top_fit": 0
-                                },
-                                "锁住locked": false
-                            },
-                            {
-                                "class": "lv_cont",
-                                "name": "cont_18",
-                                "styles": [
-                                    {
-                                        "base": "lv_style_pretty",
-                                        "body": {
-                                            "border": {
-                                                "color": "#ffffff",
-                                                "width": 0
-                                            },
-                                            "grad_color": "#ffffff",
-                                            "radius": 0
-                                        },
-                                        "type": "LV_CONT_STYLE_MAIN"
-                                    }
-                                ],
-                                "widget": "cont",
-                                "全局global": true,
-                                "可拖动drag": false,
-                                "名字name": "cont_18",
-                                "坐标geometry": {
-                                    "height": 8,
-                                    "width": 25,
-                                    "x": 101,
-                                    "y": 156
+                                    "height": 229,
+                                    "width": 39,
+                                    "x": 186,
+                                    "y": 33
                                 },
                                 "布局layout": "Off",
                                 "显示visible": true,
@@ -800,10 +2513,10 @@
                         "可拖动drag": false,
                         "名字name": "cont_5",
                         "坐标geometry": {
-                            "height": 208,
-                            "width": 220,
-                            "x": 248,
-                            "y": 30
+                            "height": 265,
+                            "width": 240,
+                            "x": 228,
+                            "y": 13
                         },
                         "布局layout": "Off",
                         "显示visible": true,
@@ -813,6 +2526,125 @@
                             "cont_right_fit": 0,
                             "cont_top_fit": 0
                         },
+                        "锁住locked": false
+                    },
+                    {
+                        "class": "lv_list",
+                        "name": "list_mp3",
+                        "styles": [
+                            {
+                                "body": {
+                                    "border": {
+                                        "color": "#000000",
+                                        "opa": 255,
+                                        "part": 15,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#5596d8",
+                                    "main_color": "#5596d8",
+                                    "opa": 255,
+                                    "padding": {
+                                        "bottom": 5,
+                                        "inner": 5,
+                                        "left": 5,
+                                        "right": 5,
+                                        "top": 5
+                                    },
+                                    "radius": 0,
+                                    "shadow": {
+                                        "color": "#808080",
+                                        "type": 1,
+                                        "width": 0
+                                    }
+                                },
+                                "image": {
+                                    "color": "#f0f0f0",
+                                    "intense": 0,
+                                    "opa": 255
+                                },
+                                "text": {
+                                    "color": "#f0f0f0",
+                                    "font": "Roboto 16",
+                                    "letter_space": 0,
+                                    "line_space": 2,
+                                    "opa": 255,
+                                    "sel_color": "#5596d8"
+                                },
+                                "type": "LV_LIST_STYLE_EDGE_FLASH"
+                            },
+                            {
+                                "base": "lv_style_transp_fit",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6"
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6"
+                                },
+                                "type": "LV_LIST_STYLE_BG"
+                            },
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6",
+                                    "radius": 0,
+                                    "shadow": {
+                                        "color": "#4456c6"
+                                    }
+                                },
+                                "type": "LV_LIST_STYLE_SCRL"
+                            },
+                            {
+                                "base": "lv_style_btn_rel",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_REL"
+                            },
+                            {
+                                "base": "lv_style_btn_pr",
+                                "body": {
+                                    "border": {
+                                        "color": "#101d6b",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#101d6b",
+                                    "main_color": "#101d6b",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_PR"
+                            }
+                        ],
+                        "widget": "list",
+                        "全局global": true,
+                        "单选模式single mode": false,
+                        "可拖动drag": false,
+                        "名字name": "list_mp3",
+                        "坐标geometry": {
+                            "height": 286,
+                            "width": 158,
+                            "x": 27,
+                            "y": 25
+                        },
+                        "显示visible": true,
+                        "条目items": [
+                        ],
+                        "滚动传播scroll propagation": false,
+                        "边缘闪烁edge flash": false,
                         "锁住locked": false
                     }
                 ],

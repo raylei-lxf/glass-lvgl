@@ -1,6 +1,6 @@
 {
     "lvgl": {
-        "name": "file.lvgl",
+        "name": "video_list.lvgl",
         "resolution": {
             "height": 360,
             "width": 480
@@ -10,7 +10,7 @@
                 "children": [
                     {
                         "class": "lv_cont",
-                        "name": "cont_file_line",
+                        "name": "cont_1",
                         "styles": [
                             {
                                 "base": "lv_style_pretty",
@@ -28,7 +28,7 @@
                         "widget": "cont",
                         "全局global": true,
                         "可拖动drag": false,
-                        "名字name": "cont_file_line",
+                        "名字name": "cont_1",
                         "坐标geometry": {
                             "height": 2,
                             "width": 480,
@@ -47,7 +47,7 @@
                     },
                     {
                         "class": "lv_img",
-                        "name": "img_file_title",
+                        "name": "img_1",
                         "widget": "img",
                         "偏移offset": {
                             "X": 0,
@@ -55,34 +55,34 @@
                         },
                         "全局global": true,
                         "可拖动drag": false,
-                        "名字name": "img_file_title",
+                        "名字name": "img_1",
                         "坐标geometry": {
-                            "height": 36,
-                            "width": 35,
-                            "x": 15,
-                            "y": 7
+                            "height": 30,
+                            "width": 30,
+                            "x": 24,
+                            "y": 10
                         },
                         "显示visible": true,
-                        "源图source": "file_title.png",
+                        "源图source": "videotubiao.png",
                         "自动大小auto size": true,
                         "锁住locked": false
                     },
                     {
                         "class": "lv_label",
-                        "name": "label_file_title",
+                        "name": "label_1",
                         "widget": "label",
                         "全局global": true,
                         "动画速度anim speed": 25,
                         "可拖动drag": false,
-                        "名字name": "label_file_title",
+                        "名字name": "label_1",
                         "坐标geometry": {
-                            "height": 36,
-                            "width": 115,
-                            "x": 59,
-                            "y": 9
+                            "height": 33,
+                            "width": 64,
+                            "x": 64,
+                            "y": 12
                         },
                         "对齐align": "Left",
-                        "文本text": "File",
+                        "文本text": "Video",
                         "显示visible": true,
                         "模式mode": "Corp",
                         "背景绘制body draw": false,
@@ -91,7 +91,7 @@
                     },
                     {
                         "class": "lv_list",
-                        "name": "file_list",
+                        "name": "list_video",
                         "styles": [
                             {
                                 "body": {
@@ -194,11 +194,11 @@
                         "全局global": true,
                         "单选模式single mode": false,
                         "可拖动drag": false,
-                        "名字name": "file_list",
+                        "名字name": "list_video",
                         "坐标geometry": {
                             "height": 275,
                             "width": 444,
-                            "x": 23,
+                            "x": 22,
                             "y": 62
                         },
                         "显示visible": true,
@@ -216,12 +216,16 @@
                         "base": "lv_style_pretty",
                         "body": {
                             "border": {
-                                "color": "#ffffff",
+                                "color": "#4456c6",
+                                "opa": 255,
                                 "width": 0
                             },
                             "grad_color": "#4456c6",
                             "main_color": "#4456c6",
-                            "radius": 0
+                            "radius": 0,
+                            "shadow": {
+                                "color": "#4456c6"
+                            }
                         },
                         "type": "LV_CONT_STYLE_MAIN"
                     }

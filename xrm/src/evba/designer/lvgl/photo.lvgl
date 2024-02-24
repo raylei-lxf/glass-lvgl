@@ -75,6 +75,28 @@
                         "源图source": "photo_playering_baground.png",
                         "自动大小auto size": true,
                         "锁住locked": false
+                    },
+                    {
+                        "class": "lv_img",
+                        "name": "img_photo",
+                        "widget": "img",
+                        "偏移offset": {
+                            "X": 0,
+                            "Y": 0
+                        },
+                        "全局global": true,
+                        "可拖动drag": false,
+                        "名字name": "img_photo",
+                        "坐标geometry": {
+                            "height": 44,
+                            "width": 70,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "显示visible": true,
+                        "源图source": "",
+                        "自动大小auto size": true,
+                        "锁住locked": false
                     }
                 ],
                 "class": "lv_cont",

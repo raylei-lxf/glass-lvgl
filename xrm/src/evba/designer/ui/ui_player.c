@@ -11,7 +11,6 @@
 ******************************************************************************/
 static lv_style_t style0_cont_main;
 static lv_style_t style0_bar_player_pro;
-static lv_style_t style0_label_1;
 
 
 /******************************************************************************
@@ -51,29 +50,16 @@ void player_ui_create(player_ui_t *ui)
 	ui->label_player_start = lv_label_create(ui->cont_main, NULL);
 	lv_label_set_text(ui->label_player_start, "00:16");
 	lv_label_set_long_mode(ui->label_player_start, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_player_start, 26, 312);
-	lv_obj_set_size(ui->label_player_start, 125, 31);
+	lv_obj_set_pos(ui->label_player_start, 25, 323);
+	lv_obj_set_size(ui->label_player_start, 52, 24);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LABEL
 	ui->label_player_total = lv_label_create(ui->cont_main, NULL);
 	lv_label_set_text(ui->label_player_total, "02:58");
 	lv_label_set_long_mode(ui->label_player_total, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_player_total, 340, 306);
-	lv_obj_set_size(ui->label_player_total, 125, 31);
-#endif // LV_USE_LABEL
-
-#ifdef LV_USE_LABEL
-	lv_style_copy(&style0_label_1, &lv_style_transp);
-	style0_label_1.text.font = &lv_font_roboto_28;
-	style0_label_1.text.line_space = 2;
-
-	ui->label_1 = lv_label_create(ui->cont_main, NULL);
-	lv_label_set_text(ui->label_1, "Text.mp4");
-	lv_label_set_long_mode(ui->label_1, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_1, 23, 33);
-	lv_obj_set_size(ui->label_1, 386, 40);
-	lv_label_set_style(ui->label_1, LV_LABEL_STYLE_MAIN, &style0_label_1);
+	lv_obj_set_pos(ui->label_player_total, 417, 324);
+	lv_obj_set_size(ui->label_player_total, 50, 25);
 #endif // LV_USE_LABEL
 
 }
