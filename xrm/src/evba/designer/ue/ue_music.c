@@ -250,11 +250,11 @@ static int music_create(void)
     }
 
     // tplayer_init(t113_play, CEDARX_PLAYER);
-	key_callback_register(LV_KEY_1, music_key_confire_callback);
-	key_callback_register(LV_KEY_2, music_key_canel_callback);
+	key_callback_register(LV_KEY_0, music_key_confire_callback);
+	key_callback_register(LV_KEY_4, music_key_canel_callback);
 
-	key_callback_register(LV_KEY_3, music_key_left_callback);
-	key_callback_register(LV_KEY_4, music_key_right_callback);
+	key_callback_register(LV_KEY_2, music_key_left_callback);
+	key_callback_register(LV_KEY_3, music_key_right_callback);
 
 	return 0;
 }

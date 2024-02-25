@@ -198,35 +198,39 @@ static void video_key_canel_callback(void)
 
 static void video_key_left_callback(void)
 {
-    video_list_ui_t *ui = &para->ui;
-    video_set_list_unfocus(ui->list_video, m_video_foucs);
+    if (is_playing == 0) {
+        video_list_ui_t *ui = &para->ui;
+        video_set_list_unfocus(ui->list_video, m_video_foucs);
 
-    m_video_foucs++;
-    if (m_video_foucs < 0) {
-        m_video_foucs = video_count - 1;
-    } else if (m_video_foucs >= video_count) {
-        m_video_foucs = 0;
-    }
-    app_info(".......m_foucs = %d\n", m_video_foucs);
-    if (video_count > 0) {
-        video_set_list_focus(ui->list_video, m_video_foucs);
+        m_video_foucs++;
+        if (m_video_foucs < 0) {
+            m_video_foucs = video_count - 1;
+        } else if (m_video_foucs >= video_count) {
+            m_video_foucs = 0;
+        }
+        app_info(".......m_foucs = %d\n", m_video_foucs);
+        if (video_count > 0) {
+            video_set_list_focus(ui->list_video, m_video_foucs);
+        }
     }
 }
 
 static void video_key_right_callback(void)
 {
-	video_list_ui_t *ui = &para->ui;
-    video_set_list_unfocus(ui->list_video, m_video_foucs);
+    if (is_playing == 0) {
+    	video_list_ui_t *ui = &para->ui;
+        video_set_list_unfocus(ui->list_video, m_video_foucs);
 
-    m_video_foucs--;
-    if (m_video_foucs < 0) {
-        m_video_foucs = video_count - 1;
-    } else if (m_video_foucs >= video_count) {
-        m_video_foucs = 0;
-    }
-    app_info(".......m_foucs = %d\n", m_video_foucs);
-    if (video_count > 0) {
-        video_set_list_focus(ui->list_video, m_video_foucs);
+        m_video_foucs--;
+        if (m_video_foucs < 0) {
+            m_video_foucs = video_count - 1;
+        } else if (m_video_foucs >= video_count) {
+            m_video_foucs = 0;
+        }
+        app_info(".......m_foucs = %d\n", m_video_foucs);
+        if (video_count > 0) {
+            video_set_list_focus(ui->list_video, m_video_foucs);
+        }
     }
 }
 
@@ -252,11 +256,11 @@ static int video_list_create(void)
     }
 
     // tplayer_init(t113_play, CEDARX_PLAYER);
-    key_callback_register(LV_KEY_1, video_key_confire_callback);
-    key_callback_register(LV_KEY_2, video_key_canel_callback);
+    key_callback_register(LV_KEY_0, video_key_confire_callback);
+    key_callback_register(LV_KEY_4, video_key_canel_callback);
 
-    key_callback_register(LV_KEY_3, video_key_left_callback);
-    key_callback_register(LV_KEY_4, video_key_right_callback);
+    key_callback_register(LV_KEY_2, video_key_left_callback);
+    key_callback_register(LV_KEY_3, video_key_right_callback);
 
 	return 0;
 }

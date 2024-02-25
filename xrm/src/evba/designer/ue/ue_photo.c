@@ -124,10 +124,10 @@ static int photo_create(void)
     lv_obj_t *tip = para->ui.img_photo_show;
     lv_obj_set_top(tip, true);
 
-    key_callback_register(LV_KEY_1, photo_key_confire_callback);
-    key_callback_register(LV_KEY_2, photo_key_canel_callback);
-    key_callback_register(LV_KEY_3, photo_key_left_callback);
-    key_callback_register(LV_KEY_4, photo_key_right_callback);
+    key_callback_register(LV_KEY_0, photo_key_confire_callback);
+    key_callback_register(LV_KEY_4, photo_key_canel_callback);
+    key_callback_register(LV_KEY_2, photo_key_left_callback);
+    key_callback_register(LV_KEY_3, photo_key_right_callback);
 
     app_info("photo create......., photo_name = %s\n", photo_name);
     if (access(photo_name, F_OK) != -1) {

@@ -185,10 +185,10 @@ static int setting_create(void)
     style0_cont_setting_factory = lv_cont_get_style(setting_ui->cont_setting_factory, 0);
     style0_cont_upgrade = lv_cont_get_style(setting_ui->cont_upgrade, 0);
     
-	key_callback_register(LV_KEY_1, key_confirm_callback);
-	key_callback_register(LV_KEY_2, key_cancel_callback);
-	key_callback_register(LV_KEY_3, key_up_callback);
-	key_callback_register(LV_KEY_4, key_down_callback);
+	key_callback_register(LV_KEY_0, key_confirm_callback);
+	key_callback_register(LV_KEY_4, key_cancel_callback);
+	key_callback_register(LV_KEY_2, key_up_callback);
+	key_callback_register(LV_KEY_3, key_down_callback);
 
 	app_info("........");
 	return 0;

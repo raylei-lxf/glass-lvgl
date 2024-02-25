@@ -204,10 +204,10 @@ static int home_create(void)
 	load_image();
 	
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
-	key_callback_register(LV_KEY_1, key_confirm_callback);
+	key_callback_register(LV_KEY_0, key_confirm_callback);
 
-	key_callback_register(LV_KEY_3, key_left_callback);
-	key_callback_register(LV_KEY_4, key_right_callback);
+	key_callback_register(LV_KEY_2, key_left_callback);
+	key_callback_register(LV_KEY_3, key_right_callback);
 	return 0;
 }
 
