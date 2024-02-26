@@ -9,80 +9,117 @@
             {
                 "children": [
                     {
-                        "class": "lv_bar",
-                        "name": "bar_player_pro",
+                        "children": [
+                            {
+                                "class": "lv_label",
+                                "name": "label_1",
+                                "widget": "label",
+                                "全局global": true,
+                                "动画速度anim speed": 25,
+                                "可拖动drag": false,
+                                "名字name": "label_1",
+                                "坐标geometry": {
+                                    "height": 22,
+                                    "width": 48,
+                                    "x": 13,
+                                    "y": 0
+                                },
+                                "对齐align": "Left",
+                                "文本text": "00:16",
+                                "显示visible": true,
+                                "模式mode": "Corp",
+                                "背景绘制body draw": false,
+                                "重着色recolor": false,
+                                "锁住locked": false
+                            },
+                            {
+                                "class": "lv_label",
+                                "name": "label_player_total",
+                                "widget": "label",
+                                "全局global": true,
+                                "动画速度anim speed": 25,
+                                "可拖动drag": false,
+                                "名字name": "label_player_total",
+                                "坐标geometry": {
+                                    "height": 25,
+                                    "width": 50,
+                                    "x": 415,
+                                    "y": 0
+                                },
+                                "对齐align": "Left",
+                                "文本text": "02:58",
+                                "显示visible": true,
+                                "模式mode": "Corp",
+                                "背景绘制body draw": false,
+                                "重着色recolor": false,
+                                "锁住locked": false
+                            },
+                            {
+                                "class": "lv_bar",
+                                "name": "bar_player_pro",
+                                "styles": [
+                                    {
+                                        "base": "lv_style_pretty",
+                                        "body": {
+                                            "grad_color": "#ffffff",
+                                            "radius": 0
+                                        },
+                                        "type": "LV_BAR_STYLE_BG"
+                                    }
+                                ],
+                                "widget": "bar",
+                                "值value": 0,
+                                "全局global": true,
+                                "动画时间anim time": 0,
+                                "可拖动drag": false,
+                                "名字name": "bar_player_pro",
+                                "坐标geometry": {
+                                    "height": 6,
+                                    "width": 438,
+                                    "x": 17,
+                                    "y": 20
+                                },
+                                "对称绘制sym": false,
+                                "显示visible": true,
+                                "范围range": {
+                                    "max": 100,
+                                    "min": 0
+                                },
+                                "锁住locked": false
+                            }
+                        ],
+                        "class": "lv_cont",
+                        "name": "cont_par",
                         "styles": [
                             {
                                 "base": "lv_style_pretty",
                                 "body": {
-                                    "grad_color": "#ffffff",
-                                    "radius": 0
+                                    "border": {
+                                        "opa": 0
+                                    },
+                                    "opa": 0
                                 },
-                                "type": "LV_BAR_STYLE_BG"
+                                "type": "LV_CONT_STYLE_MAIN"
                             }
                         ],
-                        "widget": "bar",
-                        "值value": 0,
+                        "widget": "cont",
                         "全局global": true,
-                        "动画时间anim time": 0,
                         "可拖动drag": false,
-                        "名字name": "bar_player_pro",
+                        "名字name": "cont_par",
                         "坐标geometry": {
-                            "height": 6,
-                            "width": 438,
-                            "x": 25,
-                            "y": 342
+                            "height": 35,
+                            "width": 480,
+                            "x": 0,
+                            "y": 325
                         },
-                        "对称绘制sym": false,
+                        "布局layout": "Off",
                         "显示visible": true,
-                        "范围range": {
-                            "max": 100,
-                            "min": 0
+                        "自动调整策略fit": {
+                            "cont_bottom_fit": 0,
+                            "cont_left_fit": 0,
+                            "cont_right_fit": 0,
+                            "cont_top_fit": 0
                         },
-                        "锁住locked": false
-                    },
-                    {
-                        "class": "lv_label",
-                        "name": "label_player_start",
-                        "widget": "label",
-                        "全局global": true,
-                        "动画速度anim speed": 25,
-                        "可拖动drag": false,
-                        "名字name": "label_player_start",
-                        "坐标geometry": {
-                            "height": 24,
-                            "width": 52,
-                            "x": 25,
-                            "y": 323
-                        },
-                        "对齐align": "Left",
-                        "文本text": "00:16",
-                        "显示visible": true,
-                        "模式mode": "Corp",
-                        "背景绘制body draw": false,
-                        "重着色recolor": false,
-                        "锁住locked": false
-                    },
-                    {
-                        "class": "lv_label",
-                        "name": "label_player_total",
-                        "widget": "label",
-                        "全局global": true,
-                        "动画速度anim speed": 25,
-                        "可拖动drag": false,
-                        "名字name": "label_player_total",
-                        "坐标geometry": {
-                            "height": 25,
-                            "width": 50,
-                            "x": 417,
-                            "y": 324
-                        },
-                        "对齐align": "Left",
-                        "文本text": "02:58",
-                        "显示visible": true,
-                        "模式mode": "Corp",
-                        "背景绘制body draw": false,
-                        "重着色recolor": false,
                         "锁住locked": false
                     }
                 ],

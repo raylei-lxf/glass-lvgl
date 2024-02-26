@@ -167,14 +167,14 @@ static int player_create(void)
 	// }
 	// tplayer_init(t113_play, CEDARX_PLAYER);
 
-	//lv_obj_set_hidden(para->ui.cont_main, 1);
+	system("dd if=/dev/zero of=/dev/fb0");
 	clean_screen(&para->ui);
     #if 1 
-	app_info("..........%s ", player_name);
+
+//	lv_obj_set_hidden(para->ui.cont_par, 0);
 
 	if (t113_play != NULL /*&& access(player_name , F_OK) != -1*/) {
 		app_info("..........%s ", player_name);
-		system("dd if=/dev/zero of=/dev/fb0");
 		tplayer_play_url(t113_play, player_name);
 		tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
 		tplayer_play(t113_play);
