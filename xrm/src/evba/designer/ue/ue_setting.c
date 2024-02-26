@@ -87,7 +87,7 @@ static void setting_change_focus(int focus)
 		style0_cont_setting_language->body.main_color = lv_color_hex(0x00007f);
 		style0_cont_setting_language->body.grad_color = lv_color_hex(0x00007f);
 		style0_cont_setting_language->body.border.color = lv_color_hex(0xffffff);
-		style0_cont_setting_language->body.border.width = 4;
+		style0_cont_setting_language->body.border.width = 2;
 		lv_cont_set_style(para->ui.cont_setting_language, LV_CONT_STYLE_MAIN, style0_cont_setting_language);
 
 		style0_cont_setting_factory->body.main_color = lv_color_hex(0x4456c6);
@@ -113,7 +113,7 @@ static void setting_change_focus(int focus)
 		style0_cont_setting_factory->body.main_color = lv_color_hex(0x00007f);
 		style0_cont_setting_factory->body.grad_color = lv_color_hex(0x00007f);
 		style0_cont_setting_factory->body.border.color = lv_color_hex(0xffffff);
-		style0_cont_setting_factory->body.border.width = 4;
+		style0_cont_setting_factory->body.border.width = 2;
 		lv_cont_set_style(para->ui.cont_setting_factory, LV_CONT_STYLE_MAIN, style0_cont_setting_factory);
 
 		style0_cont_upgrade->body.grad_color = lv_color_hex(0x4456c6);
@@ -138,7 +138,7 @@ static void setting_change_focus(int focus)
 		style0_cont_upgrade->body.main_color = lv_color_hex(0x00007f);
 		style0_cont_upgrade->body.grad_color = lv_color_hex(0x00007f);
 		style0_cont_upgrade->body.border.color = lv_color_hex(0xffffff);
-		style0_cont_upgrade->body.border.width = 4;
+		style0_cont_upgrade->body.border.width = 2;
 		lv_cont_set_style(para->ui.cont_upgrade, LV_CONT_STYLE_MAIN, style0_cont_upgrade);
 		break;
 	default:

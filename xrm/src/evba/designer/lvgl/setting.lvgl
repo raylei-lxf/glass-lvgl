@@ -101,10 +101,10 @@
                                 "可拖动drag": false,
                                 "名字name": "label_language_title",
                                 "坐标geometry": {
-                                    "height": 41,
-                                    "width": 121,
-                                    "x": 14,
-                                    "y": 0
+                                    "height": 32,
+                                    "width": 163,
+                                    "x": 18,
+                                    "y": 9
                                 },
                                 "对齐align": "Left",
                                 "文本text": "Text",
@@ -123,10 +123,10 @@
                                 "可拖动drag": false,
                                 "名字name": "label_language",
                                 "坐标geometry": {
-                                    "height": 41,
-                                    "width": 121,
-                                    "x": 320,
-                                    "y": 0
+                                    "height": 34,
+                                    "width": 149,
+                                    "x": 293,
+                                    "y": 7
                                 },
                                 "对齐align": "Left",
                                 "文本text": "Text",
@@ -145,8 +145,7 @@
                                 "body": {
                                     "border": {
                                         "color": "#ffffff",
-                                        "opa": 0,
-                                        "width": 4
+                                        "opa": 255
                                     },
                                     "grad_color": "#00007f",
                                     "main_color": "#00007f",
@@ -160,7 +159,7 @@
                         "可拖动drag": false,
                         "名字name": "cont_setting_language",
                         "坐标geometry": {
-                            "height": 43,
+                            "height": 50,
                             "width": 465,
                             "x": 9,
                             "y": 73
@@ -186,10 +185,10 @@
                                 "可拖动drag": false,
                                 "名字name": "label_factory",
                                 "坐标geometry": {
-                                    "height": 41,
-                                    "width": 121,
-                                    "x": 14,
-                                    "y": 0
+                                    "height": 36,
+                                    "width": 154,
+                                    "x": 13,
+                                    "y": 5
                                 },
                                 "对齐align": "Left",
                                 "文本text": "Text",
@@ -207,7 +206,8 @@
                                 "base": "lv_style_pretty",
                                 "body": {
                                     "border": {
-                                        "width": 0
+                                        "color": "#4456c6",
+                                        "opa": 255
                                     },
                                     "grad_color": "#4456c6",
                                     "main_color": "#4456c6",
@@ -221,7 +221,7 @@
                         "可拖动drag": false,
                         "名字name": "cont_setting_factory",
                         "坐标geometry": {
-                            "height": 43,
+                            "height": 50,
                             "width": 465,
                             "x": 8,
                             "y": 130
@@ -247,10 +247,10 @@
                                 "可拖动drag": false,
                                 "名字name": "label_upgrade",
                                 "坐标geometry": {
-                                    "height": 41,
-                                    "width": 121,
+                                    "height": 37,
+                                    "width": 182,
                                     "x": 14,
-                                    "y": 0
+                                    "y": 4
                                 },
                                 "对齐align": "Left",
                                 "文本text": "Text",
@@ -269,7 +269,7 @@
                                 "body": {
                                     "border": {
                                         "color": "#4456c6",
-                                        "width": 0
+                                        "opa": 255
                                     },
                                     "grad_color": "#4456c6",
                                     "main_color": "#4456c6",
@@ -283,7 +283,7 @@
                         "可拖动drag": false,
                         "名字name": "cont_upgrade",
                         "坐标geometry": {
-                            "height": 43,
+                            "height": 50,
                             "width": 465,
                             "x": 8,
                             "y": 184
