@@ -190,6 +190,7 @@ static music_key_canel_callback(void)
     	switch_window(WINDOW_MUSIC, WINDOW_HOME);
     } else {
         music_is_playing = 0;
+        tplayer_stop(t113_play);
     }
 }
 
@@ -261,6 +262,7 @@ static int music_create(void)
 
 static int music_destory(void)
 {
+    tplayer_stop(t113_play);
     key_callback_unregister();
 	music_ue_destory(para);
 	music_ui_destory(&para->ui);

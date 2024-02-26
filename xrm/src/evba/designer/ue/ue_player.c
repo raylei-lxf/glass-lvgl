@@ -180,7 +180,7 @@ static int player_create(void)
 		tplayer_play(t113_play);
 	}
     #endif
-    key_callback_register(LV_KEY_2, key_back_callback);
+    key_callback_register(LV_KEY_4, key_back_callback);
 	// key_callback_register(LV_KEY_1, key_confirm_callback);
 
 	// key_callback_register(LV_KEY_3, key_left_callback);
