@@ -383,6 +383,7 @@ static void key_menu_callback(void)
 
 }
 
+
 int main(int argc, char **argv)
 {
     (void)argc;    /*Unused*/
@@ -566,7 +567,6 @@ void key_callback_unregister(void)
 #define KEY_STATE_WAIT_REL			0x02
 #define KEY_STATE_RELEASE			0x03
 
-static int key_state = LV_INDEV_STATE_REL;
 static int key_state_next = KEY_STATE_CHECK_PR;
 static int key_value = LV_KEY_0;
 static struct timespec key_start;

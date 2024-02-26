@@ -67,7 +67,7 @@ static void player_ue_destory(player_para_t *para)
 static int fileCount = 0;
 static char* filePaths[MAX_FILES];
 
-extern char player_name[512] = { 0 };
+extern char player_name[512];
 
 int get_mp4(void)
 {
@@ -130,6 +130,23 @@ static void key_confirm_callback(void)
 }
 
 
+static void clean_screen(player_ui_t *ui)
+{
+	// open tplayerdemo || willow					// ??????Ƶ????ͼƬͼ?㣬pipeҪ??0
+	lv_obj_t *scn = lv_scr_act();					// ????Ļ
+	static lv_style_t scn_style;
+	lv_style_copy(&scn_style, &lv_style_plain);
+	scn_style.body.main_color.full = 0x00000000;
+	scn_style.body.grad_color.full = 0x00000000;
+	lv_obj_set_style(scn, &scn_style);
+
+	static lv_style_t cont_style;
+	lv_style_copy(&cont_style, &lv_style_plain);
+	cont_style.body.main_color.full = 0x00000000;		// ??cont
+	cont_style.body.grad_color.full = 0x00000000;
+	lv_cont_set_style(ui->cont_main, LV_CONT_STYLE_MAIN, &cont_style);
+}
+
 static int player_create(void)
 {
 	para = (player_para_t *)malloc(sizeof(player_para_t));
@@ -150,9 +167,11 @@ static int player_create(void)
 	// }
 	// tplayer_init(t113_play, CEDARX_PLAYER);
 
-
+	//lv_obj_set_hidden(para->ui.cont_main, 1);
+	clean_screen(&para->ui);
     #if 1 
 	app_info("..........%s ", player_name);
+
 	if (t113_play != NULL /*&& access(player_name , F_OK) != -1*/) {
 		app_info("..........%s ", player_name);
 		system("dd if=/dev/zero of=/dev/fb0");
@@ -172,11 +191,13 @@ static int player_create(void)
 
 static int player_destory(void)
 {
+	 tplayer_stop(t113_play);
 	key_callback_unregister();
 	player_ue_destory(para);
 	player_ui_destory(&para->ui);
 	free(para);
 	para = NULL;
+	
 	
     for (int i = 0; i < fileCount; i++) {
         free(filePaths[i]);

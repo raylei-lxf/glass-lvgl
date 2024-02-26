@@ -43,7 +43,7 @@ static int m_video_foucs = 0;
 static int video_count = 0;
 static char* video_Paths[MAX_VIDEO];
 
-extern char player_name[512];
+char player_name[512] = {0};
 
 int get_video_list(void)
 {
@@ -172,16 +172,16 @@ static void video_list_ue_destory(video_list_para_t *para)
 
 static void video_key_confire_callback(void)
 {
-    // switch_window(WINDOW_VIDEO_LIST, WINDOW_PLAYER);
-    if (t113_play != NULL && access(player_name , F_OK) != -1) {
-		app_info("..........%s\n", player_name);
-        // video_list_hide();
-		system("dd if=/dev/zero of=/dev/fb0");
-		tplayer_play_url(t113_play, player_name);
-		tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
-		tplayer_play(t113_play);
-        is_playing = 1;
-	}
+     switch_window(WINDOW_VIDEO_LIST, WINDOW_PLAYER);
+    // if (t113_play != NULL && access(player_name , F_OK) != -1) {
+	// 	app_info("..........%s\n", player_name);
+    //     // video_list_hide();
+	// 	system("dd if=/dev/zero of=/dev/fb0");
+	// 	tplayer_play_url(t113_play, player_name);
+	// 	tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
+	// 	tplayer_play(t113_play);
+    //     is_playing = 1;
+	// }
 }
 
 static void video_key_canel_callback(void)
@@ -191,9 +191,9 @@ static void video_key_canel_callback(void)
         switch_window(WINDOW_VIDEO_LIST, WINDOW_HOME);
     } else {
         is_playing = 0;
-        // tplayer_stop(t113_play);
+         tplayer_stop(t113_play);
         // tplayer_pause(t113_play);
-		system("dd if=/dev/zero of=/dev/fb0");
+		//system("dd if=/dev/zero of=/dev/fb0");
         video_list_show();
     }
 }
