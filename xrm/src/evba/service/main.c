@@ -23,7 +23,6 @@ pthread_t tick_id;
 
 IMG_SRC_T img_src;
 
-
 static lv_task_t *ui_lcd_task_id = NULL; 
 static int lv_lcd_sta = 0;
 static struct timespec lcd_time_start;
@@ -232,8 +231,6 @@ void lv_linux_task_loop(void)
 		usleep(10000);
 }
 
-
-
 void img_resource_page1_once_load(void)
 {
 	img_src.bluetooth[0] = (void *)mal_load_image(LV_IMAGE_PATH"bluetooth.png");
@@ -378,11 +375,27 @@ static int chip_verify()
 	}
 }
 
-static void key_menu_callback(void)
-{
+/**
+ * 1.视频界面进度条实现
+ * 
+2.图片播放图片功能
+	a.控件置顶的做法;
 
-}
+3.设置界面文字ui和业务逻辑 (中文显示)
 
+4.音乐播放界面
+	a.频谱跳动;
+	b.进度条;
+
+5.文件列表 (需要跳转到视频/音乐/照片界面)
+
+6.SD卡检测功能
+
+8 menu界面：先实现音量调节
+
+9 点击进入视频、音乐、图片界面时，如果没有文件时则在主页提示无文件
+ * 
+*/
 
 int main(int argc, char **argv)
 {
@@ -398,13 +411,10 @@ int main(int argc, char **argv)
 		fbdev_exit();
 		return 0;
 	}
-	
 
 	int check = 0;
 	//check = chip_verify();
-
 	lv_init();
-
     lv_dev_init();
     window_head_init();
     t113_play = tplayer_pthread_create();
@@ -420,8 +430,14 @@ int main(int argc, char **argv)
 	REGISTER_WINDOW(WINDOW_SETTING);
 	REGISTER_WINDOW(WINDOW_PHOTO_LIST);
 	REGISTER_WINDOW(WINDOW_VIDEO_LIST);
+	REGISTER_WINDOW(WINDOW_MENU);
+	REGISTER_WINDOW(WINDOW_POWEROFF);
 	fbdev_set_brightness(255);
     //REGISTER_WINDOW(WINDOW_VERIFY);
+
+	
+	create_window(WINDOW_POWEROFF);
+	create_window(WINDOW_MENU);
 
 #if 1
 	if(check == 0){
@@ -431,16 +447,13 @@ int main(int argc, char **argv)
 	}
 #else
 	create_window(WINDOW_HOME);
-#endif
- 
+#endif	
 
 	window_task_id = lv_task_create(window_task, 15, LV_TASK_PRIO_MID, NULL);
 	//ui_lcd_task_id = lv_task_create(lcd_state_task, 50, LV_TASK_PRIO_MID, NULL);
-	key_task_id = lv_task_create(key_task, 50, LV_TASK_PRIO_MID, NULL);
+	key_task_id = lv_task_create(key_task, 100, LV_TASK_PRIO_MID, NULL);
 	//lcd_mode_set(LCD_STA_DOING, LCD_BRIGHT_REMAIN_TIME);
 	//init_watch_dog(1);
-		
-	// key_callback_register(LV_KEY_1, key_menu_callback);
 	
     while(1) 
 	{
@@ -544,6 +557,15 @@ void lcd_state_task(lv_task_t * param)
 
 #define KEY_NUM			5
 static key_callback  key_func[KEY_NUM] = {NULL};
+static key_callback key_func_backup[KEY_NUM] = {NULL};
+
+void recovery_callback_register(void)
+{
+	for(int i = 0; i < KEY_NUM; i++)
+	{
+		key_func[i] = key_func_backup[i];
+	}
+}
 
 void key_callback_register(lv_key_nj_t key_num, key_callback func)
 {
@@ -551,15 +573,16 @@ void key_callback_register(lv_key_nj_t key_num, key_callback func)
 	{
 		key_func[key_num] = func;
 	}
-
 }
 
 void key_callback_unregister(void)
 {
 	for(int i = 0; i < KEY_NUM; i++)
 	{
+		key_func_backup[i] = key_func[i];
 		key_func[i] = NULL;
 	}
+
 }
 
 #define KEY_STATE_CHECK_PR			0x00
@@ -598,6 +621,14 @@ void key_task(lv_task_t * param)
 			break;
 		case KEY_STATE_WAIT_REL:
 			//等待释放
+
+			key_time = (uint32)(get_diff_time(&key_start, 0)*1000.0);
+			if(key_time > 3000 && key_value == LV_KEY_0)
+			{
+				app_info("key_time = %d\n", key_time);
+				show_window(WINDOW_POWEROFF);
+			}
+				
 			if(key_data.state == LV_INDEV_STATE_REL){	
 				key_state_next = KEY_STATE_RELEASE;
 			}
@@ -605,7 +636,6 @@ void key_task(lv_task_t * param)
 		case KEY_STATE_RELEASE:
 			//按键释放
 			key_state_next = KEY_STATE_CHECK_PR;
-			
 			key_time = (uint32)(get_diff_time(&key_start, 0)*1000.0);
 			app_info("key_time = %d\n", key_time);
 			if(key_time > 3000 && key_value == LV_KEY_0)

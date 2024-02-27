@@ -45,7 +45,7 @@ void lcd_mode_set(int mode, int lcd_time);
 typedef void (*key_callback)(void);
 void key_callback_register(lv_key_nj_t key_num, key_callback func);
 void key_callback_unregister(void);
-
+void recovery_callback_register(void);
 
 #if 0
 LV_FONT_DECLARE(microsoft_halvetica_20_4);

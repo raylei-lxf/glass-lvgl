@@ -1,0 +1,237 @@
+{
+    "lvgl": {
+        "name": "menu.lvgl",
+        "resolution": {
+            "height": 360,
+            "width": 480
+        },
+        "widgets": [
+            {
+                "children": [
+                    {
+                        "children": [
+                            {
+                                "class": "lv_label",
+                                "name": "label_vol",
+                                "styles": [
+                                    {
+                                        "base": "lv_style_transp",
+                                        "text": {
+                                            "color": "#444444"
+                                        },
+                                        "type": "LV_LABEL_STYLE_MAIN"
+                                    }
+                                ],
+                                "widget": "label",
+                                "全局global": true,
+                                "动画速度anim speed": 25,
+                                "可拖动drag": false,
+                                "名字name": "label_vol",
+                                "坐标geometry": {
+                                    "height": 22,
+                                    "width": 54,
+                                    "x": 20,
+                                    "y": 8
+                                },
+                                "对齐align": "Left",
+                                "文本text": "VOL",
+                                "显示visible": true,
+                                "模式mode": "Corp",
+                                "背景绘制body draw": false,
+                                "重着色recolor": false,
+                                "锁住locked": false
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "class": "lv_bar",
+                                        "name": "bar_vol_blue",
+                                        "styles": [
+                                            {
+                                                "base": "lv_style_pretty",
+                                                "body": {
+                                                    "border": {
+                                                        "color": "#cccccc",
+                                                        "opa": 255
+                                                    },
+                                                    "grad_color": "#cccccc",
+                                                    "main_color": "#cccccc",
+                                                    "radius": 0
+                                                },
+                                                "type": "LV_BAR_STYLE_BG"
+                                            }
+                                        ],
+                                        "widget": "bar",
+                                        "值value": 60,
+                                        "全局global": true,
+                                        "动画时间anim time": 0,
+                                        "可拖动drag": false,
+                                        "名字name": "bar_vol_blue",
+                                        "坐标geometry": {
+                                            "height": 21,
+                                            "width": 248,
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "对称绘制sym": false,
+                                        "显示visible": true,
+                                        "范围range": {
+                                            "max": 100,
+                                            "min": 0
+                                        },
+                                        "锁住locked": false
+                                    }
+                                ],
+                                "class": "lv_bar",
+                                "name": "bar_vol_bag",
+                                "styles": [
+                                    {
+                                        "base": "lv_style_pretty",
+                                        "body": {
+                                            "border": {
+                                                "color": "#3244b5",
+                                                "opa": 255
+                                            },
+                                            "grad_color": "#3244b5",
+                                            "main_color": "#3244b5",
+                                            "opa": 0,
+                                            "radius": 0,
+                                            "shadow": {
+                                                "color": "#cccccc"
+                                            }
+                                        },
+                                        "type": "LV_BAR_STYLE_BG"
+                                    }
+                                ],
+                                "widget": "bar",
+                                "值value": 100,
+                                "全局global": true,
+                                "动画时间anim time": 0,
+                                "可拖动drag": false,
+                                "名字name": "bar_vol_bag",
+                                "坐标geometry": {
+                                    "height": 21,
+                                    "width": 248,
+                                    "x": 118,
+                                    "y": 6
+                                },
+                                "对称绘制sym": false,
+                                "显示visible": true,
+                                "范围range": {
+                                    "max": 100,
+                                    "min": 0
+                                },
+                                "锁住locked": false
+                            },
+                            {
+                                "class": "lv_label",
+                                "name": "label_val",
+                                "styles": [
+                                    {
+                                        "base": "lv_style_transp",
+                                        "text": {
+                                            "color": "#444444"
+                                        },
+                                        "type": "LV_LABEL_STYLE_MAIN"
+                                    }
+                                ],
+                                "widget": "label",
+                                "全局global": true,
+                                "动画速度anim speed": 25,
+                                "可拖动drag": false,
+                                "名字name": "label_val",
+                                "坐标geometry": {
+                                    "height": 22,
+                                    "width": 69,
+                                    "x": 388,
+                                    "y": 7
+                                },
+                                "对齐align": "Left",
+                                "文本text": "100",
+                                "显示visible": true,
+                                "模式mode": "Corp",
+                                "背景绘制body draw": false,
+                                "重着色recolor": false,
+                                "锁住locked": false
+                            }
+                        ],
+                        "class": "lv_cont",
+                        "name": "cont_botton",
+                        "styles": [
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "border": {
+                                        "color": "#ffffff"
+                                    },
+                                    "grad_color": "#ffffff",
+                                    "radius": 0,
+                                    "shadow": {
+                                        "color": "#ffffff"
+                                    }
+                                },
+                                "type": "LV_CONT_STYLE_MAIN"
+                            }
+                        ],
+                        "widget": "cont",
+                        "全局global": true,
+                        "可拖动drag": false,
+                        "名字name": "cont_botton",
+                        "坐标geometry": {
+                            "height": 33,
+                            "width": 473,
+                            "x": 0,
+                            "y": 325
+                        },
+                        "布局layout": "Off",
+                        "显示visible": true,
+                        "自动调整策略fit": {
+                            "cont_bottom_fit": 0,
+                            "cont_left_fit": 0,
+                            "cont_right_fit": 0,
+                            "cont_top_fit": 0
+                        },
+                        "锁住locked": false
+                    }
+                ],
+                "class": "lv_cont",
+                "name": "cont_main",
+                "styles": [
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "border": {
+                                "opa": 0,
+                                "width": 1
+                            },
+                            "grad_color": "#f4f4f4",
+                            "main_color": "#f4f4f4",
+                            "opa": 0,
+                            "radius": 0
+                        },
+                        "type": "LV_CONT_STYLE_MAIN"
+                    }
+                ],
+                "widget": "cont",
+                "全局global": true,
+                "可拖动drag": false,
+                "名字name": "cont_main",
+                "坐标geometry": {
+                    "height": 360,
+                    "width": 480,
+                    "x": 0,
+                    "y": 0
+                },
+                "布局layout": "Off",
+                "显示visible": true,
+                "自动调整策略fit": {
+                    "cont_bottom_fit": 0,
+                    "cont_left_fit": 0,
+                    "cont_right_fit": 0,
+                    "cont_top_fit": 0
+                },
+                "锁住locked": false
+            }
+        ]
+    }
+}

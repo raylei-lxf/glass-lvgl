@@ -23,6 +23,12 @@
         },
         {
             "name": "photo_list.lvgl"
+        },
+        {
+            "name": "menu.lvgl"
+        },
+        {
+            "name": "poweroff.lvgl"
         }
     ],
     "fonts": [
@@ -129,6 +135,10 @@
         },
         {
             "colorFormat": "ARGB8888",
+            "name": "tutest.jpg"
+        },
+        {
+            "colorFormat": "ARGB8888",
             "name": "video.png"
         },
         {
@@ -158,7 +168,7 @@
     ],
     "lvgl": {
         "name": "xrm",
-        "path": "E:/T133/03_AWEI/littlevgl/littlevgl/xrm/src/evba/designer",
+        "path": "U:/work/tina-t133/package/gui/lvgl-glass/xrm/src/evba/designer",
         "resolution": {
             "height": 360,
             "width": 480
