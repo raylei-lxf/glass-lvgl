@@ -29,6 +29,9 @@
         },
         {
             "name": "poweroff.lvgl"
+        },
+        {
+            "name": "err_tip.lvgl"
         }
     ],
     "fonts": [

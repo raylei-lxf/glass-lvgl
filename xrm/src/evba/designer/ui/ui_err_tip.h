@@ -1,5 +1,5 @@
-#ifndef __UI_HOME_H__
-#define __UI_HOME_H__
+#ifndef __UI_ERR_TIP_H__
+#define __UI_ERR_TIP_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,31 +18,16 @@ typedef struct
 {
 	lv_obj_t *parent;
 	lv_obj_t *cont_main;
-	lv_obj_t *img_player;
-	lv_obj_t *label_player;
-	lv_obj_t *img_photo;
-	lv_obj_t *img_music;
-	lv_obj_t *img_file;
-	lv_obj_t *img_setting;
-	lv_obj_t *img_phone;
-	lv_obj_t *label_photo;
-	lv_obj_t *label_music;
-	lv_obj_t *label_file;
-	lv_obj_t *label_setting;
-	lv_obj_t *label_phone;
-	lv_obj_t *cont_tip;
-	lv_obj_t *label_tip_title;
-	lv_obj_t *cont_tip_line;
-	lv_obj_t *img_tip;
-	lv_obj_t *label_tip_content;
-} home_ui_t;
+	lv_obj_t *cont_1;
+	lv_obj_t *label_1;
+} err_tip_ui_t;
 
 
 /******************************************************************************
 *    functions
 ******************************************************************************/
-void home_ui_create(home_ui_t *ui);
-void home_ui_destory(home_ui_t *ui);
+void err_tip_ui_create(err_tip_ui_t *ui);
+void err_tip_ui_destory(err_tip_ui_t *ui);
 
 #ifdef __cplusplus
 }

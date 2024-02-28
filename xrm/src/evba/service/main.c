@@ -432,10 +432,13 @@ int main(int argc, char **argv)
 	REGISTER_WINDOW(WINDOW_VIDEO_LIST);
 	REGISTER_WINDOW(WINDOW_MENU);
 	REGISTER_WINDOW(WINDOW_POWEROFF);
+	REGISTER_WINDOW(WINDOW_ERR_TIP);
+	
 	fbdev_set_brightness(255);
     //REGISTER_WINDOW(WINDOW_VERIFY);
 
 	
+	create_window(WINDOW_ERR_TIP);
 	create_window(WINDOW_POWEROFF);
 	create_window(WINDOW_MENU);
 
@@ -558,21 +561,32 @@ void lcd_state_task(lv_task_t * param)
 #define KEY_NUM			5
 static key_callback  key_func[KEY_NUM] = {NULL};
 static key_callback key_func_backup[KEY_NUM] = {NULL};
+static int key_mode[KEY_NUM] = {0};
 
 void recovery_callback_register(void)
 {
 	for(int i = 0; i < KEY_NUM; i++)
 	{
 		key_func[i] = key_func_backup[i];
+		key_mode[i] = 0;
 	}
 }
 
+//注册时，按键模式默认为0；
 void key_callback_register(lv_key_nj_t key_num, key_callback func)
 {
 	if(key_num < KEY_NUM)
 	{
 		key_func[key_num] = func;
+		key_mode[key_num] = 0;
 	}
+}
+/**
+ * mode:0 按键释放时才执行按键函数，1：按键按住一直执行按键函数
+*/
+void key_mode_set(int key_num, int mode)
+{
+	key_mode[key_num] = mode;
 }
 
 void key_callback_unregister(void)
@@ -628,6 +642,12 @@ void key_task(lv_task_t * param)
 				app_info("key_time = %d\n", key_time);
 				show_window(WINDOW_POWEROFF);
 			}
+
+			if(key_mode[key_value] == 1)
+			{
+				app_info("\n");
+				key_func[key_value]();
+			}
 				
 			if(key_data.state == LV_INDEV_STATE_REL){	
 				key_state_next = KEY_STATE_RELEASE;
@@ -643,7 +663,7 @@ void key_task(lv_task_t * param)
 				power_off_set(0);
 				break;
 			}
-			if(key_func[key_value])
+			if(key_func[key_value] && key_mode[key_value] == 0)
 			{
 				app_info("\n");
 				key_func[key_value]();

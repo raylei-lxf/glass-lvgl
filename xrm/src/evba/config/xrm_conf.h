@@ -32,7 +32,8 @@ typedef enum
     WINDOW_PHOTO_LIST,
     WINDOW_VIDEO_LIST,  
     WINDOW_MENU,
-    WINDOW_POWEROFF,  
+    WINDOW_POWEROFF,
+    WINDOW_ERR_TIP,
     WINDOW_MAX
 } window_id_t;
 

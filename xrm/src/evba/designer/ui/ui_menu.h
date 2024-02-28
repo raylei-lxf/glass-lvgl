@@ -20,9 +20,8 @@ typedef struct
 	lv_obj_t *cont_main;
 	lv_obj_t *cont_botton;
 	lv_obj_t *label_vol;
-	lv_obj_t *bar_vol_bag;
-	lv_obj_t *bar_vol_blue;
 	lv_obj_t *label_val;
+	lv_obj_t *bar_vol_blue;
 } menu_ui_t;
 
 
