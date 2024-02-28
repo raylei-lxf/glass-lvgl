@@ -88,8 +88,8 @@
                         "可拖动drag": false,
                         "名字name": "img_photo",
                         "坐标geometry": {
-                            "height": 44,
-                            "width": 70,
+                            "height": 360,
+                            "width": 480,
                             "x": 0,
                             "y": 0
                         },

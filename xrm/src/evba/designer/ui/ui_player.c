@@ -11,8 +11,8 @@
 ******************************************************************************/
 static lv_style_t style0_cont_main;
 static lv_style_t style0_cont_par;
-static lv_style_t style0_label_player_total;
-static lv_style_t style0_bar_player_pro;
+static lv_style_t style0_bar_video;
+static lv_style_t style1_bar_video;
 
 
 /******************************************************************************
@@ -48,35 +48,44 @@ void player_ui_create(player_ui_t *ui)
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_LABEL
-	ui->label_1 = lv_label_create(ui->cont_par, NULL);
-	lv_label_set_text(ui->label_1, "00:16");
-	lv_label_set_long_mode(ui->label_1, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_1, 13, 0);
-	lv_obj_set_size(ui->label_1, 48, 22);
+	ui->label_player_current = lv_label_create(ui->cont_par, NULL);
+	lv_label_set_text(ui->label_player_current, "00:16");
+	lv_label_set_long_mode(ui->label_player_current, LV_LABEL_LONG_CROP);
+	lv_obj_set_pos(ui->label_player_current, 12, 0);
+	lv_obj_set_size(ui->label_player_current, 92, 22);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LABEL
-	lv_style_copy(&style0_label_player_total, &lv_style_transp);
-
 	ui->label_player_total = lv_label_create(ui->cont_par, NULL);
 	lv_label_set_text(ui->label_player_total, "02:58");
 	lv_label_set_long_mode(ui->label_player_total, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_player_total, 415, 0);
-	lv_obj_set_size(ui->label_player_total, 50, 25);
-	lv_label_set_style(ui->label_player_total, LV_LABEL_STYLE_MAIN, &style0_label_player_total);
+	lv_obj_set_pos(ui->label_player_total, 370, 0);
+	lv_obj_set_size(ui->label_player_total, 95, 25);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_BAR
-	lv_style_copy(&style0_bar_player_pro, &lv_style_pretty);
-	style0_bar_player_pro.body.grad_color = lv_color_hex(0xffffff);
-	style0_bar_player_pro.body.radius = 0;
+	lv_style_copy(&style0_bar_video, &lv_style_pretty);
+	style0_bar_video.body.grad_color = lv_color_hex(0xffffff);
+	style0_bar_video.body.radius = 0;
+	style0_bar_video.body.border.width = 0;
+	style0_bar_video.body.border.opa = 255;
 
-	ui->bar_player_pro = lv_bar_create(ui->cont_par, NULL);
-	lv_obj_set_pos(ui->bar_player_pro, 17, 20);
-	lv_obj_set_size(ui->bar_player_pro, 438, 6);
-	lv_bar_set_range(ui->bar_player_pro, 0, 100);
-	lv_bar_set_value(ui->bar_player_pro, 0, LV_ANIM_OFF);
-	lv_bar_set_style(ui->bar_player_pro, LV_BAR_STYLE_BG, &style0_bar_player_pro);
+	lv_style_copy(&style1_bar_video, &lv_style_pretty_color);
+	style1_bar_video.body.main_color = lv_color_hex(0xffff00);
+	style1_bar_video.body.grad_color = lv_color_hex(0xffff00);
+	style1_bar_video.body.radius = 0;
+	style1_bar_video.body.border.color = lv_color_hex(0xffff00);
+	style1_bar_video.body.border.width = 0;
+	style1_bar_video.body.border.opa = 255;
+
+	ui->bar_video = lv_bar_create(ui->cont_main, NULL);
+	lv_obj_set_pos(ui->bar_video, 9, 342);
+	lv_obj_set_size(ui->bar_video, 450, 15);
+	lv_bar_set_range(ui->bar_video, 20, 100);
+	lv_bar_set_value(ui->bar_video, 20, LV_ANIM_ON);
+	lv_bar_set_anim_time(ui->bar_video, 1000);
+	lv_bar_set_style(ui->bar_video, LV_BAR_STYLE_BG, &style0_bar_video);
+	lv_bar_set_style(ui->bar_video, LV_BAR_STYLE_INDIC, &style1_bar_video);
 #endif // LV_USE_BAR
 
 }

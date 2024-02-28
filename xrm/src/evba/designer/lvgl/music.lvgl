@@ -84,84 +84,6 @@
                         "锁住locked": false
                     },
                     {
-                        "children": [
-                            {
-                                "class": "lv_cont",
-                                "name": "cont_music_process_bak",
-                                "styles": [
-                                    {
-                                        "base": "lv_style_pretty",
-                                        "body": {
-                                            "border": {
-                                                "color": "#ffffff",
-                                                "opa": 255,
-                                                "width": 0
-                                            },
-                                            "grad_color": "#ffffff",
-                                            "radius": 0
-                                        },
-                                        "type": "LV_CONT_STYLE_MAIN"
-                                    }
-                                ],
-                                "widget": "cont",
-                                "全局global": true,
-                                "可拖动drag": false,
-                                "名字name": "cont_music_process_bak",
-                                "坐标geometry": {
-                                    "height": 4,
-                                    "width": 215,
-                                    "x": 0,
-                                    "y": 0
-                                },
-                                "布局layout": "Off",
-                                "显示visible": true,
-                                "自动调整策略fit": {
-                                    "cont_bottom_fit": 0,
-                                    "cont_left_fit": 0,
-                                    "cont_right_fit": 0,
-                                    "cont_top_fit": 0
-                                },
-                                "锁住locked": false
-                            }
-                        ],
-                        "class": "lv_cont",
-                        "name": "cont_music_process",
-                        "styles": [
-                            {
-                                "base": "lv_style_pretty",
-                                "body": {
-                                    "border": {
-                                        "color": "#ffffff",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#ffffff",
-                                    "radius": 0
-                                },
-                                "type": "LV_CONT_STYLE_MAIN"
-                            }
-                        ],
-                        "widget": "cont",
-                        "全局global": true,
-                        "可拖动drag": false,
-                        "名字name": "cont_music_process",
-                        "坐标geometry": {
-                            "height": 4,
-                            "width": 215,
-                            "x": 240,
-                            "y": 300
-                        },
-                        "布局layout": "Off",
-                        "显示visible": true,
-                        "自动调整策略fit": {
-                            "cont_bottom_fit": 0,
-                            "cont_left_fit": 0,
-                            "cont_right_fit": 0,
-                            "cont_top_fit": 0
-                        },
-                        "锁住locked": false
-                    },
-                    {
                         "class": "lv_label",
                         "name": "label_music_start",
                         "widget": "label",
@@ -170,9 +92,9 @@
                         "可拖动drag": false,
                         "名字name": "label_music_start",
                         "坐标geometry": {
-                            "height": 21,
-                            "width": 48,
-                            "x": 238,
+                            "height": 23,
+                            "width": 77,
+                            "x": 223,
                             "y": 278
                         },
                         "对齐align": "Left",
@@ -193,9 +115,9 @@
                         "名字name": "label_music_totle",
                         "坐标geometry": {
                             "height": 23,
-                            "width": 47,
-                            "x": 416,
-                            "y": 280
+                            "width": 81,
+                            "x": 393,
+                            "y": 278
                         },
                         "对齐align": "Left",
                         "文本text": "02:58",
@@ -2533,6 +2455,34 @@
                         "name": "list_mp3",
                         "styles": [
                             {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6",
+                                    "radius": 0,
+                                    "shadow": {
+                                        "color": "#4456c6"
+                                    }
+                                },
+                                "type": "LV_LIST_STYLE_SCRL"
+                            },
+                            {
+                                "base": "lv_style_transp_fit",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6"
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6"
+                                },
+                                "type": "LV_LIST_STYLE_BG"
+                            },
+                            {
                                 "body": {
                                     "border": {
                                         "color": "#000000",
@@ -2573,32 +2523,18 @@
                                 "type": "LV_LIST_STYLE_EDGE_FLASH"
                             },
                             {
-                                "base": "lv_style_transp_fit",
+                                "base": "lv_style_btn_pr",
                                 "body": {
                                     "border": {
-                                        "color": "#4456c6"
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6"
-                                },
-                                "type": "LV_LIST_STYLE_BG"
-                            },
-                            {
-                                "base": "lv_style_pretty",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6",
+                                        "color": "#101d6b",
                                         "opa": 255,
                                         "width": 0
                                     },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6",
-                                    "radius": 0,
-                                    "shadow": {
-                                        "color": "#4456c6"
-                                    }
+                                    "grad_color": "#101d6b",
+                                    "main_color": "#101d6b",
+                                    "radius": 0
                                 },
-                                "type": "LV_LIST_STYLE_SCRL"
+                                "type": "LV_LIST_STYLE_BTN_PR"
                             },
                             {
                                 "base": "lv_style_btn_rel",
@@ -2613,20 +2549,6 @@
                                     "radius": 0
                                 },
                                 "type": "LV_LIST_STYLE_BTN_REL"
-                            },
-                            {
-                                "base": "lv_style_btn_pr",
-                                "body": {
-                                    "border": {
-                                        "color": "#101d6b",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#101d6b",
-                                    "main_color": "#101d6b",
-                                    "radius": 0
-                                },
-                                "type": "LV_LIST_STYLE_BTN_PR"
                             }
                         ],
                         "widget": "list",
@@ -2645,6 +2567,58 @@
                         ],
                         "滚动传播scroll propagation": false,
                         "边缘闪烁edge flash": false,
+                        "锁住locked": false
+                    },
+                    {
+                        "class": "lv_bar",
+                        "name": "bar_music",
+                        "styles": [
+                            {
+                                "base": "lv_style_pretty_color",
+                                "body": {
+                                    "border": {
+                                        "color": "#ffff00",
+                                        "opa": 255,
+                                        "part": 0,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#ffff00",
+                                    "main_color": "#ffff00",
+                                    "radius": 0
+                                },
+                                "type": "LV_BAR_STYLE_INDIC"
+                            },
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "border": {
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#ffffff",
+                                    "radius": 0
+                                },
+                                "type": "LV_BAR_STYLE_BG"
+                            }
+                        ],
+                        "widget": "bar",
+                        "值value": 0,
+                        "全局global": true,
+                        "动画时间anim time": 1000,
+                        "可拖动drag": false,
+                        "名字name": "bar_music",
+                        "坐标geometry": {
+                            "height": 15,
+                            "width": 251,
+                            "x": 223,
+                            "y": 304
+                        },
+                        "对称绘制sym": false,
+                        "显示visible": true,
+                        "范围range": {
+                            "max": 100,
+                            "min": 0
+                        },
                         "锁住locked": false
                     }
                 ],

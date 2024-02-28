@@ -10,6 +10,7 @@
 #include <string.h>
 #include "player_int.h"
 #include "debug.h"
+
 /******************************************************************************
 *    datas
 ******************************************************************************/
@@ -23,8 +24,13 @@ typedef struct
 	player_ui_t ui;
 	player_ue_t ue;
 } player_para_t;
+
 static player_para_t *para = NULL;
+static int video_total_time = 0;
+static int video_current_time = 0;
+
 extern player_t *t113_play;
+extern void time_int_to_string(unsigned int int_time, char *time_str);
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -147,6 +153,34 @@ static void clean_screen(player_ui_t *ui)
 	lv_cont_set_style(ui->cont_main, LV_CONT_STYLE_MAIN, &cont_style);
 }
 
+lv_task_t *player_task_id = NULL;
+
+static void player_ui_task(struct _lv_task_t *param)
+{
+	player_ui_t *ui = (player_ui_t *)param->user_data;
+	int current_pos = 0;
+	int text_current[100] = { 0 };
+    playerStatus status = tplayer_get_status(t113_play);
+    if (status == PLAY_STATUS) {
+    	tplayer_get_current_pos(t113_play, &current_pos);
+
+	    time_int_to_string(current_pos, text_current);
+	    lv_label_set_text(ui->label_player_current, text_current);
+        // bar_value = current_pos * 100 / video_total_time;
+        // app_info("current_pos = %d,video_total_time = %d, bar_value = %d\n",current_pos, video_total_time, bar_value);
+        lv_bar_set_value(ui->bar_video, current_pos * 100 / video_total_time, LV_ANIM_ON); 
+    } else {
+        lv_bar_set_value(ui->bar_video, 100, LV_ANIM_ON);
+    }
+}
+
+static int video_bar(player_ui_t *ui)
+{
+    player_task_id = lv_task_create(player_ui_task, 30, LV_TASK_PRIO_LOW, (void *)ui);    
+
+    return 0;
+}
+
 static int player_create(void)
 {
 	para = (player_para_t *)malloc(sizeof(player_para_t));
@@ -174,10 +208,17 @@ static int player_create(void)
 //	lv_obj_set_hidden(para->ui.cont_par, 0);
 
 	if (t113_play != NULL /*&& access(player_name , F_OK) != -1*/) {
+        int duration = 0;
+        char duration_c[100] = { 0 };
 		app_info("..........%s ", player_name);
 		tplayer_play_url(t113_play, player_name);
 		tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
 		tplayer_play(t113_play);
+        tplayer_get_duration(t113_play, &duration);
+        video_total_time = duration;
+        time_int_to_string(duration, duration_c);
+        lv_label_set_text(para->ui.label_player_total, duration_c);
+        video_bar(&para->ui);
 	}
     #endif
     key_callback_register(LV_KEY_4, key_back_callback);
@@ -191,7 +232,12 @@ static int player_create(void)
 
 static int player_destory(void)
 {
-	 tplayer_stop(t113_play);
+    if (player_task_id != NULL) {
+        lv_task_del(player_task_id);
+    }
+    if (t113_play != NULL) {
+	    tplayer_stop(t113_play);
+    }
 	key_callback_unregister();
 	player_ue_destory(para);
 	player_ui_destory(&para->ui);
@@ -203,12 +249,7 @@ static int player_destory(void)
         free(filePaths[i]);
     }
 	fileCount = 0;
-    #if 0
-    if (t113_play != NULL) {
-	    tplayer_pause(t113_play);
-	    tplayer_exit(t113_play);
-    }
-    #endif
+
 	return 0;
 }
 

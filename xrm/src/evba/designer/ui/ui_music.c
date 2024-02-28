@@ -12,8 +12,6 @@
 static lv_style_t style0_cont_main;
 static lv_style_t style0_cont_1;
 static lv_style_t style0_cont_music_list;
-static lv_style_t style0_cont_music_process;
-static lv_style_t style0_cont_music_process_bak;
 static lv_style_t style0_cont_5;
 static lv_style_t style0_cont_music_1;
 static lv_style_t style0_cont_music_1_2;
@@ -80,6 +78,8 @@ static lv_style_t style1_list_mp3;
 static lv_style_t style3_list_mp3;
 static lv_style_t style4_list_mp3;
 static lv_style_t style5_list_mp3;
+static lv_style_t style0_bar_music;
+static lv_style_t style1_bar_music;
 
 static void *img_2_xunhuanmoshi_png = NULL;
 
@@ -134,50 +134,20 @@ void music_ui_create(music_ui_t *ui)
 	lv_cont_set_style(ui->cont_music_list, LV_CONT_STYLE_MAIN, &style0_cont_music_list);
 #endif // LV_USE_CONT
 
-#ifdef LV_USE_CONT
-	lv_style_copy(&style0_cont_music_process, &lv_style_pretty);
-	style0_cont_music_process.body.grad_color = lv_color_hex(0xffffff);
-	style0_cont_music_process.body.radius = 0;
-	style0_cont_music_process.body.border.color = lv_color_hex(0xffffff);
-	style0_cont_music_process.body.border.width = 0;
-	style0_cont_music_process.body.border.opa = 255;
-
-	ui->cont_music_process = lv_cont_create(ui->cont_main, NULL);
-	lv_obj_set_pos(ui->cont_music_process, 240, 300);
-	lv_obj_set_size(ui->cont_music_process, 215, 4);
-	lv_cont_set_fit4(ui->cont_music_process, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
-	lv_cont_set_style(ui->cont_music_process, LV_CONT_STYLE_MAIN, &style0_cont_music_process);
-#endif // LV_USE_CONT
-
-#ifdef LV_USE_CONT
-	lv_style_copy(&style0_cont_music_process_bak, &lv_style_pretty);
-	style0_cont_music_process_bak.body.grad_color = lv_color_hex(0xffffff);
-	style0_cont_music_process_bak.body.radius = 0;
-	style0_cont_music_process_bak.body.border.color = lv_color_hex(0xffffff);
-	style0_cont_music_process_bak.body.border.width = 0;
-	style0_cont_music_process_bak.body.border.opa = 255;
-
-	ui->cont_music_process_bak = lv_cont_create(ui->cont_music_process, NULL);
-	lv_obj_set_pos(ui->cont_music_process_bak, 0, 0);
-	lv_obj_set_size(ui->cont_music_process_bak, 215, 4);
-	lv_cont_set_fit4(ui->cont_music_process_bak, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
-	lv_cont_set_style(ui->cont_music_process_bak, LV_CONT_STYLE_MAIN, &style0_cont_music_process_bak);
-#endif // LV_USE_CONT
-
 #ifdef LV_USE_LABEL
 	ui->label_music_start = lv_label_create(ui->cont_main, NULL);
 	lv_label_set_text(ui->label_music_start, "00:16");
 	lv_label_set_long_mode(ui->label_music_start, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_music_start, 238, 278);
-	lv_obj_set_size(ui->label_music_start, 48, 21);
+	lv_obj_set_pos(ui->label_music_start, 223, 278);
+	lv_obj_set_size(ui->label_music_start, 77, 23);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LABEL
 	ui->label_music_totle = lv_label_create(ui->cont_main, NULL);
 	lv_label_set_text(ui->label_music_totle, "02:58");
 	lv_label_set_long_mode(ui->label_music_totle, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_music_totle, 416, 280);
-	lv_obj_set_size(ui->label_music_totle, 47, 23);
+	lv_obj_set_pos(ui->label_music_totle, 393, 278);
+	lv_obj_set_size(ui->label_music_totle, 81, 23);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_CONT
@@ -1133,6 +1103,32 @@ void music_ui_create(music_ui_t *ui)
 	lv_list_set_style(ui->list_mp3, LV_LIST_STYLE_BTN_REL, &style4_list_mp3);
 	lv_list_set_style(ui->list_mp3, LV_LIST_STYLE_BTN_PR, &style5_list_mp3);
 #endif // LV_USE_LIST
+
+#ifdef LV_USE_BAR
+	lv_style_copy(&style0_bar_music, &lv_style_pretty);
+	style0_bar_music.body.grad_color = lv_color_hex(0xffffff);
+	style0_bar_music.body.radius = 0;
+	style0_bar_music.body.border.width = 0;
+	style0_bar_music.body.border.opa = 255;
+
+	lv_style_copy(&style1_bar_music, &lv_style_pretty_color);
+	style1_bar_music.body.main_color = lv_color_hex(0xffff00);
+	style1_bar_music.body.grad_color = lv_color_hex(0xffff00);
+	style1_bar_music.body.radius = 0;
+	style1_bar_music.body.border.color = lv_color_hex(0xffff00);
+	style1_bar_music.body.border.width = 0;
+	style1_bar_music.body.border.part = 0;
+	style1_bar_music.body.border.opa = 255;
+
+	ui->bar_music = lv_bar_create(ui->cont_main, NULL);
+	lv_obj_set_pos(ui->bar_music, 223, 304);
+	lv_obj_set_size(ui->bar_music, 251, 15);
+	lv_bar_set_range(ui->bar_music, 0, 100);
+	lv_bar_set_value(ui->bar_music, 0, LV_ANIM_ON);
+	lv_bar_set_anim_time(ui->bar_music, 1000);
+	lv_bar_set_style(ui->bar_music, LV_BAR_STYLE_BG, &style0_bar_music);
+	lv_bar_set_style(ui->bar_music, LV_BAR_STYLE_INDIC, &style1_bar_music);
+#endif // LV_USE_BAR
 
 }
 
