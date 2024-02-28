@@ -454,7 +454,7 @@ int main(int argc, char **argv)
 
 	window_task_id = lv_task_create(window_task, 15, LV_TASK_PRIO_MID, NULL);
 	//ui_lcd_task_id = lv_task_create(lcd_state_task, 50, LV_TASK_PRIO_MID, NULL);
-	key_task_id = lv_task_create(key_task, 100, LV_TASK_PRIO_MID, NULL);
+	key_task_id = lv_task_create(key_task, 50, LV_TASK_PRIO_MID, NULL);
 	//lcd_mode_set(LCD_STA_DOING, LCD_BRIGHT_REMAIN_TIME);
 	//init_watch_dog(1);
 	

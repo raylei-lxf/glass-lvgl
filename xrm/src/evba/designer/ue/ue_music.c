@@ -194,9 +194,15 @@ static music_key_canel_callback(void)
     }
 }
 
-static music_key_left_callback(void)
+static void music_key_left_callback(void)
 {
     music_ui_t *ui = &para->ui;
+
+    if(music_Count <= 0)
+    {
+        return;
+    }
+
     music_set_list_unfocus(ui->list_mp3, m_foucs_music);
 
     m_foucs_music++;
@@ -211,11 +217,16 @@ static music_key_left_callback(void)
     }
 }
 
-static music_key_right_callback(void)
+static void music_key_right_callback(void)
 {
     music_ui_t *ui = &para->ui;
-    music_set_list_unfocus(ui->list_mp3, m_foucs_music);
 
+    if(music_Count <= 0)
+    {
+        return;
+    }
+
+     music_set_list_unfocus(ui->list_mp3, m_foucs_music);
     m_foucs_music--;
     if (m_foucs_music < 0) {
         m_foucs_music = music_Count - 1;

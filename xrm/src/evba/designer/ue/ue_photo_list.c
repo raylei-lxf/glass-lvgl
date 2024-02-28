@@ -192,8 +192,14 @@ static void photo_key_canel_callback(void)
 static void photo_key_left_callback(void)
 {
     photo_list_ui_t *ui = &para->ui;
-    photo_set_list_unfocus(ui->list_photo, m_photo_foucs);
+  
 
+    if(photo_count <= 0)
+    {
+        return;
+    }
+
+    photo_set_list_unfocus(ui->list_photo, m_photo_foucs);
     m_photo_foucs++;
     if (m_photo_foucs < 0) {
         m_photo_foucs = photo_count - 1;
@@ -209,8 +215,12 @@ static void photo_key_left_callback(void)
 static void photo_key_right_callback(void)
 {
 	photo_list_ui_t *ui = &para->ui;
-    photo_set_list_unfocus(ui->list_photo, m_photo_foucs);
-
+   
+    if(photo_count <= 0)
+    {
+        return;
+    }
+     photo_set_list_unfocus(ui->list_photo, m_photo_foucs);
     m_photo_foucs--;
     if (m_photo_foucs < 0) {
         m_photo_foucs = photo_count - 1;
