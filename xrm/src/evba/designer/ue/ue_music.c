@@ -77,7 +77,7 @@ static int m_foucs_music = 0;
 static int music_Count = 0;
 static char* music_Paths[MAX_MUSIC];
 static char music_name[512] = { 0 };
-static int music_is_playing = 0;
+static char music_name_old[512] = { 0 };
 
 int get_music_list(void)
 {
@@ -176,7 +176,7 @@ void music_set_list_focus(lv_obj_t *list, int index)
 
 static void music_key_confire_callback(void)
 {
-    if (music_is_playing == 0 && t113_play != NULL && access(music_name, F_OK) != -1) {
+    if (t113_play != NULL && access(music_name, F_OK) != -1 && strcmp(music_name_old, music_name) != 0 ) {
         int duration_c[100] = { 0 };
         int total_time = 0;
         music_ui_t *ui = &para->ui;
@@ -186,16 +186,20 @@ static void music_key_confire_callback(void)
         time_int_to_string(total_time, duration_c); 
         lv_label_set_text(ui->label_music_totle, duration_c);
         music_total_time = total_time;
+        memcpy(music_name, music_name_old, sizeof(music_name));
         app_info("................%s, music_total_time = %d, duration_c = %s\n", music_name, music_total_time, duration_c);
-        music_is_playing = 1;
-    } else if (music_is_playing == 1) {
-        
+    } else {
+        playerStatus status = tplayer_get_status(t113_play);
+        if (status == PLAY_STATUS) {
+            tplayer_pause(t113_play);
+        } else if (status == PAUSE_STATUS) {
+            tplayer_play(t113_play);
+        }
     }
 }
 
 static void music_key_canel_callback(void)
 {
-    app_info("music_is_playing = %d\n", music_is_playing);
   	switch_window(WINDOW_MUSIC, WINDOW_HOME);
 }
 
@@ -330,7 +334,6 @@ static int music_destory(void)
     }
     m_foucs_music = 0;
     music_Count = 0;
-    music_is_playing = 0;
 
     music_unload_image();
 	return 0;
