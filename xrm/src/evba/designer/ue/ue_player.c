@@ -160,23 +160,31 @@ static void player_ui_task(struct _lv_task_t *param)
 	player_ui_t *ui = (player_ui_t *)param->user_data;
 	int current_pos = 0;
 	int text_current[100] = { 0 };
+    int bar_value = 0;
     playerStatus status = tplayer_get_status(t113_play);
     if (status == PLAY_STATUS) {
+        
     	tplayer_get_current_pos(t113_play, &current_pos);
-
+        bar_value = current_pos * 1000 / video_total_time;
+        if (bar_value < 10) {
+            bar_value = 10;
+        }
 	    time_int_to_string(current_pos, text_current);
 	    lv_label_set_text(ui->label_player_current, text_current);
         // bar_value = current_pos * 100 / video_total_time;
         // app_info("current_pos = %d,video_total_time = %d, bar_value = %d\n",current_pos, video_total_time, bar_value);
-        lv_bar_set_value(ui->bar_video, current_pos * 100 / video_total_time, LV_ANIM_ON); 
-    } else {
-        lv_bar_set_value(ui->bar_video, 100, LV_ANIM_ON);
+        lv_bar_set_value(ui->bar_video, bar_value, LV_ANIM_ON); 
+    } else if (status == COMPLETE_STATUS){
+        lv_bar_set_value(ui->bar_video, 1000, LV_ANIM_ON);
+    } else if (status == PAUSE_STATUS) {
+    } else if (status == STOP_STATUS) {
     }
+
 }
 
 static int video_bar(player_ui_t *ui)
 {
-    player_task_id = lv_task_create(player_ui_task, 30, LV_TASK_PRIO_LOW, (void *)ui);    
+    player_task_id = lv_task_create(player_ui_task, 200, LV_TASK_PRIO_LOW, (void *)ui);    
 
     return 0;
 }

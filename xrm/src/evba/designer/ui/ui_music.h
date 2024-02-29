@@ -21,7 +21,6 @@ typedef struct
 	lv_obj_t *cont_1;
 	lv_obj_t *cont_music_list;
 	lv_obj_t *label_music_start;
-	lv_obj_t *label_music_totle;
 	lv_obj_t *cont_5;
 	lv_obj_t *img_2;
 	lv_obj_t *label_4;
@@ -87,6 +86,7 @@ typedef struct
 	lv_obj_t *cont_music_5_1;
 	lv_obj_t *list_mp3;
 	lv_obj_t *bar_music;
+	lv_obj_t *label_music_totle;
 } music_ui_t;
 
 

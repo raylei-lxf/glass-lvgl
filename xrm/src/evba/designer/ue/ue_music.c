@@ -30,9 +30,11 @@ static music_para_t *para = NULL;
 static *music_img_src[2] = { NULL };
 static *music_img_srcxz[2] = { NULL };
 
+static int music_total_time = 0;
+static int music_current_time = 0;
 /**********other***************/
 extern player_t *t113_play;
-
+extern void time_int_to_string(unsigned int int_time, char *time_str);
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -113,7 +115,6 @@ int get_music_list(void)
                     music_Count++;
                     if (music_Count >= MAX_MUSIC) {
                         app_info("file max\n");
-             tplayer_init(t113_play, CEDARX_PLAYER);           break;
                     }
                 }
             }
@@ -173,36 +174,37 @@ void music_set_list_focus(lv_obj_t *list, int index)
     app_info("music_name = %s\n", music_name);
 }
 
-static music_key_confire_callback(void)
+static void music_key_confire_callback(void)
 {
-    if (t113_play != NULL && access(music_name, F_OK) != -1) {
-        app_info("................%s\n", music_name);
+    if (music_is_playing == 0 && t113_play != NULL && access(music_name, F_OK) != -1) {
+        int duration_c[100] = { 0 };
+        int total_time = 0;
+        music_ui_t *ui = &para->ui;
         tplayer_play_url(t113_play, music_name);
         tplayer_play(t113_play);
+        tplayer_get_duration(t113_play, &total_time);
+        time_int_to_string(total_time, duration_c); 
+        lv_label_set_text(ui->label_music_totle, duration_c);
+        music_total_time = total_time;
+        app_info("................%s, music_total_time = %d, duration_c = %s\n", music_name, music_total_time, duration_c);
         music_is_playing = 1;
+    } else if (music_is_playing == 1) {
+        
     }
 }
 
-static music_key_canel_callback(void)
+static void music_key_canel_callback(void)
 {
     app_info("music_is_playing = %d\n", music_is_playing);
-    if (music_is_playing == 0) {
-    	switch_window(WINDOW_MUSIC, WINDOW_HOME);
-    } else {
-        music_is_playing = 0;
-        tplayer_stop(t113_play);
-    }
+  	switch_window(WINDOW_MUSIC, WINDOW_HOME);
 }
 
 static void music_key_left_callback(void)
 {
     music_ui_t *ui = &para->ui;
-
-    if(music_Count <= 0)
-    {
+    if (music_Count <= 0) {
         return;
     }
-
     music_set_list_unfocus(ui->list_mp3, m_foucs_music);
 
     m_foucs_music++;
@@ -221,12 +223,12 @@ static void music_key_right_callback(void)
 {
     music_ui_t *ui = &para->ui;
 
-    if(music_Count <= 0)
-    {
+    if (music_Count <= 0) {
         return;
     }
 
-     music_set_list_unfocus(ui->list_mp3, m_foucs_music);
+    music_set_list_unfocus(ui->list_mp3, m_foucs_music);
+
     m_foucs_music--;
     if (m_foucs_music < 0) {
         m_foucs_music = music_Count - 1;
@@ -237,6 +239,41 @@ static void music_key_right_callback(void)
     if (music_Count > 0) {
         music_set_list_focus(ui->list_mp3, m_foucs_music);
     }
+}
+
+lv_task_t *music_task_id = NULL;
+
+static void music_ui_task(struct _lv_task_t *param)
+{
+    music_ui_t *ui = (music_ui_t *)param->user_data;
+    int current_pos = 0;
+    char text_current[100] = { 0 };
+    
+    playerStatus status = tplayer_get_status(t113_play);
+    if (status == PLAY_STATUS) {
+        tplayer_get_current_pos(t113_play, &current_pos);
+        time_int_to_string(current_pos, text_current);
+        lv_label_set_text(ui->label_music_start, text_current);
+        int bar_value = current_pos * 1000 / music_total_time;
+        if (bar_value < 10) {
+    	    bar_value = 10;
+        }
+        lv_bar_set_value(ui->bar_music, bar_value, LV_ANIM_ON);
+    } else if (status == COMPLETE_STATUS){
+        // lv_bar_set_value(ui->bar_music, 1000, LV_ANIM_ON);
+    } else if (status == PAUSE_STATUS) {
+
+    } else if (status == STOP_STATUS) {
+
+    }
+}
+
+
+static int music_bar(music_ui_t *ui)
+{
+    music_task_id = lv_task_create(music_ui_task, 100, LV_TASK_PRIO_LOW, (void *)ui);
+
+    return 0;
 }
 
 static int music_create(void)
@@ -256,6 +293,8 @@ static int music_create(void)
     get_music_list();
     set_music_list();
 
+    music_bar(&para->ui);
+
     if (music_Count > 0) {
         music_ui_t *ui = &para->ui;
         music_set_list_focus(ui->list_mp3, m_foucs_music);
@@ -273,7 +312,13 @@ static int music_create(void)
 
 static int music_destory(void)
 {
-    tplayer_stop(t113_play);
+    if (music_task_id != NULL) {
+	    lv_task_del(music_task_id);
+	}
+    if (t113_play != NULL) {
+        tplayer_stop(t113_play);
+    }
+
     key_callback_unregister();
 	music_ue_destory(para);
 	music_ui_destory(&para->ui);
@@ -285,6 +330,7 @@ static int music_destory(void)
     }
     m_foucs_music = 0;
     music_Count = 0;
+    music_is_playing = 0;
 
     music_unload_image();
 	return 0;

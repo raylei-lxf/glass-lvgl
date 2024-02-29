@@ -93,34 +93,12 @@
                         "名字name": "label_music_start",
                         "坐标geometry": {
                             "height": 23,
-                            "width": 77,
-                            "x": 223,
+                            "width": 73,
+                            "x": 224,
                             "y": 278
                         },
                         "对齐align": "Left",
-                        "文本text": "00:16",
-                        "显示visible": true,
-                        "模式mode": "Corp",
-                        "背景绘制body draw": false,
-                        "重着色recolor": false,
-                        "锁住locked": false
-                    },
-                    {
-                        "class": "lv_label",
-                        "name": "label_music_totle",
-                        "widget": "label",
-                        "全局global": true,
-                        "动画速度anim speed": 25,
-                        "可拖动drag": false,
-                        "名字name": "label_music_totle",
-                        "坐标geometry": {
-                            "height": 23,
-                            "width": 81,
-                            "x": 393,
-                            "y": 278
-                        },
-                        "对齐align": "Left",
-                        "文本text": "02:58",
+                        "文本text": "00:00:00",
                         "显示visible": true,
                         "模式mode": "Corp",
                         "背景绘制body draw": false,
@@ -2455,6 +2433,34 @@
                         "name": "list_mp3",
                         "styles": [
                             {
+                                "base": "lv_style_btn_pr",
+                                "body": {
+                                    "border": {
+                                        "color": "#101d6b",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#101d6b",
+                                    "main_color": "#101d6b",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_PR"
+                            },
+                            {
+                                "base": "lv_style_btn_rel",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_REL"
+                            },
+                            {
                                 "base": "lv_style_pretty",
                                 "body": {
                                     "border": {
@@ -2521,34 +2527,6 @@
                                     "sel_color": "#5596d8"
                                 },
                                 "type": "LV_LIST_STYLE_EDGE_FLASH"
-                            },
-                            {
-                                "base": "lv_style_btn_pr",
-                                "body": {
-                                    "border": {
-                                        "color": "#101d6b",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#101d6b",
-                                    "main_color": "#101d6b",
-                                    "radius": 0
-                                },
-                                "type": "LV_LIST_STYLE_BTN_PR"
-                            },
-                            {
-                                "base": "lv_style_btn_rel",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6",
-                                    "radius": 0
-                                },
-                                "type": "LV_LIST_STYLE_BTN_REL"
                             }
                         ],
                         "widget": "list",
@@ -2616,9 +2594,31 @@
                         "对称绘制sym": false,
                         "显示visible": true,
                         "范围range": {
-                            "max": 100,
+                            "max": 1000,
                             "min": 0
                         },
+                        "锁住locked": false
+                    },
+                    {
+                        "class": "lv_label",
+                        "name": "label_music_totle",
+                        "widget": "label",
+                        "全局global": true,
+                        "动画速度anim speed": 25,
+                        "可拖动drag": false,
+                        "名字name": "label_music_totle",
+                        "坐标geometry": {
+                            "height": 23,
+                            "width": 71,
+                            "x": 405,
+                            "y": 278
+                        },
+                        "对齐align": "Left",
+                        "文本text": "00:00:00",
+                        "显示visible": true,
+                        "模式mode": "Corp",
+                        "背景绘制body draw": false,
+                        "重着色recolor": false,
                         "锁住locked": false
                     }
                 ],

@@ -25,7 +25,7 @@
                                     "y": 0
                                 },
                                 "对齐align": "Left",
-                                "文本text": "00:16",
+                                "文本text": "00:00:00",
                                 "显示visible": true,
                                 "模式mode": "Corp",
                                 "背景绘制body draw": false,
@@ -47,7 +47,7 @@
                                     "y": 0
                                 },
                                 "对齐align": "Left",
-                                "文本text": "02:58",
+                                "文本text": "00:00:00",
                                 "显示visible": true,
                                 "模式mode": "Corp",
                                 "背景绘制body draw": false,
@@ -121,7 +121,7 @@
                             }
                         ],
                         "widget": "bar",
-                        "值value": 20,
+                        "值value": 0,
                         "全局global": true,
                         "动画时间anim time": 1000,
                         "可拖动drag": false,
@@ -135,8 +135,8 @@
                         "对称绘制sym": false,
                         "显示visible": true,
                         "范围range": {
-                            "max": 100,
-                            "min": 20
+                            "max": 1000,
+                            "min": 0
                         },
                         "锁住locked": false
                     }
