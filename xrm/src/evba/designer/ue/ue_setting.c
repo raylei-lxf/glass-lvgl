@@ -57,21 +57,80 @@ static void setting_ue_destory(setting_para_t *para)
 	return;
 }
 
-static void key_confirm_callback(void)
+void setting_update_language(void)
 {
     E_LANGUAGE value = E_CHINESE;
+    value = query_language();
+    if (value != E_CHINESE) {
+        value = E_CHINESE;
+        change_language(value); 
+        static lv_style_t style_cn;
+        lv_style_copy(&style_cn, &lv_style_pretty_color);
+        style_cn.text.font = &chinese;
+        style_cn.text.color = LV_COLOR_BLACK;
+
+        lv_obj_set_style(para->ui.label_setting_title, &style_cn);
+        lv_label_set_text(para->ui.label_setting_title, "设置");
+        lv_obj_set_style(para->ui.label_language_title, &style_cn);
+        lv_label_set_text(para->ui.label_language_title, "语言");
+        lv_obj_set_style(para->ui.label_language, &style_cn);
+        lv_label_set_text(para->ui.label_language, "简体中文");
+        lv_obj_set_style(para->ui.label_factory, &style_cn);
+        lv_label_set_text(para->ui.label_factory, "恢复出厂设置");
+        lv_obj_set_style(para->ui.label_upgrade, &style_cn);
+        lv_label_set_text(para->ui.label_upgrade, "固件升级");
+
+        lv_obj_set_style(para->ui.label_tip_content, &style_cn);
+        lv_obj_set_style(para->ui.label_tip_title, &style_cn);
+        lv_label_set_text(para->ui.label_tip_content, "提示");
+        lv_label_set_text(para->ui.label_tip_title, "是否需要恢复出厂设置");
+    } else {
+        value = E_ENGLISH;
+        change_language(value); 
+
+        static lv_style_t style_en;
+        lv_style_copy(&style_en, &lv_style_pretty_color);
+        style_en.text.font = &lv_font_roboto_28;
+        style_en.text.color = LV_COLOR_BLACK;
+
+        lv_obj_set_style(para->ui.label_setting_title, &style_en);
+        lv_label_set_text(para->ui.label_setting_title, "setting");
+        lv_obj_set_style(para->ui.label_language_title, &style_en);
+        lv_label_set_text(para->ui.label_language_title, "language");
+        lv_obj_set_style(para->ui.label_language, &style_en);
+        lv_label_set_text(para->ui.label_language, "english");
+        lv_obj_set_style(para->ui.label_factory, &style_en);
+        lv_label_set_text(para->ui.label_factory, "restore factory setting");
+        lv_obj_set_style(para->ui.label_upgrade, &style_en);
+        lv_label_set_text(para->ui.label_upgrade, "firmware upgrade");
+
+        lv_obj_set_style(para->ui.label_tip_content, &style_en);
+        lv_obj_set_style(para->ui.label_tip_title, &style_en);
+        lv_label_set_text(para->ui.label_tip_content, "tip");
+        lv_label_set_text(para->ui.label_tip_title, "Whether to restore factory Settings");
+    }
+}
+
+int setting_tip = 0;
+static void key_confirm_callback(void)
+{
 	switch (m_setting_focus)
 	{
 	case Setting_Focus_Language:
-        value = query_language();
-        if (value != E_CHINESE) {
-            value = E_CHINESE;
-            change_language(value); 
+        setting_update_language();        
+		break;
+	case Setting_focus_Factory:
+        if (setting_tip == 0) {
+            setting_tip = 1;
+            lv_obj_set_hidden(para->ui.cont_tip,false);
+        } else {
+            setting_tip = 0;
+            restore_factory();
             static lv_style_t style_cn;
             lv_style_copy(&style_cn, &lv_style_pretty_color);
             style_cn.text.font = &chinese;
             style_cn.text.color = LV_COLOR_BLACK;
- 
+     
             lv_obj_set_style(para->ui.label_setting_title, &style_cn);
             lv_label_set_text(para->ui.label_setting_title, "设置");
             lv_obj_set_style(para->ui.label_language_title, &style_cn);
@@ -82,29 +141,14 @@ static void key_confirm_callback(void)
             lv_label_set_text(para->ui.label_factory, "恢复出厂设置");
             lv_obj_set_style(para->ui.label_upgrade, &style_cn);
             lv_label_set_text(para->ui.label_upgrade, "固件升级");
-        } else {
-            value = E_ENGLISH;
-            change_language(value); 
-
-            static lv_style_t style_en;
-            lv_style_copy(&style_en, &lv_style_pretty_color);
-            style_en.text.font = &lv_font_roboto_28;
-            style_en.text.color = LV_COLOR_BLACK;
- 
-            lv_obj_set_style(para->ui.label_setting_title, &style_en);
-            lv_label_set_text(para->ui.label_setting_title, "setting");
-            lv_obj_set_style(para->ui.label_language_title, &style_en);
-            lv_label_set_text(para->ui.label_language_title, "language");
-            lv_obj_set_style(para->ui.label_language, &style_en);
-            lv_label_set_text(para->ui.label_language, "english");
-            lv_obj_set_style(para->ui.label_factory, &style_en);
-            lv_label_set_text(para->ui.label_factory, "restore factory setting");
-            lv_obj_set_style(para->ui.label_upgrade, &style_en);
-            lv_label_set_text(para->ui.label_upgrade, "firmware upgrade");
+     
+            lv_obj_set_style(para->ui.label_tip_content, &style_cn);
+            lv_obj_set_style(para->ui.label_tip_title, &style_cn);
+            lv_label_set_text(para->ui.label_tip_content, "提示");
+            lv_label_set_text(para->ui.label_tip_title, "是否需要恢复出厂设置");
+            // setting_update_language();
+            lv_obj_set_hidden(para->ui.cont_tip,true);
         }
-        
-		break;
-	case Setting_focus_Factory:
 		break;
 	case Setting_Focus_upgrade:
 		break;
@@ -116,7 +160,12 @@ static void key_confirm_callback(void)
 
 static void key_cancel_callback(void)
 {
-	switch_window(WINDOW_SETTING, WINDOW_HOME);
+    if (setting_tip == 0) {
+    	switch_window(WINDOW_SETTING, WINDOW_HOME);
+    } else {
+        lv_obj_set_hidden(para->ui.cont_tip,true);
+        setting_tip = 0;
+    }
 }
 
 static void setting_change_focus(int focus)
@@ -192,6 +241,10 @@ static void setting_change_focus(int focus)
 
 static void key_up_callback(void)
 {
+    if (setting_tip != 0) {
+        return;
+    }
+
 	m_setting_focus--;
 	if (m_setting_focus < Setting_Focus_Language) {
 		m_setting_focus = Setting_Focus_upgrade;
@@ -202,6 +255,9 @@ static void key_up_callback(void)
 
 static void key_down_callback(void)
 {
+    if (setting_tip != 0) {
+        return;
+    }
 	m_setting_focus++;
 	if (m_setting_focus > Setting_Focus_upgrade) {
 		m_setting_focus = Setting_Focus_Language;
@@ -226,6 +282,8 @@ static int setting_create(void)
 	setting_ue_create(para);
     setting_ui_t *setting_ui = &para->ui;
 
+    lv_obj_set_hidden(para->ui.cont_tip,true);
+
     style0_cont_setting_language = lv_cont_get_style(setting_ui->cont_setting_language, 0);
     style0_cont_setting_factory = lv_cont_get_style(setting_ui->cont_setting_factory, 0);
     style0_cont_upgrade = lv_cont_get_style(setting_ui->cont_upgrade, 0);
@@ -249,6 +307,11 @@ static int setting_create(void)
         lv_label_set_text(para->ui.label_factory, "恢复出厂设置");
         lv_obj_set_style(para->ui.label_upgrade, &style_cn);
         lv_label_set_text(para->ui.label_upgrade, "固件升级");
+
+        lv_obj_set_style(para->ui.label_tip_content, &style_cn);
+        lv_obj_set_style(para->ui.label_tip_title, &style_cn);
+        lv_label_set_text(para->ui.label_tip_content, "提示");
+        lv_label_set_text(para->ui.label_tip_title, "是否需要恢复出厂设置");
     } else {
         static lv_style_t style_en;
         lv_style_copy(&style_en, &lv_style_pretty_color);
@@ -265,6 +328,11 @@ static int setting_create(void)
         lv_label_set_text(para->ui.label_factory, "restore factory setting");
         lv_obj_set_style(para->ui.label_upgrade, &style_en);
         lv_label_set_text(para->ui.label_upgrade, "firmware upgrade");
+
+        lv_obj_set_style(para->ui.label_tip_content, &style_en);
+        lv_obj_set_style(para->ui.label_tip_title, &style_en);
+        lv_label_set_text(para->ui.label_tip_content, "tip");
+        lv_label_set_text(para->ui.label_tip_title, "Whether to restore factory Settings");
     }
     
 	key_callback_register(LV_KEY_0, key_confirm_callback);
@@ -284,6 +352,7 @@ static int setting_destory(void)
 	free(para);
 	para = NULL;
 
+    setting_tip = 0;
 	m_setting_focus = Setting_Focus_Language;
 	return 0;
 }

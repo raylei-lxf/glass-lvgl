@@ -28,6 +28,11 @@ typedef struct
 	lv_obj_t *label_factory;
 	lv_obj_t *cont_upgrade;
 	lv_obj_t *label_upgrade;
+	lv_obj_t *cont_tip;
+	lv_obj_t *label_tip_title;
+	lv_obj_t *cont_tip_line;
+	lv_obj_t *img_tip;
+	lv_obj_t *label_tip_content;
 } setting_ui_t;
 
 

@@ -19,7 +19,7 @@ int readFromFile(const char* id, Record* record);
 
 int change_language(E_LANGUAGE value);
 E_LANGUAGE query_language(void);
-
+int restore_factory(void);
 
 
 #endif

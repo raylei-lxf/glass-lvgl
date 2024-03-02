@@ -114,3 +114,7 @@ E_LANGUAGE query_language(void)
 }
 
 
+int restore_factory(void)
+{
+    system("rm /mnt/UDISK/records.dat");
+}
