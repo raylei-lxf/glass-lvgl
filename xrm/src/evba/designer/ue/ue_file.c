@@ -314,8 +314,8 @@ static int file_create(void)
 	key_callback_register(LV_KEY_0, file_key_confire_callback);
 	key_callback_register(LV_KEY_4, file_key_canel_callback);
 
-	key_callback_register(LV_KEY_2, key_left_callback);
-	key_callback_register(LV_KEY_3, key_right_callback);
+	key_callback_register(LV_KEY_3, key_left_callback);
+	key_callback_register(LV_KEY_2, key_right_callback);
 
 	return 0;
 }

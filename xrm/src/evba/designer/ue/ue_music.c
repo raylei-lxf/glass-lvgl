@@ -308,8 +308,8 @@ static int music_create(void)
 	key_callback_register(LV_KEY_0, music_key_confire_callback);
 	key_callback_register(LV_KEY_4, music_key_canel_callback);
 
-	key_callback_register(LV_KEY_2, music_key_left_callback);
-	key_callback_register(LV_KEY_3, music_key_right_callback);
+	key_callback_register(LV_KEY_3, music_key_left_callback);
+	key_callback_register(LV_KEY_2, music_key_right_callback);
 
 	return 0;
 }

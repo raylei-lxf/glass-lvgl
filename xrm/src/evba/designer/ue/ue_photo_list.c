@@ -281,8 +281,8 @@ static int photo_list_create(void)
 
     key_callback_register(LV_KEY_0, photo_key_confire_callback);
     key_callback_register(LV_KEY_4, photo_key_canel_callback);
-    key_callback_register(LV_KEY_2, photo_key_left_callback);
-    key_callback_register(LV_KEY_3, photo_key_right_callback);
+    key_callback_register(LV_KEY_3, photo_key_left_callback);
+    key_callback_register(LV_KEY_2, photo_key_right_callback);
 
 
 	return 0;
