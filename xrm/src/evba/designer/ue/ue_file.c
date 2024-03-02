@@ -11,6 +11,8 @@
 #include <ctype.h>
 #include "debug.h"
 
+#include "config.h"
+
 /******************************************************************************
 *    datas
 ******************************************************************************/
@@ -284,13 +286,19 @@ static int file_create(void)
         file_set_list_focus(ui->file_list, m_foucs);
     }
 
-    static lv_style_t style_cn;
-    lv_style_copy(&style_cn, &lv_style_pretty_color);
-    style_cn.text.font = &chinese;
-    style_cn.text.color = LV_COLOR_BLACK;
+    
+    E_LANGUAGE value = E_CHINESE;
+    value = query_language();
 
-    lv_obj_set_style(para->ui.label_file_title, &style_cn);
-    lv_label_set_text(para->ui.label_file_title, "文件管理");
+    if (value == E_CHINESE) {
+        static lv_style_t style_cn;
+        lv_style_copy(&style_cn, &lv_style_pretty_color);
+        style_cn.text.font = &chinese;
+        style_cn.text.color = LV_COLOR_BLACK;
+
+        lv_obj_set_style(para->ui.label_file_title, &style_cn);
+        lv_label_set_text(para->ui.label_file_title, "文件管理");
+    }
 
 	key_callback_register(LV_KEY_0, file_key_confire_callback);
 	key_callback_register(LV_KEY_4, file_key_canel_callback);

@@ -11,6 +11,8 @@
 #include <dirent.h>
 #include <string.h>
 
+#include "config.h"
+
 /******************************************************************************
 *   marc 
 ******************************************************************************/
@@ -92,17 +94,91 @@ lv_obj_t *get_guanbiao_widget(int gb)
 	}
 }
 
+int findFilesWithSuffix(const char* folderPath, const char* suffix) 
+{
+    DIR* directory = opendir(folderPath);
+    if (directory == NULL) {
+        printf("cann't open : %s\n", folderPath);
+        return -1;
+    }
+
+    int found = 0;
+
+    struct dirent* entry;
+    while ((entry = readdir(directory)) != NULL) {
+        if (entry->d_type == DT_REG) {  
+            const char* fileName = entry->d_name;
+            size_t fileNameLength = strlen(fileName);
+            size_t suffixLength = strlen(suffix);
+
+            if (fileNameLength > suffixLength) {
+                const char* fileSuffix = fileName + fileNameLength - suffixLength;
+                if (strcmp(fileSuffix, suffix) == 0) {
+                    found = 1;
+                    break;
+                }
+            }
+        }
+    }
+
+    closedir(directory);
+    
+    if (found) {
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
+static int tip_count_time = 0;
+
+#define SD_PATH "/mnt/app"
+#define VIDEO_NAME ".mp4"
+#define MUSIC_NAME ".mp3"
+#define JPG_NAME ".jpg"
+#define PNG_NAME ".png"
+
 static void key_confirm_callback(void)
 {
 	app_info("......guangbiao = %d\n", guangbiao);
+    home_ui_t *ui = &para->ui;
+    lv_obj_set_hidden(ui->cont_tip,true);
 	if (guangbiao == FOCUS_PLAYER) {
-    	switch_window(WINDOW_HOME, WINDOW_VIDEO_LIST);
+        if (findFilesWithSuffix(SD_PATH, VIDEO_NAME) == 0) {
+        	switch_window(WINDOW_HOME, WINDOW_VIDEO_LIST);
+        } else {
+	        app_info("can't find video\n");
+            lv_obj_set_hidden(ui->cont_tip, false);
+            tip_count_time = 0;
+        }
 	} else if (guangbiao == FOCUS_PHOTO) {
-		switch_window(WINDOW_HOME, WINDOW_PHOTO_LIST);
+        if (findFilesWithSuffix(SD_PATH, JPG_NAME) == 0 || findFilesWithSuffix(SD_PATH, PNG_NAME) == 0) {
+		    switch_window(WINDOW_HOME, WINDOW_PHOTO_LIST);
+        } else {
+	        app_info("can't find photo\n");
+            lv_obj_set_hidden(ui->cont_tip, false);
+            tip_count_time = 0;
+        }
 	} else if (guangbiao == FOCUS_MUSIC) {
-		switch_window(WINDOW_HOME, WINDOW_MUSIC);
+        if (findFilesWithSuffix(SD_PATH, MUSIC_NAME) == 0) {
+		    switch_window(WINDOW_HOME, WINDOW_MUSIC);
+        } else {
+	        app_info("can't find music\n");
+            lv_obj_set_hidden(ui->cont_tip, false);
+            tip_count_time = 0;
+        }
 	} else if (guangbiao == FOCUS_FILE) {
-		switch_window(WINDOW_HOME, WINDOW_FILE);
+        if (findFilesWithSuffix(SD_PATH, JPG_NAME) == 0 || \
+            findFilesWithSuffix(SD_PATH, PNG_NAME) == 0 || \
+            findFilesWithSuffix(SD_PATH, VIDEO_NAME) == 0 || \
+            findFilesWithSuffix(SD_PATH, MUSIC_NAME) == 0 ) {
+
+    		switch_window(WINDOW_HOME, WINDOW_FILE);
+        } else {
+	        app_info("can't find music\n");
+            lv_obj_set_hidden(ui->cont_tip, false);
+            tip_count_time = 0;
+        }
 	} else if (guangbiao == FOCUS_SETTING) {
 		switch_window(WINDOW_HOME, WINDOW_SETTING);
 	} else if (guangbiao == FOCUS_HPONE) {
@@ -112,6 +188,8 @@ static void key_confirm_callback(void)
 
 static void key_left_callback(void)
 {
+    home_ui_t *ui = &para->ui;
+    lv_obj_set_hidden(ui->cont_tip,true);
 
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_src[guangbiao]);
 
@@ -129,7 +207,8 @@ static void key_left_callback(void)
 
 static void key_right_callback(void)
 {
-
+    home_ui_t *ui = &para->ui;
+    lv_obj_set_hidden(ui->cont_tip,true);
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_src[guangbiao]);
 	
 	app_info("\n");
@@ -141,6 +220,37 @@ static void key_right_callback(void)
 	
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
 
+}
+
+static void key_canel_callback(void)
+{
+    home_ui_t *ui = &para->ui;
+    lv_obj_set_hidden(ui->cont_tip,true);
+}
+
+lv_task_t *tip_task_id = NULL;
+#define TIP_MAX_TIME    20 
+#define TIME_COUNT      100000000
+
+static void home_ui_task(struct _lv_task_t *param)
+{
+    home_ui_t *ui = (home_ui_t *)param->user_data;
+
+    tip_count_time++;
+    if (tip_count_time > TIP_MAX_TIME) {
+        lv_obj_set_hidden(ui->cont_tip,true);
+    } else if (tip_count_time > TIME_COUNT) {
+        tip_count_time = 0;
+    } 
+
+}
+
+
+static int home_task(home_ui_t *ui)
+{
+    tip_task_id = lv_task_create(home_ui_task, 200, LV_TASK_PRIO_LOW, (void *)ui);
+
+    return 0;
 }
 
 void load_image()
@@ -184,27 +294,41 @@ static int home_create(void)
 	home_ui_create(&para->ui);
 	home_ue_create(para);
 
-    static lv_style_t style_cn;
-    lv_style_copy(&style_cn, &lv_style_pretty_color);
-    style_cn.text.font = &chinese;
-    style_cn.text.color = LV_COLOR_BLACK;
+    E_LANGUAGE value = E_CHINESE;
+    // change_language(value);
+    value = query_language();
 
-    lv_obj_set_style(para->ui.label_player, &style_cn);
-    lv_obj_set_style(para->ui.label_photo, &style_cn);
-    lv_obj_set_style(para->ui.label_music, &style_cn);
-    lv_obj_set_style(para->ui.label_file, &style_cn);
-    lv_obj_set_style(para->ui.label_setting, &style_cn);
-    lv_obj_set_style(para->ui.label_phone, &style_cn);
-    lv_label_set_text(para->ui.label_player, "视频");
-    lv_label_set_text(para->ui.label_photo, "照片");
-    lv_label_set_text(para->ui.label_music, "音乐");
-    lv_label_set_text(para->ui.label_file, "文件");
-    lv_label_set_text(para->ui.label_setting, "设置");
-    lv_label_set_text(para->ui.label_phone, "手机");
+    if (value == E_CHINESE) {
+        app_info("..........\n");
+        static lv_style_t style_cn;
+        lv_style_copy(&style_cn, &lv_style_pretty_color);
+        style_cn.text.font = &chinese;
+        style_cn.text.color = LV_COLOR_BLACK;
+
+        lv_obj_set_style(para->ui.label_player, &style_cn);
+        lv_obj_set_style(para->ui.label_photo, &style_cn);
+        lv_obj_set_style(para->ui.label_music, &style_cn);
+        lv_obj_set_style(para->ui.label_file, &style_cn);
+        lv_obj_set_style(para->ui.label_setting, &style_cn);
+        lv_obj_set_style(para->ui.label_phone, &style_cn);
+        lv_label_set_text(para->ui.label_player, "视频");
+        lv_label_set_text(para->ui.label_photo, "照片");
+        lv_label_set_text(para->ui.label_music, "音乐");
+        lv_label_set_text(para->ui.label_file, "文件");
+        lv_label_set_text(para->ui.label_setting, "设置");
+        lv_label_set_text(para->ui.label_phone, "手机");
+
+        lv_obj_set_style(para->ui.label_tip_content, &style_cn);
+        lv_obj_set_style(para->ui.label_tip_title, &style_cn);
+        lv_label_set_text(para->ui.label_tip_content, "提示");
+        lv_label_set_text(para->ui.label_tip_title, "无处理");
+    }
 	load_image();
 	
+    home_task(&para->ui);
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
 	key_callback_register(LV_KEY_0, key_confirm_callback);
+	key_callback_register(LV_KEY_4, key_canel_callback);
 
 	key_callback_register(LV_KEY_2, key_left_callback);
 	key_callback_register(LV_KEY_3, key_right_callback);
@@ -213,6 +337,9 @@ static int home_create(void)
 
 static int home_destory(void)
 {
+    if (tip_task_id != NULL) {
+	    lv_task_del(tip_task_id);
+	}
 	key_callback_unregister();
 	home_ue_destory(para);
 	home_ui_destory(&para->ui);

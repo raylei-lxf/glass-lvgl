@@ -7,6 +7,7 @@
 #include "debug.h"
 #include "lv_style.h"
 
+#include "config.h"
 /******************************************************************************
 *    datas
 ******************************************************************************/
@@ -187,21 +188,26 @@ static int setting_create(void)
     style0_cont_setting_factory = lv_cont_get_style(setting_ui->cont_setting_factory, 0);
     style0_cont_upgrade = lv_cont_get_style(setting_ui->cont_upgrade, 0);
 
-    static lv_style_t style_cn;
-    lv_style_copy(&style_cn, &lv_style_pretty_color);
-    style_cn.text.font = &chinese;
-    style_cn.text.color = LV_COLOR_BLACK;
+    E_LANGUAGE value = E_CHINESE;
+    value = query_language();
 
-    lv_obj_set_style(para->ui.label_setting_title, &style_cn);
-    lv_label_set_text(para->ui.label_setting_title, "设置");
-    lv_obj_set_style(para->ui.label_language_title, &style_cn);
-    lv_label_set_text(para->ui.label_language_title, "语言");
-    lv_obj_set_style(para->ui.label_language, &style_cn);
-    lv_label_set_text(para->ui.label_language, "简体中文");
-    lv_obj_set_style(para->ui.label_factory, &style_cn);
-    lv_label_set_text(para->ui.label_factory, "恢复出厂设置");
-    lv_obj_set_style(para->ui.label_upgrade, &style_cn);
-    lv_label_set_text(para->ui.label_upgrade, "固件升级");
+    if (value == E_CHINESE) {
+    static lv_style_t style_cn;
+        lv_style_copy(&style_cn, &lv_style_pretty_color);
+        style_cn.text.font = &chinese;
+        style_cn.text.color = LV_COLOR_BLACK;
+
+        lv_obj_set_style(para->ui.label_setting_title, &style_cn);
+        lv_label_set_text(para->ui.label_setting_title, "设置");
+        lv_obj_set_style(para->ui.label_language_title, &style_cn);
+        lv_label_set_text(para->ui.label_language_title, "语言");
+        lv_obj_set_style(para->ui.label_language, &style_cn);
+        lv_label_set_text(para->ui.label_language, "简体中文");
+        lv_obj_set_style(para->ui.label_factory, &style_cn);
+        lv_label_set_text(para->ui.label_factory, "恢复出厂设置");
+        lv_obj_set_style(para->ui.label_upgrade, &style_cn);
+        lv_label_set_text(para->ui.label_upgrade, "固件升级");
+    }
     
 	key_callback_register(LV_KEY_0, key_confirm_callback);
 	key_callback_register(LV_KEY_4, key_cancel_callback);

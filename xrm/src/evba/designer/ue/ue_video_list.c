@@ -12,6 +12,7 @@
 #include "debug.h"
 #include "player_int.h"
 
+#include "config.h"
 /******************************************************************************
 *    datas
 ******************************************************************************/
@@ -257,13 +258,18 @@ static int video_list_create(void)
         video_set_list_focus(ui->list_video, m_video_foucs);
     }
 
-    static lv_style_t style_cn;
-    lv_style_copy(&style_cn, &lv_style_pretty_color);
-    style_cn.text.font = &chinese;
-    style_cn.text.color = LV_COLOR_BLACK;
+    E_LANGUAGE value = E_CHINESE;
+    value = query_language();
 
-    lv_obj_set_style(para->ui.label_1, &style_cn);
-    lv_label_set_text(para->ui.label_1, "视频");
+    if (value == E_CHINESE) {
+        static lv_style_t style_cn;
+        lv_style_copy(&style_cn, &lv_style_pretty_color);
+        style_cn.text.font = &chinese;
+        style_cn.text.color = LV_COLOR_BLACK;
+
+        lv_obj_set_style(para->ui.label_1, &style_cn);
+        lv_label_set_text(para->ui.label_1, "视频");
+    }
 
     // tplayer_init(t113_play, CEDARX_PLAYER);
     key_callback_register(LV_KEY_0, video_key_confire_callback);

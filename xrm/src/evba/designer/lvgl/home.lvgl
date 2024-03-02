@@ -283,13 +283,13 @@
                                 "可拖动drag": false,
                                 "名字name": "label_tip_title",
                                 "坐标geometry": {
-                                    "height": 30,
-                                    "width": 145,
-                                    "x": 0,
-                                    "y": 34
+                                    "height": 68,
+                                    "width": 194,
+                                    "x": 62,
+                                    "y": 67
                                 },
                                 "对齐align": "Left",
-                                "文本text": "Text",
+                                "文本text": "Untreated",
                                 "显示visible": true,
                                 "模式mode": "Corp",
                                 "背景绘制body draw": false,
@@ -343,8 +343,8 @@
                                 "坐标geometry": {
                                     "height": 23,
                                     "width": 23,
-                                    "x": 5,
-                                    "y": 40
+                                    "x": 9,
+                                    "y": 47
                                 },
                                 "显示visible": true,
                                 "源图source": "tishi.png",
@@ -360,13 +360,13 @@
                                 "可拖动drag": false,
                                 "名字name": "label_tip_content",
                                 "坐标geometry": {
-                                    "height": 69,
+                                    "height": 26,
                                     "width": 145,
-                                    "x": 0,
-                                    "y": 0
+                                    "x": 8,
+                                    "y": 9
                                 },
                                 "对齐align": "Left",
-                                "文本text": "Text",
+                                "文本text": "Tip",
                                 "显示visible": true,
                                 "模式mode": "Corp",
                                 "背景绘制body draw": false,
@@ -396,8 +396,8 @@
                         "坐标geometry": {
                             "height": 174,
                             "width": 300,
-                            "x": 88,
-                            "y": 123
+                            "x": 96,
+                            "y": 87
                         },
                         "布局layout": "Off",
                         "显示visible": false,

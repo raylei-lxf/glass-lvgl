@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include "debug.h"
 
+#include "config.h"
 /******************************************************************************
 *    datas
 ******************************************************************************/
@@ -255,13 +256,18 @@ static int photo_list_create(void)
         photo_set_list_focus(ui->list_photo, m_photo_foucs);
     }
 
-    static lv_style_t style_cn;
-    lv_style_copy(&style_cn, &lv_style_pretty_color);
-    style_cn.text.font = &chinese;
-    style_cn.text.color = LV_COLOR_BLACK;
+    E_LANGUAGE value = E_CHINESE;
+    value = query_language();
 
-    lv_obj_set_style(para->ui.label_1, &style_cn);
-    lv_label_set_text(para->ui.label_1, "音乐");
+    if (value == E_CHINESE) {
+        static lv_style_t style_cn;
+        lv_style_copy(&style_cn, &lv_style_pretty_color);
+        style_cn.text.font = &chinese;
+        style_cn.text.color = LV_COLOR_BLACK;
+
+        lv_obj_set_style(para->ui.label_1, &style_cn);
+        lv_label_set_text(para->ui.label_1, "音乐");
+    }
 
     key_callback_register(LV_KEY_0, photo_key_confire_callback);
     key_callback_register(LV_KEY_4, photo_key_canel_callback);

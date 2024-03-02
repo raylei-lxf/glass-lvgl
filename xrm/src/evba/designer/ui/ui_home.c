@@ -11,7 +11,10 @@
 ******************************************************************************/
 static lv_style_t style0_cont_main;
 static lv_style_t style0_cont_tip;
+static lv_style_t style0_label_tip_title;
 static lv_style_t style0_cont_tip_line;
+static lv_style_t style0_img_tip;
+static lv_style_t style0_label_tip_content;
 
 static void *img_player_video_png = NULL;
 static void *img_photo_photo_png = NULL;
@@ -152,7 +155,7 @@ void home_ui_create(home_ui_t *ui)
 	style0_cont_tip.body.border.width = 0;
 
 	ui->cont_tip = lv_cont_create(ui->cont_main, NULL);
-	lv_obj_set_pos(ui->cont_tip, 88, 123);
+	lv_obj_set_pos(ui->cont_tip, 96, 87);
 	lv_obj_set_size(ui->cont_tip, 300, 174);
 	lv_cont_set_fit4(ui->cont_tip, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
 	lv_obj_set_hidden(ui->cont_tip,true);
@@ -160,11 +163,14 @@ void home_ui_create(home_ui_t *ui)
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_LABEL
+	lv_style_copy(&style0_label_tip_title, &lv_style_transp);
+
 	ui->label_tip_title = lv_label_create(ui->cont_tip, NULL);
-	lv_label_set_text(ui->label_tip_title, "Text");
+	lv_label_set_text(ui->label_tip_title, "Untreated");
 	lv_label_set_long_mode(ui->label_tip_title, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_tip_title, 0, 34);
-	lv_obj_set_size(ui->label_tip_title, 145, 30);
+	lv_obj_set_pos(ui->label_tip_title, 62, 67);
+	lv_obj_set_size(ui->label_tip_title, 194, 68);
+	lv_label_set_style(ui->label_tip_title, LV_LABEL_STYLE_MAIN, &style0_label_tip_title);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_CONT
@@ -180,20 +186,26 @@ void home_ui_create(home_ui_t *ui)
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_IMG
+	lv_style_copy(&style0_img_tip, &lv_style_plain);
+
 	ui->img_tip = lv_img_create(ui->cont_tip, NULL);
-	lv_obj_set_pos(ui->img_tip, 5, 40);
+	lv_obj_set_pos(ui->img_tip, 9, 47);
 	lv_obj_set_size(ui->img_tip, 23, 23);
 	img_tip_tishi_png = (void *)mal_load_image(LV_IMAGE_PATH"tishi.png");
 	lv_img_set_src(ui->img_tip, img_tip_tishi_png);
 
+	lv_img_set_style(ui->img_tip, LV_IMG_STYLE_MAIN, &style0_img_tip);
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_LABEL
+	lv_style_copy(&style0_label_tip_content, &lv_style_transp);
+
 	ui->label_tip_content = lv_label_create(ui->cont_tip, NULL);
-	lv_label_set_text(ui->label_tip_content, "Text");
+	lv_label_set_text(ui->label_tip_content, "Tip");
 	lv_label_set_long_mode(ui->label_tip_content, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_tip_content, 0, 0);
-	lv_obj_set_size(ui->label_tip_content, 145, 69);
+	lv_obj_set_pos(ui->label_tip_content, 8, 9);
+	lv_obj_set_size(ui->label_tip_content, 145, 26);
+	lv_label_set_style(ui->label_tip_content, LV_LABEL_STYLE_MAIN, &style0_label_tip_content);
 #endif // LV_USE_LABEL
 
 }
