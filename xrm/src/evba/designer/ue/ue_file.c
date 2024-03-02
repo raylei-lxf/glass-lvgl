@@ -296,7 +296,7 @@ static int file_create(void)
         static lv_style_t style_cn;
         lv_style_copy(&style_cn, &lv_style_pretty_color);
         style_cn.text.font = &chinese;
-        style_cn.text.color = LV_COLOR_BLACK;
+        style_cn.text.color = LV_COLOR_WHITE;
 
         lv_obj_set_style(para->ui.label_file_title, &style_cn);
         lv_label_set_text(para->ui.label_file_title, "文件管理");
@@ -304,7 +304,7 @@ static int file_create(void)
         static lv_style_t style_en;
         lv_style_copy(&style_en, &lv_style_pretty_color);
         style_en.text.font = &lv_font_roboto_28;
-        style_en.text.color = LV_COLOR_BLACK;
+        style_en.text.color = LV_COLOR_WHITE;
 
         lv_obj_set_style(para->ui.label_file_title, &style_en);
         lv_label_set_text(para->ui.label_file_title, "file");

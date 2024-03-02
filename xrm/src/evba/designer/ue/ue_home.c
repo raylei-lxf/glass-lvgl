@@ -131,6 +131,78 @@ int findFilesWithSuffix(const char* folderPath, const char* suffix)
     }
 }
 
+void home_text_focus(void)
+{
+    home_ui_t *ui = &para->ui;
+    lv_obj_set_hidden(ui->cont_tip,true);
+
+
+    E_LANGUAGE value = E_CHINESE;
+    value = query_language();
+
+    static lv_style_t style_selected;
+    static lv_style_t style_unselected;
+    lv_style_copy(&style_selected, &lv_style_pretty_color);
+    lv_style_copy(&style_unselected, &lv_style_pretty_color);
+    if (value == E_CHINESE) {
+    	style_selected.text.font = &chinese;
+    	style_selected.text.color = LV_COLOR_YELLOW;
+    	style_unselected.text.font = &chinese;
+    	style_unselected.text.color = LV_COLOR_WHITE;
+    } else {
+    	style_selected.text.font = &lv_font_roboto_28;
+    	style_selected.text.color = LV_COLOR_YELLOW;
+    	style_unselected.text.font = &lv_font_roboto_28;
+    	style_unselected.text.color = LV_COLOR_WHITE;
+    }
+    
+
+    if (guangbiao == FOCUS_PLAYER) {
+    	lv_obj_set_style(para->ui.label_player, &style_selected);
+        lv_obj_set_style(para->ui.label_photo, &style_unselected);
+        lv_obj_set_style(para->ui.label_music, &style_unselected);
+        lv_obj_set_style(para->ui.label_file, &style_unselected);
+        lv_obj_set_style(para->ui.label_setting, &style_unselected);
+        lv_obj_set_style(para->ui.label_phone, &style_unselected);
+    } else if (guangbiao == FOCUS_PHOTO) {
+    	lv_obj_set_style(para->ui.label_player, &style_unselected);
+        lv_obj_set_style(para->ui.label_photo, &style_selected);
+        lv_obj_set_style(para->ui.label_music, &style_unselected);
+        lv_obj_set_style(para->ui.label_file, &style_unselected);
+        lv_obj_set_style(para->ui.label_setting, &style_unselected);
+        lv_obj_set_style(para->ui.label_phone, &style_unselected);
+    } else if (guangbiao == FOCUS_MUSIC) {
+    	lv_obj_set_style(para->ui.label_player, &style_unselected);
+        lv_obj_set_style(para->ui.label_photo, &style_unselected);
+        lv_obj_set_style(para->ui.label_music, &style_selected);
+        lv_obj_set_style(para->ui.label_file, &style_unselected);
+        lv_obj_set_style(para->ui.label_setting, &style_unselected);
+        lv_obj_set_style(para->ui.label_phone, &style_unselected);
+    } else if (guangbiao == FOCUS_FILE) {
+    	lv_obj_set_style(para->ui.label_player, &style_unselected);
+        lv_obj_set_style(para->ui.label_photo, &style_unselected);
+        lv_obj_set_style(para->ui.label_music, &style_unselected);
+        lv_obj_set_style(para->ui.label_file, &style_selected);
+        lv_obj_set_style(para->ui.label_setting, &style_unselected);
+        lv_obj_set_style(para->ui.label_phone, &style_unselected);
+    } else if (guangbiao == FOCUS_SETTING) {
+    	lv_obj_set_style(para->ui.label_player, &style_unselected);
+        lv_obj_set_style(para->ui.label_photo, &style_unselected);
+        lv_obj_set_style(para->ui.label_music, &style_unselected);
+        lv_obj_set_style(para->ui.label_file, &style_unselected);
+        lv_obj_set_style(para->ui.label_setting, &style_selected);
+        lv_obj_set_style(para->ui.label_phone, &style_unselected);
+    } else if (guangbiao == FOCUS_HPONE) {
+    	lv_obj_set_style(para->ui.label_player, &style_unselected);
+        lv_obj_set_style(para->ui.label_photo, &style_unselected);
+        lv_obj_set_style(para->ui.label_music, &style_unselected);
+        lv_obj_set_style(para->ui.label_file, &style_unselected);
+        lv_obj_set_style(para->ui.label_setting, &style_unselected);
+        lv_obj_set_style(para->ui.label_phone, &style_selected);
+    }
+
+}
+
 static int tip_count_time = 0;
 
 #define SD_PATH "/mnt/app"
@@ -202,6 +274,7 @@ static void key_left_callback(void)
 	
 	app_info("guangbiao = %d\n", guangbiao);
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
+    home_text_focus();
 
 }
 
@@ -220,7 +293,7 @@ static void key_right_callback(void)
 	}
 	
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
-
+    home_text_focus();
 }
 
 static void key_canel_callback(void)
@@ -303,7 +376,7 @@ static int home_create(void)
         static lv_style_t style_cn;
         lv_style_copy(&style_cn, &lv_style_pretty_color);
         style_cn.text.font = &chinese;
-        style_cn.text.color = LV_COLOR_BLACK;
+        style_cn.text.color = LV_COLOR_WHITE;
 
         lv_obj_set_style(para->ui.label_player, &style_cn);
         lv_obj_set_style(para->ui.label_photo, &style_cn);
@@ -327,7 +400,7 @@ static int home_create(void)
         static lv_style_t style_en;
         lv_style_copy(&style_en, &lv_style_pretty_color);
         style_en.text.font = &lv_font_roboto_28;
-        style_en.text.color = LV_COLOR_BLACK;
+        style_en.text.color = LV_COLOR_WHITE;
 
         lv_obj_set_style(para->ui.label_player, &style_en);
         lv_obj_set_style(para->ui.label_photo, &style_en);
@@ -340,7 +413,7 @@ static int home_create(void)
         lv_label_set_text(para->ui.label_music, "music");
         lv_label_set_text(para->ui.label_file, "file");
         lv_label_set_text(para->ui.label_setting, "setting");
-        lv_label_set_text(para->ui.label_phone, "photo");
+        lv_label_set_text(para->ui.label_phone, "phone");
 
         lv_obj_set_style(para->ui.label_tip_content, &style_en);
         lv_obj_set_style(para->ui.label_tip_title, &style_en);
@@ -348,6 +421,7 @@ static int home_create(void)
         lv_label_set_text(para->ui.label_tip_title, "fileless");
     }
 	load_image();
+    home_text_focus();
 	
     home_task(&para->ui);
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
