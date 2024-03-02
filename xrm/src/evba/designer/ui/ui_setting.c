@@ -13,7 +13,6 @@ static lv_style_t style0_cont_main;
 static lv_style_t style0_cont_setting_line;
 static lv_style_t style0_cont_setting_language;
 static lv_style_t style0_label_language_title;
-static lv_style_t style0_label_language;
 static lv_style_t style0_cont_setting_factory;
 static lv_style_t style0_label_factory;
 static lv_style_t style0_cont_upgrade;
@@ -102,14 +101,11 @@ void setting_ui_create(setting_ui_t *ui)
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LABEL
-	lv_style_copy(&style0_label_language, &lv_style_transp);
-
 	ui->label_language = lv_label_create(ui->cont_setting_language, NULL);
 	lv_label_set_text(ui->label_language, "Text");
 	lv_label_set_long_mode(ui->label_language, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_language, 293, 7);
 	lv_obj_set_size(ui->label_language, 149, 34);
-	lv_label_set_style(ui->label_language, LV_LABEL_STYLE_MAIN, &style0_label_language);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_CONT
@@ -134,7 +130,7 @@ void setting_ui_create(setting_ui_t *ui)
 	lv_label_set_text(ui->label_factory, "Text");
 	lv_label_set_long_mode(ui->label_factory, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_factory, 13, 5);
-	lv_obj_set_size(ui->label_factory, 154, 36);
+	lv_obj_set_size(ui->label_factory, 359, 36);
 	lv_label_set_style(ui->label_factory, LV_LABEL_STYLE_MAIN, &style0_label_factory);
 #endif // LV_USE_LABEL
 
@@ -160,7 +156,7 @@ void setting_ui_create(setting_ui_t *ui)
 	lv_label_set_text(ui->label_upgrade, "Text");
 	lv_label_set_long_mode(ui->label_upgrade, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_upgrade, 14, 4);
-	lv_obj_set_size(ui->label_upgrade, 182, 37);
+	lv_obj_set_size(ui->label_upgrade, 393, 37);
 	lv_label_set_style(ui->label_upgrade, LV_LABEL_STYLE_MAIN, &style0_label_upgrade);
 #endif // LV_USE_LABEL
 

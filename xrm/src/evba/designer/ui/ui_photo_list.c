@@ -128,7 +128,7 @@ void photo_list_ui_create(photo_list_ui_t *ui)
 	lv_label_set_text(ui->label_1, "Music");
 	lv_label_set_long_mode(ui->label_1, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_1, 64, 12);
-	lv_obj_set_size(ui->label_1, 64, 33);
+	lv_obj_set_size(ui->label_1, 228, 33);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_CONT

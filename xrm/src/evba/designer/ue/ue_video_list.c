@@ -17,6 +17,7 @@
 *    datas
 ******************************************************************************/
 LV_FONT_DECLARE(chinese)
+LV_FONT_DECLARE(lv_font_roboto_28)
 
 typedef struct
 {
@@ -269,6 +270,14 @@ static int video_list_create(void)
 
         lv_obj_set_style(para->ui.label_1, &style_cn);
         lv_label_set_text(para->ui.label_1, "视频");
+    } else {
+        static lv_style_t style_en;
+        lv_style_copy(&style_en, &lv_style_pretty_color);
+        style_en.text.font = &lv_font_roboto_28;
+        style_en.text.color = LV_COLOR_BLACK;
+
+        lv_obj_set_style(para->ui.label_1, &style_en);
+        lv_label_set_text(para->ui.label_1, "video");
     }
 
     // tplayer_init(t113_play, CEDARX_PLAYER);

@@ -53,34 +53,6 @@
                                 "type": "LV_LIST_STYLE_EDGE_FLASH"
                             },
                             {
-                                "base": "lv_style_transp_fit",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6"
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6"
-                                },
-                                "type": "LV_LIST_STYLE_BG"
-                            },
-                            {
-                                "base": "lv_style_pretty",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6",
-                                    "radius": 0,
-                                    "shadow": {
-                                        "color": "#4456c6"
-                                    }
-                                },
-                                "type": "LV_LIST_STYLE_SCRL"
-                            },
-                            {
                                 "base": "lv_style_btn_rel",
                                 "body": {
                                     "border": {
@@ -107,6 +79,34 @@
                                     "radius": 0
                                 },
                                 "type": "LV_LIST_STYLE_BTN_PR"
+                            },
+                            {
+                                "base": "lv_style_transp_fit",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6"
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6"
+                                },
+                                "type": "LV_LIST_STYLE_BG"
+                            },
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6",
+                                    "radius": 0,
+                                    "shadow": {
+                                        "color": "#4456c6"
+                                    }
+                                },
+                                "type": "LV_LIST_STYLE_SCRL"
                             }
                         ],
                         "widget": "list",
@@ -159,7 +159,7 @@
                         "名字name": "label_1",
                         "坐标geometry": {
                             "height": 33,
-                            "width": 64,
+                            "width": 228,
                             "x": 64,
                             "y": 12
                         },

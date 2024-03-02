@@ -16,6 +16,7 @@
 *    datas
 ******************************************************************************/
 LV_FONT_DECLARE(chinese)
+LV_FONT_DECLARE(lv_font_roboto_28)
 
 typedef struct
 {
@@ -266,7 +267,16 @@ static int photo_list_create(void)
         style_cn.text.color = LV_COLOR_BLACK;
 
         lv_obj_set_style(para->ui.label_1, &style_cn);
-        lv_label_set_text(para->ui.label_1, "音乐");
+        lv_label_set_text(para->ui.label_1, "照片");
+    } else {
+        static lv_style_t style_en;
+        lv_style_copy(&style_en, &lv_style_pretty_color);
+        style_en.text.font = &lv_font_roboto_28;
+        style_en.text.color = LV_COLOR_BLACK;
+
+        lv_obj_set_style(para->ui.label_1, &style_en);
+        lv_label_set_text(para->ui.label_1, "photo");
+        
     }
 
     key_callback_register(LV_KEY_0, photo_key_confire_callback);

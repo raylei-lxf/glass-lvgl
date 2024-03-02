@@ -20,6 +20,7 @@
 *    datas
 ******************************************************************************/
 LV_FONT_DECLARE(chinese)
+LV_FONT_DECLARE(lv_font_roboto_28)
 
 typedef struct
 {
@@ -295,7 +296,6 @@ static int home_create(void)
 	home_ue_create(para);
 
     E_LANGUAGE value = E_CHINESE;
-    // change_language(value);
     value = query_language();
 
     if (value == E_CHINESE) {
@@ -322,6 +322,30 @@ static int home_create(void)
         lv_obj_set_style(para->ui.label_tip_title, &style_cn);
         lv_label_set_text(para->ui.label_tip_content, "提示");
         lv_label_set_text(para->ui.label_tip_title, "无处理");
+    } else {
+        app_info("..........\n");
+        static lv_style_t style_en;
+        lv_style_copy(&style_en, &lv_style_pretty_color);
+        style_en.text.font = &lv_font_roboto_28;
+        style_en.text.color = LV_COLOR_BLACK;
+
+        lv_obj_set_style(para->ui.label_player, &style_en);
+        lv_obj_set_style(para->ui.label_photo, &style_en);
+        lv_obj_set_style(para->ui.label_music, &style_en);
+        lv_obj_set_style(para->ui.label_file, &style_en);
+        lv_obj_set_style(para->ui.label_setting, &style_en);
+        lv_obj_set_style(para->ui.label_phone, &style_en);
+        lv_label_set_text(para->ui.label_player, "video");
+        lv_label_set_text(para->ui.label_photo, "photo");
+        lv_label_set_text(para->ui.label_music, "music");
+        lv_label_set_text(para->ui.label_file, "file");
+        lv_label_set_text(para->ui.label_setting, "setting");
+        lv_label_set_text(para->ui.label_phone, "photo");
+
+        lv_obj_set_style(para->ui.label_tip_content, &style_en);
+        lv_obj_set_style(para->ui.label_tip_title, &style_en);
+        lv_label_set_text(para->ui.label_tip_content, "tip");
+        lv_label_set_text(para->ui.label_tip_title, "fileless");
     }
 	load_image();
 	

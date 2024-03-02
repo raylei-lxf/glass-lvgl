@@ -186,7 +186,7 @@
                                 "名字name": "label_factory",
                                 "坐标geometry": {
                                     "height": 36,
-                                    "width": 154,
+                                    "width": 359,
                                     "x": 13,
                                     "y": 5
                                 },
@@ -248,7 +248,7 @@
                                 "名字name": "label_upgrade",
                                 "坐标geometry": {
                                     "height": 37,
-                                    "width": 182,
+                                    "width": 393,
                                     "x": 14,
                                     "y": 4
                                 },
