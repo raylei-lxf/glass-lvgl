@@ -274,7 +274,7 @@ static void key_left_callback(void)
 	
 	app_info("guangbiao = %d\n", guangbiao);
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
-    home_text_focus();
+    // home_text_focus();
 
 }
 
@@ -293,7 +293,7 @@ static void key_right_callback(void)
 	}
 	
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
-    home_text_focus();
+    // home_text_focus();
 }
 
 static void key_canel_callback(void)
@@ -421,7 +421,7 @@ static int home_create(void)
         lv_label_set_text(para->ui.label_tip_title, "fileless");
     }
 	load_image();
-    home_text_focus();
+    // home_text_focus();
 	
     home_task(&para->ui);
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
