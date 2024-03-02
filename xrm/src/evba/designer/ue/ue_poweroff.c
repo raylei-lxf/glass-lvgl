@@ -5,7 +5,7 @@
 #include "ui_resource.h"
 #include "public.h"
 #include "debug.h"
-
+#include "config.h"
 /******************************************************************************
 *    datas
 ******************************************************************************/
@@ -57,6 +57,18 @@ static int poweroff_create(void)
 	poweroff_ue_create(para);
 
 	ui_set_hidden(para->ui.cont_1, 1);
+
+    E_LANGUAGE value = E_CHINESE;
+    value = query_language();
+
+	if(value == E_CHINESE)
+	{
+		ui_lable_set_font(para->ui.label_tip_content, &chinese);
+		lv_label_set_text(para->ui.label_tip_content, "提示");
+		ui_lable_set_font(para->ui.label_tip_title, &chinese);
+		lv_label_set_text(para->ui.label_tip_title, "关机");
+	}
+
 	return 0;
 }
 

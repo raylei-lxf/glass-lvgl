@@ -84,28 +84,6 @@
                         "锁住locked": false
                     },
                     {
-                        "class": "lv_label",
-                        "name": "label_music_start",
-                        "widget": "label",
-                        "全局global": true,
-                        "动画速度anim speed": 25,
-                        "可拖动drag": false,
-                        "名字name": "label_music_start",
-                        "坐标geometry": {
-                            "height": 23,
-                            "width": 73,
-                            "x": 224,
-                            "y": 278
-                        },
-                        "对齐align": "Left",
-                        "文本text": "00:00:00",
-                        "显示visible": true,
-                        "模式mode": "Corp",
-                        "背景绘制body draw": false,
-                        "重着色recolor": false,
-                        "锁住locked": false
-                    },
-                    {
                         "children": [
                             {
                                 "class": "lv_img",
@@ -2548,77 +2526,136 @@
                         "锁住locked": false
                     },
                     {
-                        "class": "lv_bar",
-                        "name": "bar_music",
-                        "styles": [
+                        "children": [
                             {
-                                "base": "lv_style_pretty_color",
-                                "body": {
-                                    "border": {
-                                        "color": "#ffff00",
-                                        "opa": 255,
-                                        "part": 0,
-                                        "width": 0
+                                "class": "lv_bar",
+                                "name": "bar_music",
+                                "styles": [
+                                    {
+                                        "base": "lv_style_pretty_color",
+                                        "body": {
+                                            "border": {
+                                                "color": "#ffff00",
+                                                "opa": 255,
+                                                "part": 0,
+                                                "width": 0
+                                            },
+                                            "grad_color": "#ffff00",
+                                            "main_color": "#ffff00",
+                                            "radius": 0
+                                        },
+                                        "type": "LV_BAR_STYLE_INDIC"
                                     },
-                                    "grad_color": "#ffff00",
-                                    "main_color": "#ffff00",
-                                    "radius": 0
+                                    {
+                                        "base": "lv_style_pretty",
+                                        "body": {
+                                            "border": {
+                                                "opa": 255,
+                                                "width": 0
+                                            },
+                                            "grad_color": "#ffffff",
+                                            "radius": 0
+                                        },
+                                        "type": "LV_BAR_STYLE_BG"
+                                    }
+                                ],
+                                "widget": "bar",
+                                "值value": 0,
+                                "全局global": true,
+                                "动画时间anim time": 1000,
+                                "可拖动drag": false,
+                                "名字name": "bar_music",
+                                "坐标geometry": {
+                                    "height": 15,
+                                    "width": 251,
+                                    "x": 0,
+                                    "y": 25
                                 },
-                                "type": "LV_BAR_STYLE_INDIC"
+                                "对称绘制sym": false,
+                                "显示visible": true,
+                                "范围range": {
+                                    "max": 1000,
+                                    "min": 0
+                                },
+                                "锁住locked": false
                             },
+                            {
+                                "class": "lv_label",
+                                "name": "label_music_start",
+                                "widget": "label",
+                                "全局global": true,
+                                "动画速度anim speed": 25,
+                                "可拖动drag": false,
+                                "名字name": "label_music_start",
+                                "坐标geometry": {
+                                    "height": 18,
+                                    "width": 73,
+                                    "x": 0,
+                                    "y": 2
+                                },
+                                "对齐align": "Left",
+                                "文本text": "00:00:00",
+                                "显示visible": true,
+                                "模式mode": "Corp",
+                                "背景绘制body draw": false,
+                                "重着色recolor": false,
+                                "锁住locked": false
+                            },
+                            {
+                                "class": "lv_label",
+                                "name": "label_music_totle",
+                                "widget": "label",
+                                "全局global": true,
+                                "动画速度anim speed": 25,
+                                "可拖动drag": false,
+                                "名字name": "label_music_totle",
+                                "坐标geometry": {
+                                    "height": 23,
+                                    "width": 71,
+                                    "x": 188,
+                                    "y": 0
+                                },
+                                "对齐align": "Left",
+                                "文本text": "00:00:00",
+                                "显示visible": true,
+                                "模式mode": "Corp",
+                                "背景绘制body draw": false,
+                                "重着色recolor": false,
+                                "锁住locked": false
+                            }
+                        ],
+                        "class": "lv_cont",
+                        "name": "cont_2",
+                        "styles": [
                             {
                                 "base": "lv_style_pretty",
                                 "body": {
                                     "border": {
-                                        "opa": 255,
-                                        "width": 0
+                                        "opa": 0
                                     },
-                                    "grad_color": "#ffffff",
-                                    "radius": 0
+                                    "opa": 0
                                 },
-                                "type": "LV_BAR_STYLE_BG"
+                                "type": "LV_CONT_STYLE_MAIN"
                             }
                         ],
-                        "widget": "bar",
-                        "值value": 0,
+                        "widget": "cont",
                         "全局global": true,
-                        "动画时间anim time": 1000,
                         "可拖动drag": false,
-                        "名字name": "bar_music",
+                        "名字name": "cont_2",
                         "坐标geometry": {
-                            "height": 15,
-                            "width": 251,
+                            "height": 43,
+                            "width": 257,
                             "x": 223,
-                            "y": 304
+                            "y": 283
                         },
-                        "对称绘制sym": false,
+                        "布局layout": "Off",
                         "显示visible": true,
-                        "范围range": {
-                            "max": 1000,
-                            "min": 0
+                        "自动调整策略fit": {
+                            "cont_bottom_fit": 0,
+                            "cont_left_fit": 0,
+                            "cont_right_fit": 0,
+                            "cont_top_fit": 0
                         },
-                        "锁住locked": false
-                    },
-                    {
-                        "class": "lv_label",
-                        "name": "label_music_totle",
-                        "widget": "label",
-                        "全局global": true,
-                        "动画速度anim speed": 25,
-                        "可拖动drag": false,
-                        "名字name": "label_music_totle",
-                        "坐标geometry": {
-                            "height": 23,
-                            "width": 71,
-                            "x": 405,
-                            "y": 278
-                        },
-                        "对齐align": "Left",
-                        "文本text": "00:00:00",
-                        "显示visible": true,
-                        "模式mode": "Corp",
-                        "背景绘制body draw": false,
-                        "重着色recolor": false,
                         "锁住locked": false
                     }
                 ],

@@ -12,7 +12,6 @@
 static lv_style_t style0_cont_main;
 static lv_style_t style0_cont_1;
 static lv_style_t style0_cont_music_list;
-static lv_style_t style0_label_music_start;
 static lv_style_t style0_cont_5;
 static lv_style_t style0_cont_music_1;
 static lv_style_t style0_cont_music_1_2;
@@ -79,6 +78,7 @@ static lv_style_t style1_list_mp3;
 static lv_style_t style3_list_mp3;
 static lv_style_t style4_list_mp3;
 static lv_style_t style5_list_mp3;
+static lv_style_t style0_cont_2;
 static lv_style_t style0_bar_music;
 static lv_style_t style1_bar_music;
 static lv_style_t style0_label_music_totle;
@@ -135,17 +135,6 @@ void music_ui_create(music_ui_t *ui)
 	lv_cont_set_fit4(ui->cont_music_list, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
 	lv_cont_set_style(ui->cont_music_list, LV_CONT_STYLE_MAIN, &style0_cont_music_list);
 #endif // LV_USE_CONT
-
-#ifdef LV_USE_LABEL
-	lv_style_copy(&style0_label_music_start, &lv_style_transp);
-
-	ui->label_music_start = lv_label_create(ui->cont_main, NULL);
-	lv_label_set_text(ui->label_music_start, "00:00:00");
-	lv_label_set_long_mode(ui->label_music_start, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_music_start, 224, 278);
-	lv_obj_set_size(ui->label_music_start, 73, 23);
-	lv_label_set_style(ui->label_music_start, LV_LABEL_STYLE_MAIN, &style0_label_music_start);
-#endif // LV_USE_LABEL
 
 #ifdef LV_USE_CONT
 	lv_style_copy(&style0_cont_5, &lv_style_pretty);
@@ -1101,6 +1090,18 @@ void music_ui_create(music_ui_t *ui)
 	lv_list_set_style(ui->list_mp3, LV_LIST_STYLE_BTN_PR, &style5_list_mp3);
 #endif // LV_USE_LIST
 
+#ifdef LV_USE_CONT
+	lv_style_copy(&style0_cont_2, &lv_style_pretty);
+	style0_cont_2.body.opa = 0;
+	style0_cont_2.body.border.opa = 0;
+
+	ui->cont_2 = lv_cont_create(ui->cont_main, NULL);
+	lv_obj_set_pos(ui->cont_2, 223, 283);
+	lv_obj_set_size(ui->cont_2, 257, 43);
+	lv_cont_set_fit4(ui->cont_2, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
+	lv_cont_set_style(ui->cont_2, LV_CONT_STYLE_MAIN, &style0_cont_2);
+#endif // LV_USE_CONT
+
 #ifdef LV_USE_BAR
 	lv_style_copy(&style0_bar_music, &lv_style_pretty);
 	style0_bar_music.body.grad_color = lv_color_hex(0xffffff);
@@ -1117,8 +1118,8 @@ void music_ui_create(music_ui_t *ui)
 	style1_bar_music.body.border.part = 0;
 	style1_bar_music.body.border.opa = 255;
 
-	ui->bar_music = lv_bar_create(ui->cont_main, NULL);
-	lv_obj_set_pos(ui->bar_music, 223, 304);
+	ui->bar_music = lv_bar_create(ui->cont_2, NULL);
+	lv_obj_set_pos(ui->bar_music, 0, 25);
 	lv_obj_set_size(ui->bar_music, 251, 15);
 	lv_bar_set_range(ui->bar_music, 0, 1000);
 	lv_bar_set_value(ui->bar_music, 0, LV_ANIM_ON);
@@ -1128,12 +1129,20 @@ void music_ui_create(music_ui_t *ui)
 #endif // LV_USE_BAR
 
 #ifdef LV_USE_LABEL
+	ui->label_music_start = lv_label_create(ui->cont_2, NULL);
+	lv_label_set_text(ui->label_music_start, "00:00:00");
+	lv_label_set_long_mode(ui->label_music_start, LV_LABEL_LONG_CROP);
+	lv_obj_set_pos(ui->label_music_start, 0, 2);
+	lv_obj_set_size(ui->label_music_start, 73, 18);
+#endif // LV_USE_LABEL
+
+#ifdef LV_USE_LABEL
 	lv_style_copy(&style0_label_music_totle, &lv_style_transp);
 
-	ui->label_music_totle = lv_label_create(ui->cont_main, NULL);
+	ui->label_music_totle = lv_label_create(ui->cont_2, NULL);
 	lv_label_set_text(ui->label_music_totle, "00:00:00");
 	lv_label_set_long_mode(ui->label_music_totle, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_music_totle, 405, 278);
+	lv_obj_set_pos(ui->label_music_totle, 188, 0);
 	lv_obj_set_size(ui->label_music_totle, 71, 23);
 	lv_label_set_style(ui->label_music_totle, LV_LABEL_STYLE_MAIN, &style0_label_music_totle);
 #endif // LV_USE_LABEL

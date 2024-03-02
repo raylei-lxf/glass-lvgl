@@ -48,6 +48,8 @@ void key_callback_unregister(void);
 void recovery_callback_register(void);
 void key_mode_set(int key_num, int mode);
 
+LV_FONT_DECLARE(chinese)
+LV_FONT_DECLARE(lv_font_roboto_28)
 #if 0
 LV_FONT_DECLARE(microsoft_halvetica_20_4);
 LV_FONT_DECLARE(microsoft_halvetica_24_4);
