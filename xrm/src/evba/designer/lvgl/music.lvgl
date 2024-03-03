@@ -110,6 +110,15 @@
                             {
                                 "class": "lv_label",
                                 "name": "label_4",
+                                "styles": [
+                                    {
+                                        "base": "lv_style_transp",
+                                        "text": {
+                                            "color": "#ffffff"
+                                        },
+                                        "type": "LV_LABEL_STYLE_MAIN"
+                                    }
+                                ],
                                 "widget": "label",
                                 "全局global": true,
                                 "动画速度anim speed": 25,
@@ -2428,15 +2437,18 @@
                                 "type": "LV_LIST_STYLE_SCRL"
                             },
                             {
-                                "base": "lv_style_transp_fit",
+                                "base": "lv_style_btn_rel",
                                 "body": {
                                     "border": {
-                                        "color": "#4456c6"
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
                                     },
                                     "grad_color": "#4456c6",
-                                    "main_color": "#4456c6"
+                                    "main_color": "#4456c6",
+                                    "radius": 0
                                 },
-                                "type": "LV_LIST_STYLE_BG"
+                                "type": "LV_LIST_STYLE_BTN_REL"
                             },
                             {
                                 "base": "lv_style_btn_pr",
@@ -2451,20 +2463,6 @@
                                     "radius": 0
                                 },
                                 "type": "LV_LIST_STYLE_BTN_PR"
-                            },
-                            {
-                                "base": "lv_style_btn_rel",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6",
-                                    "radius": 0
-                                },
-                                "type": "LV_LIST_STYLE_BTN_REL"
                             },
                             {
                                 "body": {
@@ -2505,6 +2503,17 @@
                                     "sel_color": "#5596d8"
                                 },
                                 "type": "LV_LIST_STYLE_EDGE_FLASH"
+                            },
+                            {
+                                "base": "lv_style_transp_fit",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6"
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6"
+                                },
+                                "type": "LV_LIST_STYLE_BG"
                             }
                         ],
                         "widget": "list",
@@ -2600,8 +2609,8 @@
                                 "坐标geometry": {
                                     "height": 27,
                                     "width": 89,
-                                    "x": 7,
-                                    "y": 8
+                                    "x": 2,
+                                    "y": 11
                                 },
                                 "对齐align": "Left",
                                 "文本text": "00:00:00",
@@ -2630,12 +2639,12 @@
                                 "可拖动drag": false,
                                 "名字name": "label_music_totle",
                                 "坐标geometry": {
-                                    "height": 24,
-                                    "width": 89,
-                                    "x": 162,
-                                    "y": 7
+                                    "height": 26,
+                                    "width": 82,
+                                    "x": 169,
+                                    "y": 12
                                 },
-                                "对齐align": "Left",
+                                "对齐align": "Right",
                                 "文本text": "00:00:00",
                                 "显示visible": true,
                                 "模式mode": "Corp",

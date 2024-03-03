@@ -177,7 +177,7 @@ void music_set_list_focus(lv_obj_t *list, int index)
 static void music_key_confire_callback(void)
 {
     if (t113_play != NULL && access(music_name, F_OK) != -1 && strcmp(music_name_old, music_name) != 0 ) {
-        int duration_c[100] = { 0 };
+        char duration_c[100] = { 0 };
         int total_time = 0;
         music_ui_t *ui = &para->ui;
         tplayer_play_url(t113_play, music_name);

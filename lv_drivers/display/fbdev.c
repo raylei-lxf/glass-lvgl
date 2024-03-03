@@ -263,15 +263,15 @@ void fbdev_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color
 			area->x1 > (int32_t)LV_HOR_RES_MAX- 1 ||
 			area->y1 > (int32_t)LV_VER_RES_MAX - 1
 #else
-			area->x1 > (int32_t)LV_VER_RES_MAX- 1 ||
-			area->y1 > (int32_t)LV_HOR_RES_MAX - 1
+            area->x1 > (int32_t)LV_HOR_RES_MAX - 1 || 
+			area->y1 > (int32_t)LV_VER_RES_MAX- 1 
+			
 #endif
  	) {
         lv_disp_flush_ready(drv);
         printf("fbdev_flush errrr out! %d %d %d %d %d %d\n", area->x1, area->x2, area->y1, area->y2, vinfo.xres, vinfo.yres);
         return;
     }
-
 #if LV_UI_ROTATE_DIRECTION == 1//rotate 90Â°
     fb_rotate90_paint(area, color_p);
 #elif LV_UI_ROTATE_DIRECTION == 2//rotate 180Â°
@@ -349,7 +349,7 @@ void fbdev_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color
 	if(wait_flash == 0)
 	{
 		////zddll add
-		ioctl(fbfd, FBIOPAN_DISPLAY, &vinfo); /*º¯Êý×îºó,ÔÚË¢ÆÁº¯ÊýºóÃæ,µ÷ÓÃ FBIOPAN_DISPLAY ½Ó¿Ú*/
+		ioctl(fbfd, FBIOPAN_DISPLAY, &vinfo); /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Ë¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ FBIOPAN_DISPLAY ï¿½Ó¿ï¿½*/
 	}
 }
 

@@ -13,6 +13,7 @@ static lv_style_t style0_cont_main;
 static lv_style_t style0_cont_1;
 static lv_style_t style0_cont_music_list;
 static lv_style_t style0_cont_5;
+static lv_style_t style0_label_4;
 static lv_style_t style0_cont_music_1;
 static lv_style_t style0_cont_music_1_2;
 static lv_style_t style0_cont_music_1_3;
@@ -161,11 +162,16 @@ void music_ui_create(music_ui_t *ui)
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_LABEL
+	lv_style_copy(&style0_label_4, &lv_style_transp);
+	style0_label_4.text.color = lv_color_hex(0xffffff);
+	style0_label_4.text.line_space = 2;
+
 	ui->label_4 = lv_label_create(ui->cont_5, NULL);
 	lv_label_set_text(ui->label_4, "01/04");
 	lv_label_set_long_mode(ui->label_4, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_4, 150, 0);
 	lv_obj_set_size(ui->label_4, 70, 29);
+	lv_label_set_style(ui->label_4, LV_LABEL_STYLE_MAIN, &style0_label_4);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_CONT
@@ -1138,7 +1144,7 @@ void music_ui_create(music_ui_t *ui)
 	ui->label_music_start = lv_label_create(ui->cont_2, NULL);
 	lv_label_set_text(ui->label_music_start, "00:00:00");
 	lv_label_set_long_mode(ui->label_music_start, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_music_start, 7, 8);
+	lv_obj_set_pos(ui->label_music_start, 2, 11);
 	lv_obj_set_size(ui->label_music_start, 89, 27);
 	lv_label_set_style(ui->label_music_start, LV_LABEL_STYLE_MAIN, &style0_label_music_start);
 #endif // LV_USE_LABEL
@@ -1151,9 +1157,10 @@ void music_ui_create(music_ui_t *ui)
 
 	ui->label_music_totle = lv_label_create(ui->cont_2, NULL);
 	lv_label_set_text(ui->label_music_totle, "00:00:00");
+	lv_label_set_align(ui->label_music_totle, LV_LABEL_ALIGN_RIGHT);
 	lv_label_set_long_mode(ui->label_music_totle, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_music_totle, 162, 7);
-	lv_obj_set_size(ui->label_music_totle, 89, 24);
+	lv_obj_set_pos(ui->label_music_totle, 169, 12);
+	lv_obj_set_size(ui->label_music_totle, 82, 26);
 	lv_label_set_style(ui->label_music_totle, LV_LABEL_STYLE_MAIN, &style0_label_music_totle);
 #endif // LV_USE_LABEL
 

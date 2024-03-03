@@ -188,7 +188,13 @@ void time_int_to_string(unsigned int int_time, char *time_str)
 	second = int_time;
 	minutes = second / 60;
 	hours = minutes / 60;
-	sprintf(time_str, "%02d:%02d:%02d", hours, minutes % 60, second % 60);
+
+	if(hours == 0)
+	{
+		sprintf(time_str, "%02d:%02d", minutes % 60, second % 60);
+	}else{
+		sprintf(time_str, "%02d:%02d:%02d", hours, minutes % 60, second % 60);
+	}
 }
 
 void media_set_time(lv_obj_t *time_lable, unsigned int time)
