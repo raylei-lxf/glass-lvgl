@@ -2411,34 +2411,6 @@
                         "name": "list_mp3",
                         "styles": [
                             {
-                                "base": "lv_style_btn_pr",
-                                "body": {
-                                    "border": {
-                                        "color": "#101d6b",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#101d6b",
-                                    "main_color": "#101d6b",
-                                    "radius": 0
-                                },
-                                "type": "LV_LIST_STYLE_BTN_PR"
-                            },
-                            {
-                                "base": "lv_style_btn_rel",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6",
-                                    "radius": 0
-                                },
-                                "type": "LV_LIST_STYLE_BTN_REL"
-                            },
-                            {
                                 "base": "lv_style_pretty",
                                 "body": {
                                     "border": {
@@ -2465,6 +2437,34 @@
                                     "main_color": "#4456c6"
                                 },
                                 "type": "LV_LIST_STYLE_BG"
+                            },
+                            {
+                                "base": "lv_style_btn_pr",
+                                "body": {
+                                    "border": {
+                                        "color": "#101d6b",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#101d6b",
+                                    "main_color": "#101d6b",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_PR"
+                            },
+                            {
+                                "base": "lv_style_btn_rel",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_REL"
                             },
                             {
                                 "body": {
@@ -2569,7 +2569,7 @@
                                     "height": 15,
                                     "width": 251,
                                     "x": 0,
-                                    "y": 25
+                                    "y": 44
                                 },
                                 "对称绘制sym": false,
                                 "显示visible": true,
@@ -2582,16 +2582,26 @@
                             {
                                 "class": "lv_label",
                                 "name": "label_music_start",
+                                "styles": [
+                                    {
+                                        "base": "lv_style_transp",
+                                        "text": {
+                                            "color": "#ffffff",
+                                            "font": "Roboto 22"
+                                        },
+                                        "type": "LV_LABEL_STYLE_MAIN"
+                                    }
+                                ],
                                 "widget": "label",
                                 "全局global": true,
                                 "动画速度anim speed": 25,
                                 "可拖动drag": false,
                                 "名字name": "label_music_start",
                                 "坐标geometry": {
-                                    "height": 18,
-                                    "width": 73,
-                                    "x": 0,
-                                    "y": 2
+                                    "height": 27,
+                                    "width": 89,
+                                    "x": 7,
+                                    "y": 8
                                 },
                                 "对齐align": "Left",
                                 "文本text": "00:00:00",
@@ -2604,16 +2614,26 @@
                             {
                                 "class": "lv_label",
                                 "name": "label_music_totle",
+                                "styles": [
+                                    {
+                                        "base": "lv_style_transp",
+                                        "text": {
+                                            "color": "#ffffff",
+                                            "font": "Roboto 22"
+                                        },
+                                        "type": "LV_LABEL_STYLE_MAIN"
+                                    }
+                                ],
                                 "widget": "label",
                                 "全局global": true,
                                 "动画速度anim speed": 25,
                                 "可拖动drag": false,
                                 "名字name": "label_music_totle",
                                 "坐标geometry": {
-                                    "height": 23,
-                                    "width": 71,
-                                    "x": 188,
-                                    "y": 0
+                                    "height": 24,
+                                    "width": 89,
+                                    "x": 162,
+                                    "y": 7
                                 },
                                 "对齐align": "Left",
                                 "文本text": "00:00:00",
@@ -2643,10 +2663,10 @@
                         "可拖动drag": false,
                         "名字name": "cont_2",
                         "坐标geometry": {
-                            "height": 43,
+                            "height": 59,
                             "width": 257,
                             "x": 223,
-                            "y": 283
+                            "y": 276
                         },
                         "布局layout": "Off",
                         "显示visible": true,

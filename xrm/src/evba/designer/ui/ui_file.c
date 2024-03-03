@@ -68,7 +68,7 @@ void file_ui_create(file_ui_t *ui)
 	lv_label_set_text(ui->label_file_title, "File");
 	lv_label_set_long_mode(ui->label_file_title, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_file_title, 59, 9);
-	lv_obj_set_size(ui->label_file_title, 115, 36);
+	lv_obj_set_size(ui->label_file_title, 166, 36);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LIST

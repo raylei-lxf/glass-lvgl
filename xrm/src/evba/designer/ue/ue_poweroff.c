@@ -58,17 +58,6 @@ static int poweroff_create(void)
 
 	ui_set_hidden(para->ui.cont_1, 1);
 
-    E_LANGUAGE value = E_CHINESE;
-    value = query_language();
-
-	if(value == E_CHINESE)
-	{
-		ui_lable_set_font(para->ui.label_tip_content, &chinese);
-		lv_label_set_text(para->ui.label_tip_content, "提示");
-		ui_lable_set_font(para->ui.label_tip_title, &chinese);
-		lv_label_set_text(para->ui.label_tip_title, "关机");
-	}
-
 	return 0;
 }
 
@@ -86,8 +75,26 @@ static int poweroff_destory(void)
 static int poweroff_show(void)
 {
 	//lv_obj_set_hidden(para->ui.cont_main, 0);
+	
+    E_LANGUAGE value = E_CHINESE;
+    value = query_language();
+
+	if(value == E_CHINESE)
+	{
+		ui_lable_set_font(para->ui.label_tip_content, &chinese);
+		lv_label_set_text(para->ui.label_tip_content, "提示");
+		ui_lable_set_font(para->ui.label_tip_title, &chinese);
+		lv_label_set_text(para->ui.label_tip_title, "关机");
+	}else{
+		ui_lable_set_font(para->ui.label_tip_content, &lv_font_roboto_28);
+		lv_label_set_text(para->ui.label_tip_content, "Tip");
+		ui_lable_set_font(para->ui.label_tip_title, &lv_font_roboto_28);
+		lv_label_set_text(para->ui.label_tip_title, "POWEROFF");
+	}
+
 	lv_obj_move_foreground(para->ui.cont_main);
 	lv_obj_set_hidden(para->ui.cont_1, 0);
+
 	return 0;
 }
 
