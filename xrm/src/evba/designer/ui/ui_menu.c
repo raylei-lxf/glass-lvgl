@@ -48,7 +48,7 @@ void menu_ui_create(menu_ui_t *ui)
 
 	ui->cont_botton = lv_cont_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->cont_botton, 0, 325);
-	lv_obj_set_size(ui->cont_botton, 473, 33);
+	lv_obj_set_size(ui->cont_botton, 480, 33);
 	lv_cont_set_fit4(ui->cont_botton, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
 	lv_cont_set_style(ui->cont_botton, LV_CONT_STYLE_MAIN, &style0_cont_botton);
 #endif // LV_USE_CONT

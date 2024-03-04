@@ -28,33 +28,99 @@ typedef enum{
 	MENU_SPEED,
 	MENU_TIME,
 	MENU_BRT,
-	MENU_COL,
+	MENU_COL = 5,
 	MENU_CNT,
 	MENU_FOCUS,
 	MENU_R,
 	MENU_G,
-	MENU_B,
+	MENU_B = 10,
 	MENU_MAX
 }menu_type_t;
 
+
 typedef struct{
-	int vol_val;
-	int auto_val;
-	int speed_val;
-	int time_val;
-	int brt_val;
-	int col_val;
-	int cnt_val;
-	int focus_val;
-	int r_val;
-	int g_val;
-	int b_val;
-}menu_val_t;
+	menu_type_t type;
+	char type_str[16];
+	int val;
+	char val_str[16];
+	int max_val;
+	int min_val;
+}menu_val_s;
+
+menu_val_s menu_s[MENU_MAX]={
+	{
+		.type=MENU_VOL,
+		.type_str = "VOL",
+		.max_val = 30,
+		.min_val = 0,
+	},
+	{
+		.type=MENU_AUTO,
+		.type_str = "auto",
+		.max_val = 1,
+		.min_val = 0,
+	},
+	{
+		.type=MENU_SPEED,
+		.type_str = "speed",
+		.max_val = 6,
+		.min_val = 0,
+	},	
+	{
+		.type=MENU_TIME,
+		.type_str = "time",
+		.max_val = 30,
+		.min_val = 0,
+	},
+	{
+		.type=MENU_BRT,
+		.type_str = "BRT",
+		.max_val = 100,
+		.min_val = 0,
+	},
+	{
+		.type=MENU_COL,
+		.type_str = "COL",
+		.max_val = 100,
+		.min_val = 0,
+	},
+	{
+		.type=MENU_CNT,
+		.type_str = "CNT",
+		.max_val = 100,
+		.min_val = 0,
+	},
+	{
+		.type=MENU_FOCUS,
+		.type_str = "FOCUS",
+		.max_val = 4,
+		.min_val = 1,
+	},
+	{
+		.type=MENU_R,
+		.type_str = "R",
+		.max_val = 100,
+		.min_val = 0,
+	},
+	{
+		.type=MENU_G,
+		.type_str = "G",
+		.max_val = 100,
+		.min_val = 0,
+	},
+	{
+		.type=MENU_B,
+		.type_str = "B",
+		.max_val = 100,
+		.min_val = 0,
+	}						
+};
+
 
 static lv_task_t *menu_task_id;
 static uint32_t time_count = 0;
 static menu_type_t menu_type = MENU_VOL;
-static menu_val_t menu_val;
+
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -77,115 +143,66 @@ static void menu_ue_destory(menu_para_t *para)
 	return;
 }
 
-static void key_up_callback()
+void menu_type_set_value(menu_type_t type, int value)
 {
 	char val_str[16] = {0};
 
-
-	sprintf(val_str, "%d", 0);
-	switch(menu_type){
-		case MENU_VOL:
-
-		menu_val.vol_val++;
-		if(menu_val.vol_val>100)
-		{
-			menu_val.vol_val = 100;
-		}
-		sprintf(val_str, "%d", menu_val.vol_val);
-		lv_bar_set_value(para->ui.bar_vol_blue, menu_val.vol_val, LV_ANIM_OFF);
-		break;
+	switch(type)
+	{
 		case MENU_AUTO:
-		lv_bar_set_value(para->ui.bar_vol_blue, menu_val.auto_val, LV_ANIM_OFF);
+
+		if(value == 0)
+		{
+			sprintf(val_str, "%s", "OFF");
+		}else{
+			sprintf(val_str, "%s", "ON");
+		}
 		break;
-		case MENU_SPEED:
-	
-		break;
-		case MENU_TIME:
-	
-		break;
-		case MENU_BRT:
-		
-		break;
-		case MENU_COL:
-	
-		break;
-		case MENU_FOCUS:
-	
-		break;
-		case MENU_CNT:
-	
-		break;
-		case MENU_R:
-		
-		break;
-		case MENU_G:
-		
-		break;
-		case MENU_B:
-		
-		break;
-		
-		default: 
+		default:
+		sprintf(val_str, "%d", value);
 		break;
 	}
+
 	lv_label_set_text(para->ui.label_val, val_str);
 
+	int bar_val;
+	bar_val = 100 * value / menu_s[type].max_val;
+
+	lv_bar_set_value(para->ui.bar_vol_blue, bar_val, LV_ANIM_OFF);
+
+}
+
+static void key_up_callback()
+{
+	 menu_s[menu_type].val++;
+	 if( menu_s[menu_type].val >  menu_s[menu_type].max_val)
+	 {
+		 menu_s[menu_type].val =  menu_s[menu_type].max_val;
+	 }
+
+	lv_bar_set_value(para->ui.bar_vol_blue, menu_s[menu_type].val, LV_ANIM_OFF);
+	menu_type_set_value(menu_type, menu_s[menu_type].val);
 	time_count = 0;
 }
 
+
+
+
 static void key_down_callback()
 {
-	char val_str[16] = {0};
 
-	sprintf(val_str, "%d", 0);
-	switch(menu_type){
-		case MENU_VOL:
+	 menu_s[menu_type].val--;
+	 if( menu_s[menu_type].val <  menu_s[menu_type].min_val)
+	 {
+		 menu_s[menu_type].val =  menu_s[menu_type].min_val;
+	 }
 
-		menu_val.vol_val--;
-		if(menu_val.vol_val < 0)
-		{
-			menu_val.vol_val = 0;
-		}
-		sprintf(val_str, "%d", menu_val.vol_val);
-		lv_bar_set_value(para->ui.bar_vol_blue, menu_val.vol_val, LV_ANIM_OFF);
 	
-		break;
-		case MENU_AUTO:
-		lv_bar_set_value(para->ui.bar_vol_blue, menu_val.auto_val, LV_ANIM_OFF);
-		break;
-		case MENU_SPEED:
-	
-		break;
-		case MENU_TIME:
-	
-		break;
-		case MENU_BRT:
-		
-		break;
-		case MENU_COL:
-	
-		break;
-		case MENU_FOCUS:
-	
-		break;
-		case MENU_CNT:
-	
-		break;
-		case MENU_R:
-		
-		break;
-		case MENU_G:
-		
-		break;
-		case MENU_B:
-		
-		break;
-		default: 
-		break;
-	}
-	lv_label_set_text(para->ui.label_val, val_str);
+	menu_type_set_value(menu_type, menu_s[menu_type].val);
 	time_count = 0;
 }	
+
+
 
 static void key_menu_callback(void)
 {
@@ -211,45 +228,9 @@ static void key_menu_callback(void)
 		menu_type = MENU_VOL;
 	}	
 
-	switch(menu_type){
-		case MENU_VOL:
-		lv_label_set_text(para->ui.label_vol, "VOL");
-		//lv_label_set_text(para->ui.label_val, "100");
-		break;
-		case MENU_AUTO:
-		lv_label_set_text(para->ui.label_vol, "auto");
-		//lv_label_set_text(para->ui.label_vol, "ON");
-		break;
-		case MENU_SPEED:
-		lv_label_set_text(para->ui.label_vol, "speed");
-		break;
-		case MENU_TIME:
-		lv_label_set_text(para->ui.label_vol, "time");
-		break;
-		case MENU_BRT:
-		lv_label_set_text(para->ui.label_vol, "BRT");
-		break;
-		case MENU_COL:
-		lv_label_set_text(para->ui.label_vol, "COL");
-		break;
-		case MENU_FOCUS:
-		lv_label_set_text(para->ui.label_vol, "FOCUS");
-		break;
-		case MENU_CNT:
-		lv_label_set_text(para->ui.label_vol, "CNT");
-		break;
-		case MENU_R:
-		lv_label_set_text(para->ui.label_vol, "R");
-		break;
-		case MENU_G:
-		lv_label_set_text(para->ui.label_vol, "G");
-		break;
-		case MENU_B:
-		lv_label_set_text(para->ui.label_vol, "B");
-		break;
-		default: break;
-	}
-
+	lv_label_set_text(para->ui.label_vol, menu_s[menu_type].type_str);
+	lv_bar_set_value(para->ui.bar_vol_blue, menu_s[menu_type].val, LV_ANIM_OFF);
+	menu_type_set_value(menu_type, menu_s[menu_type].val);
 
 }
 
@@ -287,8 +268,6 @@ static int menu_create(void)
 	menu_task_id = lv_task_create(menu_task, 100, LV_TASK_PRIO_MID, NULL);
 	time_count = 0;
 	menu_type = 0;
-
-	memset(&menu_val, 0, sizeof(menu_val_t));
 
 	key_callback_register(LV_KEY_1, key_menu_callback);
 	ui_set_hidden(para->ui.cont_botton, 1);
