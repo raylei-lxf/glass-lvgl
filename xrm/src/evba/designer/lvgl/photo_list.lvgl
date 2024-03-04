@@ -13,6 +13,51 @@
                         "name": "list_photo",
                         "styles": [
                             {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6",
+                                    "radius": 0,
+                                    "shadow": {
+                                        "color": "#4456c6"
+                                    }
+                                },
+                                "type": "LV_LIST_STYLE_SCRL"
+                            },
+                            {
+                                "base": "lv_style_btn_rel",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_REL"
+                            },
+                            {
+                                "base": "lv_style_btn_pr",
+                                "body": {
+                                    "border": {
+                                        "color": "#101d6b",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#101d6b",
+                                    "main_color": "#101d6b",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_PR"
+                            },
+                            {
                                 "body": {
                                     "border": {
                                         "color": "#000000",
@@ -53,34 +98,6 @@
                                 "type": "LV_LIST_STYLE_EDGE_FLASH"
                             },
                             {
-                                "base": "lv_style_btn_rel",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6",
-                                    "radius": 0
-                                },
-                                "type": "LV_LIST_STYLE_BTN_REL"
-                            },
-                            {
-                                "base": "lv_style_btn_pr",
-                                "body": {
-                                    "border": {
-                                        "color": "#101d6b",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#101d6b",
-                                    "main_color": "#101d6b",
-                                    "radius": 0
-                                },
-                                "type": "LV_LIST_STYLE_BTN_PR"
-                            },
-                            {
                                 "base": "lv_style_transp_fit",
                                 "body": {
                                     "border": {
@@ -90,23 +107,6 @@
                                     "main_color": "#4456c6"
                                 },
                                 "type": "LV_LIST_STYLE_BG"
-                            },
-                            {
-                                "base": "lv_style_pretty",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6",
-                                    "radius": 0,
-                                    "shadow": {
-                                        "color": "#4456c6"
-                                    }
-                                },
-                                "type": "LV_LIST_STYLE_SCRL"
                             }
                         ],
                         "widget": "list",
@@ -164,7 +164,7 @@
                             "y": 12
                         },
                         "对齐align": "Left",
-                        "文本text": "Music",
+                        "文本text": "Photo",
                         "显示visible": true,
                         "模式mode": "Corp",
                         "背景绘制body draw": false,
@@ -222,6 +222,7 @@
                             },
                             "grad_color": "#4456c6",
                             "main_color": "#4456c6",
+                            "radius": 0,
                             "shadow": {
                                 "color": "#4456c6"
                             }

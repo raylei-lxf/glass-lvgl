@@ -253,25 +253,25 @@ void fbdev_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color
     if(fbp == NULL ||
             area->x2 < 0 ||
             area->y2 < 0 ||
- #if  LV_UI_ROTATE_DIRECTION == 1    
+ #if  LV_UI_ROTATE_DIRECTION == 0 
             area->x1 > (int32_t)LV_HOR_RES_MAX- 1 ||
             area->y1 > (int32_t)LV_VER_RES_MAX - 1
-#elif  LV_UI_ROTATE_DIRECTION == 2	
+#elif  LV_UI_ROTATE_DIRECTION == 1
 			area->x1 > (int32_t)LV_VER_RES_MAX- 1 ||
 			area->y1 > (int32_t)LV_HOR_RES_MAX - 1
-#elif  LV_UI_ROTATE_DIRECTION == 3
+#elif  LV_UI_ROTATE_DIRECTION == 2
 			area->x1 > (int32_t)LV_HOR_RES_MAX- 1 ||
 			area->y1 > (int32_t)LV_VER_RES_MAX - 1
 #else
-            area->x1 > (int32_t)LV_HOR_RES_MAX - 1 || 
-			area->y1 > (int32_t)LV_VER_RES_MAX- 1 
-			
+			area->x1 > (int32_t)LV_VER_RES_MAX- 1 ||
+			area->y1 > (int32_t)LV_HOR_RES_MAX - 1
 #endif
  	) {
         lv_disp_flush_ready(drv);
         printf("fbdev_flush errrr out! %d %d %d %d %d %d\n", area->x1, area->x2, area->y1, area->y2, vinfo.xres, vinfo.yres);
         return;
     }
+
 #if LV_UI_ROTATE_DIRECTION == 1//rotate 90°
     fb_rotate90_paint(area, color_p);
 #elif LV_UI_ROTATE_DIRECTION == 2//rotate 180°

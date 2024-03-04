@@ -29,6 +29,7 @@ void photo_list_ui_create(photo_list_ui_t *ui)
 	lv_style_copy(&style0_cont_main, &lv_style_pretty);
 	style0_cont_main.body.main_color = lv_color_hex(0x4456c6);
 	style0_cont_main.body.grad_color = lv_color_hex(0x4456c6);
+	style0_cont_main.body.radius = 0;
 	style0_cont_main.body.border.color = lv_color_hex(0x4456c6);
 	style0_cont_main.body.border.width = 0;
 	style0_cont_main.body.border.opa = 255;
@@ -125,7 +126,7 @@ void photo_list_ui_create(photo_list_ui_t *ui)
 
 #ifdef LV_USE_LABEL
 	ui->label_1 = lv_label_create(ui->cont_main, NULL);
-	lv_label_set_text(ui->label_1, "Music");
+	lv_label_set_text(ui->label_1, "Photo");
 	lv_label_set_long_mode(ui->label_1, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_1, 64, 12);
 	lv_obj_set_size(ui->label_1, 228, 33);

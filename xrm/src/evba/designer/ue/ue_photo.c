@@ -73,6 +73,7 @@ static void photo_play_load_image(void)
 
     lv_obj_t *photo_play = para->ui.img_photo;
     lv_img_set_src(photo_play, photo_play_srcxz[0]);
+    lv_obj_move_foreground(para->ui.cont_1);
 }
 
 
@@ -121,8 +122,8 @@ static int photo_create(void)
 	photo_ui_create(&para->ui);
 	photo_ue_create(para);
 
-    lv_obj_t *tip = para->ui.img_photo_show;
-    lv_obj_set_top(tip, true);
+    // lv_obj_t *tip = para->ui.img_photo_show;
+    // lv_obj_set_top(tip, true);
 
     key_callback_register(LV_KEY_0, photo_key_confire_callback);
     key_callback_register(LV_KEY_4, photo_key_canel_callback);

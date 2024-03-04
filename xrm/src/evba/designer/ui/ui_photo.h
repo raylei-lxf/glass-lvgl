@@ -18,10 +18,11 @@ typedef struct
 {
 	lv_obj_t *parent;
 	lv_obj_t *cont_main;
+	lv_obj_t *img_photo;
+	lv_obj_t *cont_1;
 	lv_obj_t *img_photo_show;
 	lv_obj_t *img_photo_ing;
 	lv_obj_t *img_photo_line;
-	lv_obj_t *img_photo;
 } photo_ui_t;
 
 
