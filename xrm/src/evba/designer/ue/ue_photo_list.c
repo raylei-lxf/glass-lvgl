@@ -275,7 +275,7 @@ static int photo_list_create(void)
         style_en.text.color = LV_COLOR_WHITE;
 
         lv_obj_set_style(para->ui.label_1, &style_en);
-        lv_label_set_text(para->ui.label_1, "photo");
+        lv_label_set_text(para->ui.label_1, "Photo");
         
     }
 

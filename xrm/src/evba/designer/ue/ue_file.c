@@ -307,7 +307,7 @@ static int file_create(void)
         style_en.text.color = LV_COLOR_WHITE;
 
         lv_obj_set_style(para->ui.label_file_title, &style_en);
-        lv_label_set_text(para->ui.label_file_title, "file");
+        lv_label_set_text(para->ui.label_file_title, "File");
         
     }
 

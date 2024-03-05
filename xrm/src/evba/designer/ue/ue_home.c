@@ -272,7 +272,7 @@ static void key_left_callback(void)
 	
 	app_info("guangbiao = %d\n", guangbiao);
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
-    // home_text_focus();
+    home_text_focus();
 
 }
 
@@ -291,7 +291,7 @@ static void key_right_callback(void)
 	}
 	
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);
-    // home_text_focus();
+    home_text_focus();
 }
 
 static void key_canel_callback(void)
@@ -406,20 +406,20 @@ static int home_create(void)
         lv_obj_set_style(para->ui.label_file, &style_en);
         lv_obj_set_style(para->ui.label_setting, &style_en);
         lv_obj_set_style(para->ui.label_phone, &style_en);
-        lv_label_set_text(para->ui.label_player, "video");
-        lv_label_set_text(para->ui.label_photo, "photo");
-        lv_label_set_text(para->ui.label_music, "music");
-        lv_label_set_text(para->ui.label_file, "file");
-        lv_label_set_text(para->ui.label_setting, "setting");
-        lv_label_set_text(para->ui.label_phone, "phone");
+        lv_label_set_text(para->ui.label_player, "Video");
+        lv_label_set_text(para->ui.label_photo, "Photo");
+        lv_label_set_text(para->ui.label_music, "Music");
+        lv_label_set_text(para->ui.label_file, "File");
+        lv_label_set_text(para->ui.label_setting, "Setting");
+        lv_label_set_text(para->ui.label_phone, "Phone");
 
         lv_obj_set_style(para->ui.label_tip_content, &style_en);
         lv_obj_set_style(para->ui.label_tip_title, &style_en);
-        lv_label_set_text(para->ui.label_tip_content, "tip");
-        lv_label_set_text(para->ui.label_tip_title, "fileless");
+        lv_label_set_text(para->ui.label_tip_content, "Tip");
+        lv_label_set_text(para->ui.label_tip_title, "Fileless");
     }
 	load_image();
-    // home_text_focus();
+    home_text_focus();
 	
     home_task(&para->ui);
 	lv_img_set_src(get_guanbiao_widget(guangbiao), img_srcxz[guangbiao]);

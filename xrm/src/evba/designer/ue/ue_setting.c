@@ -94,20 +94,20 @@ void setting_update_language(void)
         style_en.text.color = LV_COLOR_WHITE;
 
         lv_obj_set_style(para->ui.label_setting_title, &style_en);
-        lv_label_set_text(para->ui.label_setting_title, "setting");
+        lv_label_set_text(para->ui.label_setting_title, "Setting");
         lv_obj_set_style(para->ui.label_language_title, &style_en);
-        lv_label_set_text(para->ui.label_language_title, "language");
+        lv_label_set_text(para->ui.label_language_title, "Language");
         lv_obj_set_style(para->ui.label_language, &style_en);
-        lv_label_set_text(para->ui.label_language, "english");
+        lv_label_set_text(para->ui.label_language, "English");
         lv_obj_set_style(para->ui.label_factory, &style_en);
-        lv_label_set_text(para->ui.label_factory, "restore factory setting");
+        lv_label_set_text(para->ui.label_factory, "Restore factory setting");
         lv_obj_set_style(para->ui.label_upgrade, &style_en);
-        lv_label_set_text(para->ui.label_upgrade, "firmware upgrade");
+        lv_label_set_text(para->ui.label_upgrade, "Firmware upgrade");
 
         lv_obj_set_style(para->ui.label_tip_content, &style_en);
         lv_obj_set_style(para->ui.label_tip_title, &style_en);
-        lv_label_set_text(para->ui.label_tip_content, "tip");
-        lv_label_set_text(para->ui.label_tip_title, "Whether to restore factory Settings");
+        lv_label_set_text(para->ui.label_tip_content, "Tip");
+        lv_label_set_text(para->ui.label_tip_title, "Whether to restore factory Settings.");
     }
 }
 
