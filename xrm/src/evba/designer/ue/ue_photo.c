@@ -68,11 +68,33 @@ void *photo_play_srcxz[1] = {NULL};
 static void photo_play_load_image(void) 
 {
     photo_ui_t *ui = &para->ui;
+    lv_obj_t *photo_play = para->ui.img_photo;
 
 	photo_play_srcxz[0] = (void *)mal_load_image(photo_name);
+    if(!photo_play_srcxz[0])
+    {
+        app_err("%s:photo is error\n", photo_name);
+        return;
+    }
 
-    lv_obj_t *photo_play = para->ui.img_photo;
-    lv_img_set_src(photo_play, photo_play_srcxz[0]);
+    lv_img_dsc_t *dsc = photo_play_srcxz[0];
+//如果图片太大则resize
+    if(dsc->header.w > (LV_HOR_RES_MAX) || dsc->header.h > (LV_VER_RES_MAX))
+    {
+        dsc = resize_image(dsc, LV_HOR_RES_MAX, LV_VER_RES_MAX);
+        app_info("w=%d h=%d\n", dsc->header.w, dsc->header.h);
+        photo_play_srcxz[0] = dsc;
+    }
+    
+    lv_img_set_src(photo_play, dsc);
+
+//图片居中显示
+    int pos_x, pos_y;
+    pos_x = (LV_HOR_RES_MAX - dsc->header.w) / 2;
+    pos_y = (LV_VER_RES_MAX - dsc->header.h) / 2;
+    lv_obj_set_pos(ui->img_photo, pos_x, pos_y);
+	lv_obj_set_size(ui->img_photo, dsc->header.w, dsc->header.h);
+
     lv_obj_move_foreground(para->ui.cont_1);
 }
 
@@ -88,9 +110,7 @@ static void photo_key_left_callback(void)
     photo_index--;
     if (photo_index < 0) {
         photo_index = photo_max - 1;
-    } else if (photo_index > photo_max) {
-        photo_index = 0;
-    }
+    } 
     memset(photo_name, 0, sizeof(photo_name));
     sprintf(photo_name, "%s%s", "/mnt/app/", photo_play_list[photo_index]);
     photo_play_load_image();
@@ -100,9 +120,7 @@ static void photo_key_right_callback(void)
 {
     photo_play_unload_image();
     photo_index++;
-    if (photo_index < 0) {
-        photo_index = photo_max - 1;
-    } else if (photo_index > photo_max) {
+    if (photo_index >= photo_max) {
         photo_index = 0;
     }
     memset(photo_name, 0, sizeof(photo_name));

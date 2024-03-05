@@ -19,8 +19,8 @@ typedef struct
 	menu_ui_t ui;
 	menu_ue_t ue;
 } menu_para_t;
-static menu_para_t *para = NULL;
 
+static menu_para_t *para = NULL;
 
 typedef enum{
 	MENU_VOL,
@@ -36,7 +36,6 @@ typedef enum{
 	MENU_B = 10,
 	MENU_MAX
 }menu_type_t;
-
 
 typedef struct{
 	menu_type_t type;
@@ -185,9 +184,6 @@ static void key_up_callback()
 	time_count = 0;
 }
 
-
-
-
 static void key_down_callback()
 {
 
@@ -201,8 +197,6 @@ static void key_down_callback()
 	menu_type_set_value(menu_type, menu_s[menu_type].val);
 	time_count = 0;
 }	
-
-
 
 static void key_menu_callback(void)
 {

@@ -1,8 +1,16 @@
 #include "mal_image.h"
 #include "lv_common.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+
+
+typedef struct {
+    uint8_t r, g, b, a;
+} PixelRGBA;
 
 unsigned char *stbi_convert_rb(unsigned char *data, int w, int h, int Bpp)
 {
@@ -78,4 +86,39 @@ int mal_unload_image(void *dsc)
 
 	return 0;
 }
+
+lv_img_dsc_t *resize_image(const lv_img_dsc_t* src, int dst_width, int dst_height) 
+{
+
+    float x_ratio = (float)src->header.w / dst_width;
+    float y_ratio = (float)src->header.h / dst_height;
+
+	lv_img_dsc_t *dst = (lv_img_dsc_t *)malloc(sizeof(lv_img_dsc_t));
+	memset(dst, 0, sizeof(lv_img_dsc_t));
+	
+	dst->header.w = dst_width;
+	dst->header.h = dst_height;
+	dst->header.always_zero = 0;
+	dst->header.cf = LV_IMG_CF_TRUE_COLOR_ALPHA;
+	dst->data_size = dst_width * dst_height * 4;
+
+	char *dstdata = malloc(dst->data_size);
+	//memset(dstdata, 0xff, dst->data_size);
+	dst->data = dstdata;
+
+	PixelRGBA *src_rgba = src->data;
+	PixelRGBA *dst_rgba = dstdata;
+
+    for (int y = 0; y < dst_height; y++) {
+        for (int x = 0; x < dst_width; x++) {
+            int src_x = (int)(x * x_ratio);
+            int src_y = (int)(y * y_ratio);
+            dst_rgba[y * dst_width + x] = src_rgba[src_y * src->header.w + src_x];
+        }
+    }
+	mal_unload_image(src);
+	return dst;
+}
+
+
 
