@@ -50,13 +50,16 @@ void saveToFile(const Record* record)
 int readFromFile(const char* id, Record* record) 
 {
     const char* filename = CONFIG_FILE_NAME;
-    FILE* file = fopen(filename, "rb");
+    FILE* file = fopen(filename, "rb+");
     if (file == NULL) {
-        printf("can't open: %s\n", filename);
-        return -1;
+        file = fopen(filename, "wb+");
+        if (file == NULL) {
+            printf("can't open: %s\n", filename);
+            return -1;
+        }
     }
 
-    int found = 0;
+    int found = -1;
 
     while (1) {
         char file_id[100];
@@ -98,12 +101,12 @@ E_LANGUAGE query_language(void)
 {
     int ret = 0;
     int get_language = 0;
-    E_LANGUAGE value;
+    E_LANGUAGE value = E_CHINESE;
     Record record;
     ret = readFromFile(ID_LANGUAGE, &record);
     sscanf(record.value, "%d", &get_language);
-    value = (E_LANGUAGE)get_language;
     if (ret >= 0) {
+        value = (E_LANGUAGE)get_language;
         printf("ID: %s\n", record.id);
         printf("ID: %s\n", record.value);
     } else {
