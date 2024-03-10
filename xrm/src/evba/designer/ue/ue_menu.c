@@ -142,6 +142,91 @@ static void menu_ue_destory(menu_para_t *para)
 	return;
 }
 
+int change_menu_value(int value)
+{
+	int ret = 0;
+	switch(menu_type) {
+		case MENU_VOL:
+			ret = change_vol(value);
+			break;
+		case MENU_AUTO:
+			ret = change_auto(value);
+			break;
+		case MENU_SPEED:
+			ret = change_speed(value);
+			break;
+		case MENU_TIME:
+			ret = change_shutdown_time(value);
+			break;
+		case MENU_BRT:
+			ret = change_BTR(value);
+			break;
+		case MENU_COL:
+			ret = change_COL(value);
+			break;
+		case MENU_CNT:
+			ret = change_CNT(value);
+			break;
+		case MENU_FOCUS:
+			ret = change_focus(value);
+			break;							
+		case MENU_R:
+			ret = change_R(value);
+			break;
+		case MENU_G:
+			ret = change_G(value);
+			break;
+		case MENU_B:
+			ret = change_B(value);
+			break;
+		default:
+			break;
+	}
+}
+
+int query_menu_value(void)
+{
+	int value = 0;
+	switch(menu_type) {
+		case MENU_VOL:
+			value = query_vol();
+			break;
+		case MENU_AUTO:
+			value = query_auto();
+			break;
+		case MENU_SPEED:
+			value = query_speed();
+			break;
+		case MENU_TIME:
+			value = query_shutdown_time();
+			break;
+		case MENU_BRT:
+			value = query_BTR();
+			break;
+		case MENU_COL:
+			value = query_COL();
+			break;
+		case MENU_CNT:
+			value = query_CNT();
+			break;
+		case MENU_FOCUS:
+			value = query_fousc();
+			break;							
+		case MENU_R:
+			value = query_R();
+			break;
+		case MENU_G:
+			value = query_G();
+			break;
+		case MENU_B:
+			value = query_B();
+			break;
+		default:
+			break;
+	}
+	return value;
+}
+
 void menu_type_set_value(menu_type_t type, int value)
 {
 	char val_str[16] = {0};
@@ -173,19 +258,22 @@ void menu_type_set_value(menu_type_t type, int value)
 
 static void key_up_callback()
 {
+     menu_s[menu_type].val = query_menu_value();
 	 menu_s[menu_type].val++;
 	 if( menu_s[menu_type].val >  menu_s[menu_type].max_val)
 	 {
 		 menu_s[menu_type].val =  menu_s[menu_type].max_val;
 	 }
-
+    
 	lv_bar_set_value(para->ui.bar_vol_blue, menu_s[menu_type].val, LV_ANIM_OFF);
 	menu_type_set_value(menu_type, menu_s[menu_type].val);
+    change_menu_value(menu_s[menu_type].val);
 	time_count = 0;
 }
 
 static void key_down_callback()
 {
+     menu_s[menu_type].val = query_menu_value();
 
 	 menu_s[menu_type].val--;
 	 if( menu_s[menu_type].val <  menu_s[menu_type].min_val)
@@ -195,6 +283,7 @@ static void key_down_callback()
 
 	
 	menu_type_set_value(menu_type, menu_s[menu_type].val);
+    change_menu_value(menu_s[menu_type].val);
 	time_count = 0;
 }	
 
@@ -222,6 +311,7 @@ static void key_menu_callback(void)
 		menu_type = MENU_VOL;
 	}	
 
+    menu_s[menu_type].val = query_menu_value();
 	lv_label_set_text(para->ui.label_vol, menu_s[menu_type].type_str);
 	lv_bar_set_value(para->ui.bar_vol_blue, menu_s[menu_type].val, LV_ANIM_OFF);
 	menu_type_set_value(menu_type, menu_s[menu_type].val);
