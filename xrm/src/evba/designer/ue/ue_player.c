@@ -31,6 +31,7 @@ static int video_current_time = 0;
 
 extern player_t *t113_play;
 extern void time_int_to_string(unsigned int int_time, char *time_str);
+extern int file_to_play;
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -48,19 +49,67 @@ static void player_ue_create(player_para_t *para)
 	return;
 }
 
+static uint32_t speed_count_time = 20;
+static int current_pos = 0;
+#define TIME_MAX    10
+
 static void key_left_callback(void)
 {
-
+    #if 0
+    // if (t113_play != NULL && speed_count_time >= TIME_MAX) {
+    int pos = 0;
+    if (t113_play != NULL) {
+        playerStatus status = tplayer_get_status(t113_play);
+        if (status == PLAY_STATUS) {
+            // pos = current_pos + 10;
+            pos = 10;
+            if (pos > 0) { 
+                tplayer_seekto(t113_play, pos);
+                speed_count_time = 0;
+	            app_info("......pos = %d\n", pos);
+            }
+            // tplayer_get_current_pos(t113_play, &current_pos);
+            // tplayer_seekto(t113_play, current_pos+10);
+            // speed_count_time = 0;
+        }
+    }
+    #endif
 }
 
 static void key_right_callback(void)
 {
+    #if 0
+    int pos = 0;
+    // if (t113_play != NULL && speed_count_time >= TIME_MAX) {
+    // tplayer_get_current_pos(t113_play, &current_pos);
+    if (t113_play != NULL) {
+        playerStatus status = tplayer_get_status(t113_play);
+        if (status == PLAY_STATUS) {
+            // pos = current_pos - 10;
+            pos = 10;
+            if (pos > 0) { 
+                tplayer_seekto(t113_play, pos);
+                if(tplayer_get_status(t113_play) == SEEKTO_STATUS)
+                {
+                    media_ui_send_event(MEDIA_IDLE_EVENT, NULL, 0);
+                }
+                speed_count_time = 0;
+	            app_info("......pos = %d\n", pos);
+            }
+        }
+    }
+    #endif
 	
 }
 
 static void key_back_callback(void)
 {
-    switch_window(WINDOW_PLAYER, WINDOW_VIDEO_LIST);
+    if (file_to_play == 0) {
+        switch_window(WINDOW_PLAYER, WINDOW_VIDEO_LIST);
+    } else {
+        file_to_play = 0;
+        switch_window(WINDOW_PLAYER, WINDOW_FILE);
+    }
 }
 
 static void player_ue_destory(player_para_t *para)
@@ -115,24 +164,15 @@ int get_mp4(void)
 
 static void key_confirm_callback(void)
 {
-	#if 0
-    if (fileCount > 0 && t113_play != NULL) {
-		system("dd if=/dev/zero of=/dev/fb0");
-        app_info("..........%s ", filePaths[0]);
-       	tplayer_play_url(t113_play, filePaths[0]);
-		tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
-		tplayer_play(t113_play);
-
-    }
-	#endif
-	if (t113_play != NULL && access(player_name , F_OK) != -1) {
-		app_info("..........%s ", player_name);
-		system("dd if=/dev/zero of=/dev/fb0");
-		tplayer_play_url(t113_play, player_name);
-		tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
-		tplayer_play(t113_play);
-	}
 	app_info("......\n");
+    if (t113_play != NULL) {
+        playerStatus status = tplayer_get_status(t113_play);
+        if (status == PLAY_STATUS) {
+            tplayer_pause(t113_play);
+        } else if (status == PAUSE_STATUS) {
+            tplayer_play(t113_play);
+        }
+    }
 }
 
 
@@ -161,6 +201,7 @@ static void player_ui_task(struct _lv_task_t *param)
 	int current_pos = 0;
 	int text_current[100] = { 0 };
     int bar_value = 0;
+    speed_count_time++;
     playerStatus status = tplayer_get_status(t113_play);
     if (status == PLAY_STATUS) {
         
@@ -230,10 +271,12 @@ static int player_create(void)
 	}
     #endif
     key_callback_register(LV_KEY_4, key_back_callback);
-	// key_callback_register(LV_KEY_1, key_confirm_callback);
+	key_callback_register(LV_KEY_0, key_confirm_callback);
 
-	// key_callback_register(LV_KEY_3, key_left_callback);
-	// key_callback_register(LV_KEY_4, key_right_callback);
+	// key_callback_register(LV_KEY_2, key_left_callback);
+	// key_callback_register(LV_KEY_3, key_right_callback);
+	// key_mode_set(LV_KEY_3, 1);
+	// key_mode_set(LV_KEY_2, 1);
 
 	return 0;
 }
@@ -247,6 +290,7 @@ static int player_destory(void)
 	    tplayer_stop(t113_play);
     }
 	key_callback_unregister();
+    file_to_play = 0;
 	player_ue_destory(para);
 	player_ui_destory(&para->ui);
 	free(para);

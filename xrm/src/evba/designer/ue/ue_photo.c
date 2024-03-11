@@ -30,6 +30,8 @@ char photo_name[512] = { 0 };
 char photo_play_list[100][512] = { 0 };
 int photo_index = 0;
 int photo_max = 0;
+
+extern int file_to_photo;
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -60,7 +62,12 @@ static void photo_key_confire_callback(void)
 
 static void photo_key_canel_callback(void)
 {
-    switch_window(WINDOW_PHOTO, WINDOW_PHOTO_LIST);
+    if (file_to_photo == 0) {
+        switch_window(WINDOW_PHOTO, WINDOW_PHOTO_LIST);
+    } else {
+        file_to_photo = 0;
+        switch_window(WINDOW_PHOTO, WINDOW_FILE);
+    }
 }
 
 void *photo_play_srcxz[1] = {NULL};

@@ -29,6 +29,7 @@ typedef struct
 	file_ui_t ui;
 	file_ue_t ue;
 } file_para_t;
+
 static file_para_t *para = NULL;
 
 typedef enum
@@ -198,7 +199,7 @@ void file_set_list_focus(lv_obj_t *list, int index)
     int i = 0;
 
     focus_btn = lv_list_get_next_btn(list, NULL);
-    for(i = 0; i < index; i++){
+    for (i = 0; i < index; i++) {
         focus_btn = lv_list_get_next_btn(list, focus_btn);
     }
     focus_img = lv_list_get_btn_img(focus_btn);
@@ -213,9 +214,48 @@ void file_set_list_focus(lv_obj_t *list, int index)
     lv_list_set_btn_selected(list, focus_btn);
 }
 
+int file_to_play = 0;
+int file_to_photo = 0;
+int file_to_music = 0;
+extern char player_name[512]; 
+extern int photo_index;
+extern int photo_max;
+extern char photo_name[512];
+extern char photo_play_list[100][512];
+
 static void file_key_confire_callback(void)
 {
-    
+    if (file_number[m_foucs].file_type == FILE_JPG) {
+        int j = 0;
+        char path[512] = { 0 };
+        for (int i = 0; i < fileCount; i++) {
+            if (file_number[i].file_type == FILE_JPG) {
+                strncpy(photo_play_list[j], file_number[i].file_Paths, 512);
+                app_info("file_number[%d].file_Paths = %s\n", i, file_number[i].file_Paths);
+                app_info("photo_play_list[%d] = %s\n", j, photo_play_list[j]);
+                if (i == m_foucs) {
+                    memset(photo_name, 0, sizeof(photo_name));
+                    sprintf(path, "%s%s", "/mnt/app/", file_number[i].file_Paths); 
+                    strncpy(player_name, path, sizeof(path));
+                    photo_index = j;
+                }
+                j++;
+            }
+        }
+        photo_max = j;
+        file_to_photo = 1;
+        switch_window(WINDOW_FILE, WINDOW_PHOTO);    
+    } else if (file_number[m_foucs].file_type == FILE_MP4) {
+        char path[512] = { 0 };  
+        memset(player_name, 0, sizeof(player_name));
+        sprintf(path, "%s%s", "/mnt/app/", file_number[m_foucs].file_Paths);
+        memcpy(player_name, path, sizeof(path));
+        file_to_play = 1;
+        switch_window(WINDOW_FILE, WINDOW_PLAYER);    
+    } else if (file_number[m_foucs].file_type == FILE_MUS) {
+        switch_window(WINDOW_FILE, WINDOW_MUSIC);    
+        file_to_music = 1;
+    }
 }
 
 static void file_key_canel_callback(void)
@@ -237,7 +277,6 @@ static void key_left_callback(void)
     app_info(".......m_foucs = %d\n", m_foucs);
     if (fileCount > 0) {
         file_set_list_focus(ui->file_list, m_foucs);
-
     }
 }
 
@@ -309,7 +348,10 @@ static int file_create(void)
         lv_obj_set_style(para->ui.label_file_title, &style_en);
         lv_label_set_text(para->ui.label_file_title, "File");
         
-    }
+    }   
+    file_to_play = 0;
+    file_to_photo = 0;
+    file_to_music = 0;
 
 	key_callback_register(LV_KEY_0, file_key_confire_callback);
 	key_callback_register(LV_KEY_4, file_key_canel_callback);

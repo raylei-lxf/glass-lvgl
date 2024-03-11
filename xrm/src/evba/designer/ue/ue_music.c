@@ -35,6 +35,8 @@ static int music_current_time = 0;
 /**********other***************/
 extern player_t *t113_play;
 extern void time_int_to_string(unsigned int int_time, char *time_str);
+
+extern int file_to_music;
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -200,7 +202,12 @@ static void music_key_confire_callback(void)
 
 static void music_key_canel_callback(void)
 {
-  	switch_window(WINDOW_MUSIC, WINDOW_HOME);
+    if (file_to_music == 0) {
+      	switch_window(WINDOW_MUSIC, WINDOW_HOME);
+    } else {
+        file_to_music = 0;
+      	switch_window(WINDOW_MUSIC, WINDOW_FILE);
+    }
 }
 
 static void music_key_left_callback(void)
@@ -322,7 +329,7 @@ static int music_destory(void)
     if (t113_play != NULL) {
         tplayer_stop(t113_play);
     }
-
+    file_to_music = 0;
     key_callback_unregister();
 	music_ue_destory(para);
 	music_ui_destory(&para->ui);
