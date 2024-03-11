@@ -420,6 +420,7 @@ int main(int argc, char **argv)
     t113_play = tplayer_pthread_create();
 	tplayer_init(t113_play, CEDARX_PLAYER);
 	//fbdev_set_brightness(0);
+	param_config_init();
 
     REGISTER_WINDOW(WINDOW_HOME);
 	REGISTER_WINDOW(WINDOW_MUSIC);
