@@ -24,8 +24,18 @@ E_LANGUAGE query_language(void)
   return value;
 }
 
+int save_menu_configure(char *name, int val)
+{
+   return write_int_type_param("menu",  name,  val);
+} 
+
+int read_menu_configure(char *name, int *val)
+{
+    read_int_type_param("menu",  name,  val);
+} 
+
 int restore_factory(void)
 {
-    system("rm /mnt/UDISK/records.dat");
+    
 }
 

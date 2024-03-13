@@ -170,7 +170,7 @@ void menu_type_set_value(menu_type_t type, int value)
 
 	lv_bar_set_value(para->ui.bar_vol_blue, bar_val, LV_ANIM_OFF);
 
-	write_int_type_param("menu", menu_s[menu_type].type_str, menu_s[menu_type].val);
+	save_menu_configure(menu_s[menu_type].type_str, menu_s[menu_type].val);
 
 }
 
@@ -225,7 +225,7 @@ static void key_menu_callback(void)
 	{
 		menu_type = MENU_VOL;
 	}	
-	
+
 	lv_label_set_text(para->ui.label_vol, menu_s[menu_type].type_str);
 	lv_bar_set_value(para->ui.bar_vol_blue, menu_s[menu_type].val, LV_ANIM_OFF);
 	menu_type_set_value(menu_type, menu_s[menu_type].val);
@@ -272,7 +272,11 @@ static int menu_create(void)
 
 	for(int i=0; i< MENU_MAX; i++)
 	{
-		read_int_type_param("menu",  menu_s[i].type_str,  &menu_s[i].val);
+		int ret = read_menu_configure(menu_s[i].type_str,  &menu_s[i].val);
+		if(ret < 0)
+		{
+			save_menu_configure(menu_s[i].type_str, menu_s[i].val);
+		}
 	}
 	
 	return 0;

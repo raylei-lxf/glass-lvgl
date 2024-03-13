@@ -2,8 +2,8 @@
 #define __APP_CONFIG_PARAM_H__
 #include "rat_common.h"
 /* user data save by sence */
-#define VA_SAVE_PATH			"/etc/param_save.cfg"
-#define VA_BACKUP_SAVE_PATH			"/etc/param_save_backup.cfg"
+#define VA_SAVE_PATH			"/mnt/UDISK/param_save.cfg"
+#define VA_BACKUP_SAVE_PATH			"/mnt/UDISK/param_save_backup.cfg"
 
 /* major key */
 #define PUBLIC_SCENE			"public"
