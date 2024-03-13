@@ -421,7 +421,8 @@ int main(int argc, char **argv)
 	tplayer_init(t113_play, CEDARX_PLAYER);
 	//fbdev_set_brightness(0);
 	param_config_init();
-
+	media_file_find();
+	
     REGISTER_WINDOW(WINDOW_HOME);
 	REGISTER_WINDOW(WINDOW_MUSIC);
 	REGISTER_WINDOW(WINDOW_FILE);

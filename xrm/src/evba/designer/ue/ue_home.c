@@ -93,41 +93,41 @@ lv_obj_t *get_guanbiao_widget(int gb)
 	}
 }
 
-int findFilesWithSuffix(const char* folderPath, const char* suffix) 
-{
-    DIR* directory = opendir(folderPath);
-    if (directory == NULL) {
-        printf("cann't open : %s\n", folderPath);
-        return -1;
-    }
+// int findFilesWithSuffix(const char* folderPath, const char* suffix) 
+// {
+//     DIR* directory = opendir(folderPath);
+//     if (directory == NULL) {
+//         printf("cann't open : %s\n", folderPath);
+//         return -1;
+//     }
 
-    int found = 0;
+//     int found = 0;
 
-    struct dirent* entry;
-    while ((entry = readdir(directory)) != NULL) {
-        if (entry->d_type == DT_REG) {  
-            const char* fileName = entry->d_name;
-            size_t fileNameLength = strlen(fileName);
-            size_t suffixLength = strlen(suffix);
+//     struct dirent* entry;
+//     while ((entry = readdir(directory)) != NULL) {
+//         if (entry->d_type == DT_REG) {  
+//             const char* fileName = entry->d_name;
+//             size_t fileNameLength = strlen(fileName);
+//             size_t suffixLength = strlen(suffix);
 
-            if (fileNameLength > suffixLength) {
-                const char* fileSuffix = fileName + fileNameLength - suffixLength;
-                if (strcmp(fileSuffix, suffix) == 0) {
-                    found = 1;
-                    break;
-                }
-            }
-        }
-    }
+//             if (fileNameLength > suffixLength) {
+//                 const char* fileSuffix = fileName + fileNameLength - suffixLength;
+//                 if (strcmp(fileSuffix, suffix) == 0) {
+//                     found = 1;
+//                     break;
+//                 }
+//             }
+//         }
+//     }
 
-    closedir(directory);
+//     closedir(directory);
     
-    if (found) {
-        return 0;
-    } else {
-        return -1;
-    }
-}
+//     if (found) {
+//         return 0;
+//     } else {
+//         return -1;
+//     }
+// }
 
 void home_text_focus(void)
 {
@@ -203,11 +203,6 @@ void home_text_focus(void)
 
 static int tip_count_time = 0;
 
-#define SD_PATH "/mnt/app"
-#define VIDEO_NAME ".mp4"
-#define MUSIC_NAME ".mp3"
-#define JPG_NAME ".jpg"
-#define PNG_NAME ".png"
 
 static void key_confirm_callback(void)
 {
@@ -215,7 +210,7 @@ static void key_confirm_callback(void)
     home_ui_t *ui = &para->ui;
     lv_obj_set_hidden(ui->cont_tip,true);
 	if (guangbiao == FOCUS_PLAYER) {
-        if (findFilesWithSuffix(SD_PATH, VIDEO_NAME) == 0) {
+        if (video_file_get_total_num() > 0) {
         	switch_window(WINDOW_HOME, WINDOW_VIDEO_LIST);
         } else {
 	        app_info("can't find video\n");
@@ -223,7 +218,7 @@ static void key_confirm_callback(void)
             tip_count_time = 0;
         }
 	} else if (guangbiao == FOCUS_PHOTO) {
-        if (findFilesWithSuffix(SD_PATH, JPG_NAME) == 0 || findFilesWithSuffix(SD_PATH, PNG_NAME) == 0) {
+        if (photo_file_get_total_num() > 0) {
 		    switch_window(WINDOW_HOME, WINDOW_PHOTO_LIST);
         } else {
 	        app_info("can't find photo\n");
@@ -231,7 +226,7 @@ static void key_confirm_callback(void)
             tip_count_time = 0;
         }
 	} else if (guangbiao == FOCUS_MUSIC) {
-        if (findFilesWithSuffix(SD_PATH, MUSIC_NAME) == 0) {
+        if (music_file_get_total_num()) {
 		    switch_window(WINDOW_HOME, WINDOW_MUSIC);
         } else {
 	        app_info("can't find music\n");
@@ -239,10 +234,10 @@ static void key_confirm_callback(void)
             tip_count_time = 0;
         }
 	} else if (guangbiao == FOCUS_FILE) {
-        if (findFilesWithSuffix(SD_PATH, JPG_NAME) == 0 || \
-            findFilesWithSuffix(SD_PATH, PNG_NAME) == 0 || \
-            findFilesWithSuffix(SD_PATH, VIDEO_NAME) == 0 || \
-            findFilesWithSuffix(SD_PATH, MUSIC_NAME) == 0 ) {
+        if (video_file_get_total_num() > 0 ||
+            photo_file_get_total_num() > 0 || 
+            music_file_get_total_num()  
+        ) {
 
     		switch_window(WINDOW_HOME, WINDOW_FILE);
         } else {
