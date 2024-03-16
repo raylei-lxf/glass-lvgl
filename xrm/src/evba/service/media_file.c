@@ -1,60 +1,43 @@
 #include "media_file.h"
 
-media_file_list_t   *video_list;
-media_file_list_t   *music_list;
-media_file_list_t   *photo_list;
-
+media_file_list_t   *meida_list[MEIDA_TYPE_MAX];
 
 void media_file_find(void)
 {
-    video_list = media_load_file(RAT_MEDIA_TYPE_PIC, MEDIA_PATH);
-    photo_list = media_load_file(RAT_MEDIA_TYPE_VIDEO, MEDIA_PATH);
-    music_list = media_load_file(RAT_MEDIA_TYPE_AUDIO, MEDIA_PATH);
+    meida_list[VIDEO_TYPE] = media_load_file(RAT_MEDIA_TYPE_VIDEO, MEDIA_PATH);
+    meida_list[PHOTO_TYPE] = media_load_file(RAT_MEDIA_TYPE_PIC, MEDIA_PATH);
+    meida_list[MUSIC_TYPE] = media_load_file(RAT_MEDIA_TYPE_AUDIO, MEDIA_PATH);
 }
 
-int video_file_get_total_num()
+int media_file_get_total_num(media_type_t type)
 {
-    if(!video_list)
+    if(!meida_list[type])
     {
         return 0;
     }
-    return video_list->total_num;
+    return meida_list[type]->total_num;
 }
-
-int  music_file_get_total_num()
+char *media_file_get_path(media_type_t type, int index)
 {
-    if(!music_list)
+    if(!meida_list[type])
     {
-        return 0;
+        return NULL;
     }
-    return music_list->total_num;
-}
-
-int photo_file_get_total_num()
-{
-    if(!photo_list)
-    {
-        return 0;
-    }
-    return photo_list->total_num;
-}
-char *video_file_get_path(int index)
-{
-    return media_get_file_path(video_list, index);
-}
-
-char *music_file_get_path(int index)
-{
-    return media_get_file_path(music_list, index);
-}
-
-char *photo_file_get_path(int index)
-{
-    return media_get_file_path(photo_list, index);
+    return media_get_file_path(meida_list[type], index);
 }
 
 char *media_file_get_path_to_name(char *path)
 {
 
     return media_get_path_to_name(path);
+}
+
+int media_file_get_play_index(media_type_t type)
+{
+    return media_get_play_file_index(meida_list[type]);
+}
+
+void media_file_set_play_index(media_type_t type, int index)
+{
+    media_set_play_file_index(meida_list[type], index);
 }

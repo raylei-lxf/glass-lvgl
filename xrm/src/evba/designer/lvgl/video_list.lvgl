@@ -111,15 +111,18 @@
                                 "type": "LV_LIST_STYLE_SCRL"
                             },
                             {
-                                "base": "lv_style_transp_fit",
+                                "base": "lv_style_btn_rel",
                                 "body": {
                                     "border": {
-                                        "color": "#4456c6"
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
                                     },
                                     "grad_color": "#4456c6",
-                                    "main_color": "#4456c6"
+                                    "main_color": "#4456c6",
+                                    "radius": 0
                                 },
-                                "type": "LV_LIST_STYLE_BG"
+                                "type": "LV_LIST_STYLE_BTN_REL"
                             },
                             {
                                 "base": "lv_style_btn_pr",
@@ -134,20 +137,6 @@
                                     "radius": 0
                                 },
                                 "type": "LV_LIST_STYLE_BTN_PR"
-                            },
-                            {
-                                "base": "lv_style_btn_rel",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6",
-                                    "radius": 0
-                                },
-                                "type": "LV_LIST_STYLE_BTN_REL"
                             },
                             {
                                 "body": {
@@ -188,6 +177,17 @@
                                     "sel_color": "#5596d8"
                                 },
                                 "type": "LV_LIST_STYLE_EDGE_FLASH"
+                            },
+                            {
+                                "base": "lv_style_transp_fit",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6"
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6"
+                                },
+                                "type": "LV_LIST_STYLE_BG"
                             }
                         ],
                         "widget": "list",

@@ -39,6 +39,7 @@ void hide_window(window_id_t id);
 void switch_window(window_id_t old_id, window_id_t new_id);
 void update_window(void);
 window_id_t get_curr_window_id(void);
+window_id_t get_last_window_id(void);
 
 #define REGISTER_WINDOW(name)\
 do{\

@@ -25,7 +25,7 @@
                                     "y": 0
                                 },
                                 "对齐align": "Left",
-                                "文本text": "00:00:00",
+                                "文本text": "00:00",
                                 "显示visible": true,
                                 "模式mode": "Corp",
                                 "背景绘制body draw": false,
@@ -47,7 +47,7 @@
                                     "y": 0
                                 },
                                 "对齐align": "Left",
-                                "文本text": "00:00:00",
+                                "文本text": "00:00",
                                 "显示visible": true,
                                 "模式mode": "Corp",
                                 "背景绘制body draw": false,
@@ -94,6 +94,18 @@
                         "name": "bar_video",
                         "styles": [
                             {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "border": {
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#ffffff",
+                                    "radius": 0
+                                },
+                                "type": "LV_BAR_STYLE_BG"
+                            },
+                            {
                                 "base": "lv_style_pretty_color",
                                 "body": {
                                     "border": {
@@ -106,18 +118,6 @@
                                     "radius": 0
                                 },
                                 "type": "LV_BAR_STYLE_INDIC"
-                            },
-                            {
-                                "base": "lv_style_pretty",
-                                "body": {
-                                    "border": {
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#ffffff",
-                                    "radius": 0
-                                },
-                                "type": "LV_BAR_STYLE_BG"
                             }
                         ],
                         "widget": "bar",

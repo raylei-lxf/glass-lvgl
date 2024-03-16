@@ -15,6 +15,7 @@ E_LANGUAGE query_language(void);
 
 int save_menu_configure(char *name, int val);
 int read_menu_configure(char *name, int *val);
+int read_menu_vol_value();
 
 int restore_factory(void);
 

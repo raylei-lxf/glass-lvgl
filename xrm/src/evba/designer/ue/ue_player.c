@@ -28,10 +28,11 @@ typedef struct
 static player_para_t *para = NULL;
 static int video_total_time = 0;
 static int video_current_time = 0;
-
 extern player_t *t113_play;
-extern void time_int_to_string(unsigned int int_time, char *time_str);
-extern int file_to_play;
+
+static uint32_t speed_count_time = 20;
+static int current_pos = 0;
+#define TIME_MAX    10
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -48,10 +49,6 @@ static void player_ue_create(player_para_t *para)
 	// lv_obj_set_event_cb(para->ui.btn_back_home, btn_back_home_event_cb);
 	return;
 }
-
-static uint32_t speed_count_time = 20;
-static int current_pos = 0;
-#define TIME_MAX    10
 
 static void key_left_callback(void)
 {
@@ -104,62 +101,13 @@ static void key_right_callback(void)
 
 static void key_back_callback(void)
 {
-    if (file_to_play == 0) {
-        switch_window(WINDOW_PLAYER, WINDOW_VIDEO_LIST);
-    } else {
-        file_to_play = 0;
-        switch_window(WINDOW_PLAYER, WINDOW_FILE);
-    }
+    switch_window(WINDOW_PLAYER, get_last_window_id());
 }
 
 static void player_ue_destory(player_para_t *para)
 {
 	(void)para;
 	return;
-}
-
-#define MAX_FILES 100
-static int fileCount = 0;
-static char* filePaths[MAX_FILES];
-
-extern char player_name[512];
-
-int get_mp4(void)
-{
-    const char* folderPath = "/mnt/app/";  
-    const char* extension = ".mp4";
-    
-
-    DIR* dir = opendir(folderPath);
-    if (dir == NULL) {
-        app_info("can't open  folderPath = %s\n", folderPath);
-        return -1;
-    }
-
-    struct dirent* entry;
-    while ((entry = readdir(dir)) != NULL && fileCount < MAX_FILES) {
-        if (entry->d_type == DT_REG) {  
-            const char* fileName = entry->d_name;
-            size_t len = strlen(fileName);
-
-            if (len >= strlen(extension) && strcmp(fileName + len - strlen(extension), extension) == 0) {
-                char* filePath = malloc(strlen(folderPath) + 1 + len + 1);
-                sprintf(filePath, "%s/%s", folderPath, fileName);
-                filePaths[fileCount] = filePath;
-                fileCount++;
-            }
-        }
-    }
-
-    closedir(dir);
-
-    // 打印文件路径数组
-    for (int i = 0; i < fileCount; i++) {
-        app_info("files: %s\n", filePaths[i]);
-    }
-
-
-    return 0;
 }
 
 static void key_confirm_callback(void)
@@ -174,7 +122,6 @@ static void key_confirm_callback(void)
         }
     }
 }
-
 
 static void clean_screen(player_ui_t *ui)
 {
@@ -201,6 +148,7 @@ static void player_ui_task(struct _lv_task_t *param)
 	int current_pos = 0;
 	int text_current[100] = { 0 };
     int bar_value = 0;
+
     speed_count_time++;
     playerStatus status = tplayer_get_status(t113_play);
     if (status == PLAY_STATUS) {
@@ -232,6 +180,7 @@ static int video_bar(player_ui_t *ui)
 
 static int player_create(void)
 {
+    char player_name[512] = {0};
 	para = (player_para_t *)malloc(sizeof(player_para_t));
 	if(NULL == para) {
 		return -1;
@@ -256,13 +205,14 @@ static int player_create(void)
 
 //	lv_obj_set_hidden(para->ui.cont_par, 0);
 
+    sprintf(player_name, "%s", media_file_get_path(VIDEO_TYPE, media_file_get_play_index(VIDEO_TYPE)));
 	if (t113_play != NULL /*&& access(player_name , F_OK) != -1*/) {
         int duration = 0;
         char duration_c[100] = { 0 };
 		app_info("..........%s ", player_name);
 		tplayer_play_url(t113_play, player_name);
 		tplayer_set_displayrect(t113_play, 0, 0, 480, 360);
-		tplayer_play(t113_play);
+        tplayer_play(t113_play);
         tplayer_get_duration(t113_play, &duration);
         video_total_time = duration;
         time_int_to_string(duration, duration_c);
@@ -290,17 +240,10 @@ static int player_destory(void)
 	    tplayer_stop(t113_play);
     }
 	key_callback_unregister();
-    file_to_play = 0;
 	player_ue_destory(para);
 	player_ui_destory(&para->ui);
 	free(para);
 	para = NULL;
-	
-	
-    for (int i = 0; i < fileCount; i++) {
-        free(filePaths[i]);
-    }
-	fileCount = 0;
 
 	return 0;
 }

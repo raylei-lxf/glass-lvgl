@@ -41,67 +41,17 @@ static int video_list_hide(void);
 
 #define MAX_VIDEO 100
 static int is_playing = 0;
-static int m_video_foucs = 0;
+int m_video_foucs = 0;
 static int video_count = 0;
-static char* video_Paths[MAX_VIDEO];
-
-char player_name[512] = {0};
-
-int get_video_list(void)
-{
-    const char* directory = "/mnt/app";  
-    const char* formats[] = { ".mp4" }; 
-    
-    DIR* dir = opendir(directory);
-    if (dir == NULL) {
-        app_info("can't open  folderPath：%s\n", directory);
-        return -11;
-    }
-    
-    struct dirent* entry;
-    while ((entry = readdir(dir)) != NULL) {
-        if (entry->d_type == DT_REG) {
-            char* extension = strrchr(entry->d_name, '.');
-            if (extension != NULL) {
-                int i;
-                for (i = 0; extension[i]; i++) {
-                    extension[i] = tolower(extension[i]);
-                }
-                
-                int num_formats = sizeof(formats) / sizeof(formats[0]);
-                int found = 0;
-                
-                for (i = 0; i < num_formats; i++) {
-                    if (strcasecmp(extension, formats[i]) == 0) {
-                        found = i+1;
-                        break;
-                    }
-                }
-                
-                if (found != 0) {
-                    video_Paths[video_count] = strdup(entry->d_name);
-                    video_count++;
-                    if (video_count >= MAX_VIDEO) {
-                        app_info("file max\n");
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    closedir(dir);
-    for (int i = 0; i < video_count; i++) {
-        app_info("files: %s\n", video_Paths[i]);
-    }
-    return 0;
-}
 
 void set_video_list(void)
 {
     video_list_ui_t *ui = &para->ui;
+
+
+    video_count = media_file_get_total_num(VIDEO_TYPE);
     for (int i = 0; i < video_count; i++) {
-        void *video_list = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao.png");
-        lv_list_add_btn(ui->list_video, video_list, video_Paths[i]);
+        lv_list_add_btn(ui->list_video, video_img_srcxz[0],  media_file_get_path_to_name(media_file_get_path(VIDEO_TYPE, i)));
     }
 }
 
@@ -147,9 +97,6 @@ void video_set_list_focus(lv_obj_t *list, int index)
 	lv_img_set_src(focus_img, video_img_srcxz[1]);
     lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
     lv_list_set_btn_selected(list, focus_btn);
-
-    sprintf(player_name, "%s%s", "/mnt/app/", video_Paths[index]);
-    app_info("player_name = %s\n", player_name);
 }
 
 static void btn_back_home_event_cb(lv_obj_t * btn, lv_event_t event)
@@ -174,6 +121,7 @@ static void video_list_ue_destory(video_list_para_t *para)
 
 static void video_key_confire_callback(void)
 {
+     media_file_set_play_index(VIDEO_TYPE, m_video_foucs);
      switch_window(WINDOW_VIDEO_LIST, WINDOW_PLAYER);
     // if (t113_play != NULL && access(player_name , F_OK) != -1) {
 	// 	app_info("..........%s\n", player_name);
@@ -207,9 +155,7 @@ static void video_key_left_callback(void)
         video_set_list_unfocus(ui->list_video, m_video_foucs);
 
         m_video_foucs++;
-        if (m_video_foucs < 0) {
-            m_video_foucs = video_count - 1;
-        } else if (m_video_foucs >= video_count) {
+        if(m_video_foucs >= video_count) {
             m_video_foucs = 0;
         }
         app_info(".......m_foucs = %d\n", m_video_foucs);
@@ -228,9 +174,8 @@ static void video_key_right_callback(void)
         m_video_foucs--;
         if (m_video_foucs < 0) {
             m_video_foucs = video_count - 1;
-        } else if (m_video_foucs >= video_count) {
-            m_video_foucs = 0;
         }
+
         app_info(".......m_foucs = %d\n", m_video_foucs);
         if (video_count > 0) {
             video_set_list_focus(ui->list_video, m_video_foucs);
@@ -251,7 +196,6 @@ static int video_list_create(void)
 	video_list_ue_create(para);
 	video_load_image();
 
-	get_video_list();
 	set_video_list();
 
 	if (video_count > 0) {
@@ -299,12 +243,6 @@ static int video_list_destory(void)
 	para = NULL;
 
 	video_unload_image();
-
-    for (int i = 0; i < video_count; i++) {
-        free(video_Paths[i]);
-    }
-	video_count = 0;
-	m_video_foucs = 0;
 
 	return 0;
 }

@@ -15,7 +15,6 @@ static lv_style_t style0_cont_setting_language;
 static lv_style_t style0_cont_setting_factory;
 static lv_style_t style0_cont_upgrade;
 static lv_style_t style0_cont_tip;
-static lv_style_t style0_label_tip_title;
 static lv_style_t style0_cont_tip_line;
 
 static void *img_setting_title_shezhitubiao_png = NULL;
@@ -166,14 +165,11 @@ void setting_ui_create(setting_ui_t *ui)
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_LABEL
-	lv_style_copy(&style0_label_tip_title, &lv_style_transp);
-
 	ui->label_tip_title = lv_label_create(ui->cont_tip, NULL);
 	lv_label_set_text(ui->label_tip_title, "Untreated");
 	lv_label_set_long_mode(ui->label_tip_title, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_tip_title, 62, 67);
 	lv_obj_set_size(ui->label_tip_title, 194, 68);
-	lv_label_set_style(ui->label_tip_title, LV_LABEL_STYLE_MAIN, &style0_label_tip_title);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_CONT

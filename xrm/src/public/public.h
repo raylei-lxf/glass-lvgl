@@ -6,6 +6,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include "lvgl.h"
+#include "media_file.h"
 
 typedef struct IMG_SRC{
 	void *bluetooth[2];

@@ -2420,23 +2420,6 @@
                         "name": "list_mp3",
                         "styles": [
                             {
-                                "base": "lv_style_pretty",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6",
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6",
-                                    "radius": 0,
-                                    "shadow": {
-                                        "color": "#4456c6"
-                                    }
-                                },
-                                "type": "LV_LIST_STYLE_SCRL"
-                            },
-                            {
                                 "base": "lv_style_btn_rel",
                                 "body": {
                                     "border": {
@@ -2463,6 +2446,34 @@
                                     "radius": 0
                                 },
                                 "type": "LV_LIST_STYLE_BTN_PR"
+                            },
+                            {
+                                "base": "lv_style_transp_fit",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6"
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6"
+                                },
+                                "type": "LV_LIST_STYLE_BG"
+                            },
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "border": {
+                                        "color": "#4456c6",
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#4456c6",
+                                    "main_color": "#4456c6",
+                                    "radius": 0,
+                                    "shadow": {
+                                        "color": "#4456c6"
+                                    }
+                                },
+                                "type": "LV_LIST_STYLE_SCRL"
                             },
                             {
                                 "body": {
@@ -2503,17 +2514,6 @@
                                     "sel_color": "#5596d8"
                                 },
                                 "type": "LV_LIST_STYLE_EDGE_FLASH"
-                            },
-                            {
-                                "base": "lv_style_transp_fit",
-                                "body": {
-                                    "border": {
-                                        "color": "#4456c6"
-                                    },
-                                    "grad_color": "#4456c6",
-                                    "main_color": "#4456c6"
-                                },
-                                "type": "LV_LIST_STYLE_BG"
                             }
                         ],
                         "widget": "list",
@@ -2541,6 +2541,18 @@
                                 "name": "bar_music",
                                 "styles": [
                                     {
+                                        "base": "lv_style_pretty",
+                                        "body": {
+                                            "border": {
+                                                "opa": 255,
+                                                "width": 0
+                                            },
+                                            "grad_color": "#ffffff",
+                                            "radius": 0
+                                        },
+                                        "type": "LV_BAR_STYLE_BG"
+                                    },
+                                    {
                                         "base": "lv_style_pretty_color",
                                         "body": {
                                             "border": {
@@ -2554,18 +2566,6 @@
                                             "radius": 0
                                         },
                                         "type": "LV_BAR_STYLE_INDIC"
-                                    },
-                                    {
-                                        "base": "lv_style_pretty",
-                                        "body": {
-                                            "border": {
-                                                "opa": 255,
-                                                "width": 0
-                                            },
-                                            "grad_color": "#ffffff",
-                                            "radius": 0
-                                        },
-                                        "type": "LV_BAR_STYLE_BG"
                                     }
                                 ],
                                 "widget": "bar",
@@ -2613,7 +2613,7 @@
                                     "y": 11
                                 },
                                 "对齐align": "Left",
-                                "文本text": "00:00:00",
+                                "文本text": "00:00",
                                 "显示visible": true,
                                 "模式mode": "Corp",
                                 "背景绘制body draw": false,
@@ -2645,7 +2645,7 @@
                                     "y": 12
                                 },
                                 "对齐align": "Right",
-                                "文本text": "00:00:00",
+                                "文本text": "00:00",
                                 "显示visible": true,
                                 "模式mode": "Corp",
                                 "背景绘制body draw": false,

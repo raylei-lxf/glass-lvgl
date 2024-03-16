@@ -16,9 +16,6 @@
 /******************************************************************************
 *    datas
 ******************************************************************************/
-LV_FONT_DECLARE(chinese)
-LV_FONT_DECLARE(lv_font_roboto_28)
-
 typedef struct
 {
 	uint8_t id;
@@ -32,15 +29,12 @@ typedef struct
 
 static file_para_t *para = NULL;
 
-typedef enum
-{
-    File_Focus_None = 0,
-} E_File_Focus;
-
-static E_File_Focus m_file_focus = File_Focus_None;
-
 void *file_img_src[6] = {NULL};
 void *file_img_srcxz[6] = {NULL};
+
+static int m_foucs = 0;
+static int fileCount = 0;
+
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -61,15 +55,16 @@ static void file_ue_create(file_para_t *para)
 static void file_load_image(void) 
 {
     file_ui_t *ui = &para->ui;
-        
-   	file_img_srcxz[0] = (void *)mal_load_image(LV_IMAGE_PATH"pictubiao.png");
-   	file_img_srcxz[1] = (void *)mal_load_image(LV_IMAGE_PATH"pictubiao1.png");
 
-	file_img_srcxz[2] = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao.png");
-	file_img_srcxz[3] = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao1.png");
 
-	file_img_srcxz[4] = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue.png");
-	file_img_srcxz[5] = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue1.png");
+	file_img_srcxz[0] = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao.png");
+	file_img_srcxz[1] = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao1.png");
+
+	file_img_srcxz[2] = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue.png");
+	file_img_srcxz[3] = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue1.png");
+            
+   	file_img_srcxz[4] = (void *)mal_load_image(LV_IMAGE_PATH"pictubiao.png");
+   	file_img_srcxz[5] = (void *)mal_load_image(LV_IMAGE_PATH"pictubiao1.png");
     #if 0
     file_img_src[0] = lv_img_get_src(ui->img_player);
 	file_img_src[1] = lv_img_get_src(ui->img_photo);
@@ -86,91 +81,89 @@ static void file_unload_image(void)
 	mal_unload_image(file_img_srcxz[4]);
 	mal_unload_image(file_img_srcxz[5]);
 }
-#define MAX_FILES 100
-#define FILE_MP4    0
-#define FILE_JPG    1
-#define FILE_MUS    2
-static int m_foucs = 0;
-static int fileCount = 0;
-static char* filePaths[MAX_FILES];
 
-typedef struct {
-    int file_type;
-    char *file_Paths;    
-}File_T;
-
-File_T file_number[MAX_FILES];
-
-int get_file_list(void)
+int get_file_type(int index)
 {
-    const char* directory = "/mnt/app";  
-    const char* formats[] = { ".mp4", ".jpg", ".mp3" }; 
-    
-    DIR* dir = opendir(directory);
-    if (dir == NULL) {
-        app_info("can't open  folderPath：%s\n", directory);
-        return -11;
-    }
-    
-    struct dirent* entry;
-    while ((entry = readdir(dir)) != NULL) {
-        if (entry->d_type == DT_REG) {
-            char* extension = strrchr(entry->d_name, '.');
-            if (extension != NULL) {
-                int i;
-                for (i = 0; extension[i]; i++) {
-                    extension[i] = tolower(extension[i]);
-                }
-                
-                int num_formats = sizeof(formats) / sizeof(formats[0]);
-                int found = 0;
-                
-                for (i = 0; i < num_formats; i++) {
-                    if (strcasecmp(extension, formats[i]) == 0) {
-                        found = i+1;
-                        break;
-                    }
-                }
-                
-                if (found != 0) {
-                    filePaths[fileCount] = strdup(entry->d_name);
-                    file_number[fileCount].file_Paths = strdup(entry->d_name);
-                    file_number[fileCount].file_type = found - 1;
-                    fileCount++;
-                    if (fileCount >= MAX_FILES) {
-                        app_info("file max\n");
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    
-    closedir(dir);
-    
-    for (int i = 0; i < fileCount; i++) {
-        app_info("files: %s\n", filePaths[i]);
-    }
+    int photo_num = 0;
+    int music_num = 0;
+    int video_num = 0;
 
+    photo_num =  media_file_get_total_num(PHOTO_TYPE);
+    video_num = media_file_get_total_num(VIDEO_TYPE);
+    music_num = media_file_get_total_num(MUSIC_TYPE);
+
+    if(index < video_num && video_num > 0)
+    {
+        return VIDEO_TYPE;
+    }else if(index <(video_num + music_num) && music_num > 0)
+    {
+        return MUSIC_TYPE;
+    }else if(photo_num > 0){
+        return PHOTO_TYPE;
+    }  
+
+    return 0;
+}
+
+int get_media_file_focus(int focus)
+{
+    int type = get_file_type(focus);
+
+    int photo_num = 0;
+    int music_num = 0;
+    int video_num = 0;
+
+    photo_num =  media_file_get_total_num(PHOTO_TYPE);
+    video_num = media_file_get_total_num(VIDEO_TYPE);
+    music_num = media_file_get_total_num(MUSIC_TYPE);
+
+    switch(type)
+    {
+        case VIDEO_TYPE:
+        return focus;
+        case MUSIC_TYPE:
+        return focus - video_num;
+        case PHOTO_TYPE:
+        return focus - music_num - video_num;
+        default:return 0;
+    }
     return 0;
 }
 
 void set_file_list(void)
 {
     file_ui_t *ui = &para->ui;
-    // void *file_list[fileCount] = { NULL };
+
+    void *img_src;
+
+    int photo_num = 0;
+    int music_num = 0;
+    int video_num = 0;
+
+    photo_num =  media_file_get_total_num(PHOTO_TYPE);
+    video_num = media_file_get_total_num(VIDEO_TYPE);
+    music_num = media_file_get_total_num(MUSIC_TYPE);
+
+    fileCount = photo_num + video_num + music_num;
+
     for (int i = 0; i < fileCount; i++) {
-        void *file_list = NULL;
-        if (file_number[i].file_type == FILE_MP4) {
-            file_list = (void *)mal_load_image(LV_IMAGE_PATH"videotubiao.png");        
-        } else if (file_number[i].file_type == FILE_MUS) {
-            file_list = (void *)mal_load_image(LV_IMAGE_PATH"tubiaoyinyue.png");        
-        } else {
-            file_list = (void *)mal_load_image(LV_IMAGE_PATH"pictubiao.png");        
+        int type = get_file_type(i);
+        switch(type)
+        {
+            case VIDEO_TYPE:
+                img_src = file_img_srcxz[0]; 
+            break;
+            case MUSIC_TYPE:
+                img_src = file_img_srcxz[2]; 
+            break;
+            case PHOTO_TYPE:
+                img_src = file_img_srcxz[4]; 
+            break;
+            default:break;
         }
-        lv_list_add_btn(ui->file_list, file_list, file_number[i].file_Paths);
+        lv_list_add_btn(ui->file_list, img_src,
+        media_file_get_path_to_name(media_file_get_path(type, get_media_file_focus(i))));       
     }
-    
 }
 
 void file_set_list_unfocus(lv_obj_t *list, int index)
@@ -178,18 +171,28 @@ void file_set_list_unfocus(lv_obj_t *list, int index)
     lv_obj_t *focus_btn = NULL;
     lv_obj_t *focus_img = NULL;
     int i = 0;
+
     focus_btn = lv_list_get_next_btn(list, NULL);
     for(i = 0; i < index; i++){
         focus_btn = lv_list_get_next_btn(list, focus_btn);
     }
     focus_img = lv_list_get_btn_img(focus_btn);
-    if (file_number[i].file_type == FILE_JPG) {
-        lv_img_set_src(focus_img, file_img_srcxz[0]);
-    } else if (file_number[i].file_type == FILE_MP4) {
-        lv_img_set_src(focus_img, file_img_srcxz[2]);
-    } else {
-        lv_img_set_src(focus_img, file_img_srcxz[4]);
+
+    int type = get_file_type(index);
+    switch(type)
+    {
+        case VIDEO_TYPE:
+            lv_img_set_src(focus_img, file_img_srcxz[0]);
+        break;
+        case MUSIC_TYPE:
+            lv_img_set_src(focus_img, file_img_srcxz[2]);
+        break;
+        case PHOTO_TYPE:
+            lv_img_set_src(focus_img, file_img_srcxz[4]);
+        break;
+        default:break;
     }
+
 }
 
 void file_set_list_focus(lv_obj_t *list, int index)
@@ -203,59 +206,44 @@ void file_set_list_focus(lv_obj_t *list, int index)
         focus_btn = lv_list_get_next_btn(list, focus_btn);
     }
     focus_img = lv_list_get_btn_img(focus_btn);
-    if (file_number[i].file_type == FILE_JPG) {
-        lv_img_set_src(focus_img, file_img_srcxz[1]);
-    } else if (file_number[i].file_type == FILE_MP4) {
-        lv_img_set_src(focus_img, file_img_srcxz[3]);
-    } else {
-        lv_img_set_src(focus_img, file_img_srcxz[5]);
+
+    int type = get_file_type(index);
+    switch(type)
+    {
+        case VIDEO_TYPE:
+            lv_img_set_src(focus_img, file_img_srcxz[1]);
+        break;
+        case MUSIC_TYPE:
+            lv_img_set_src(focus_img, file_img_srcxz[3]);
+        break;
+        case PHOTO_TYPE:
+            lv_img_set_src(focus_img, file_img_srcxz[5]);
+        break;
+        default:break;
     }
     lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
     lv_list_set_btn_selected(list, focus_btn);
 }
 
-int file_to_play = 0;
-int file_to_photo = 0;
-int file_to_music = 0;
-extern char player_name[512]; 
-extern int photo_index;
-extern int photo_max;
-extern char photo_name[512];
-extern char photo_play_list[100][512];
-
 static void file_key_confire_callback(void)
 {
-    if (file_number[m_foucs].file_type == FILE_JPG) {
-        int j = 0;
-        char path[512] = { 0 };
-        for (int i = 0; i < fileCount; i++) {
-            if (file_number[i].file_type == FILE_JPG) {
-                strncpy(photo_play_list[j], file_number[i].file_Paths, 512);
-                app_info("file_number[%d].file_Paths = %s\n", i, file_number[i].file_Paths);
-                app_info("photo_play_list[%d] = %s\n", j, photo_play_list[j]);
-                if (i == m_foucs) {
-                    memset(photo_name, 0, sizeof(photo_name));
-                    sprintf(path, "%s%s", "/mnt/app/", file_number[i].file_Paths); 
-                    strncpy(player_name, path, sizeof(path));
-                    photo_index = j;
-                }
-                j++;
-            }
-        }
-        photo_max = j;
-        file_to_photo = 1;
-        switch_window(WINDOW_FILE, WINDOW_PHOTO);    
-    } else if (file_number[m_foucs].file_type == FILE_MP4) {
-        char path[512] = { 0 };  
-        memset(player_name, 0, sizeof(player_name));
-        sprintf(path, "%s%s", "/mnt/app/", file_number[m_foucs].file_Paths);
-        memcpy(player_name, path, sizeof(path));
-        file_to_play = 1;
-        switch_window(WINDOW_FILE, WINDOW_PLAYER);    
-    } else if (file_number[m_foucs].file_type == FILE_MUS) {
-        switch_window(WINDOW_FILE, WINDOW_MUSIC);    
-        file_to_music = 1;
+
+    int type = get_file_type(m_foucs);
+    switch(type)
+    {
+        case VIDEO_TYPE:
+            switch_window(WINDOW_FILE, WINDOW_PLAYER);
+        break;
+        case MUSIC_TYPE:
+            switch_window(WINDOW_FILE, WINDOW_MUSIC);        
+        break;
+        case PHOTO_TYPE:
+            switch_window(WINDOW_FILE, WINDOW_PHOTO);    
+        break;
+        default:break;
     }
+    
+    media_file_set_play_index(type, get_media_file_focus(m_foucs));
 }
 
 static void file_key_canel_callback(void)
@@ -263,24 +251,23 @@ static void file_key_canel_callback(void)
     switch_window(WINDOW_FILE, WINDOW_HOME);    
 }
 
-static void key_left_callback(void)
+static void key_up_callback(void)
 {
     file_ui_t *ui = &para->ui;
     file_set_list_unfocus(ui->file_list, m_foucs);
 
     m_foucs++;
-    if (m_foucs < 0) {
-        m_foucs = fileCount - 1;
-    } else if (m_foucs >= fileCount) {
+    if (m_foucs >= fileCount) {
         m_foucs = 0;
     }
+
     app_info(".......m_foucs = %d\n", m_foucs);
     if (fileCount > 0) {
         file_set_list_focus(ui->file_list, m_foucs);
     }
 }
 
-static void key_right_callback(void)
+static void key_down_callback(void)
 {
     file_ui_t *ui = &para->ui;
     file_set_list_unfocus(ui->file_list, m_foucs);
@@ -288,14 +275,11 @@ static void key_right_callback(void)
     m_foucs--;
     if (m_foucs < 0) {
         m_foucs = fileCount - 1;
-    } else if (m_foucs >= fileCount) {
-        m_foucs = 0;
     }
 
     app_info(".......m_foucs = %d\n", m_foucs);
     
     if (fileCount > 0) {
-        file_ui_t *ui = &para->ui;
         file_set_list_focus(ui->file_list, m_foucs);
     }
 }
@@ -313,20 +297,21 @@ static int file_create(void)
 		return -1;
 	}
 	memset(para, 0, sizeof(file_para_t));
-
+    app_info("\n");
 	para->ui.parent = lv_scr_act();
 	file_ui_create(&para->ui);
 	file_ue_create(para);
     file_load_image();
+    app_info("\n");
 
-    get_file_list();
     set_file_list();    
-
+    app_info("\n");
+  //  m_foucs = 0;
     if (fileCount > 0) {
         file_ui_t *ui = &para->ui;
         file_set_list_focus(ui->file_list, m_foucs);
     }
-
+        app_info("\n");
     
     E_LANGUAGE value = E_CHINESE;
     value = query_language();
@@ -349,15 +334,13 @@ static int file_create(void)
         lv_label_set_text(para->ui.label_file_title, "File");
         
     }   
-    file_to_play = 0;
-    file_to_photo = 0;
-    file_to_music = 0;
-
+    app_info("\n");
 	key_callback_register(LV_KEY_0, file_key_confire_callback);
 	key_callback_register(LV_KEY_4, file_key_canel_callback);
 
-	key_callback_register(LV_KEY_3, key_left_callback);
-	key_callback_register(LV_KEY_2, key_right_callback);
+	key_callback_register(LV_KEY_2, key_down_callback);
+	key_callback_register(LV_KEY_3, key_up_callback);
+
 
 	return 0;
 }
@@ -371,11 +354,8 @@ static int file_destory(void)
     file_unload_image();
 	para = NULL;
 
-    for (int i = 0; i < fileCount; i++) {
-        free(filePaths[i]);
-    }
 	fileCount = 0;
-    m_foucs = 0;
+ //   m_foucs = 0;
 
 	return 0;
 }

@@ -11,6 +11,8 @@
 ******************************************************************************/
 static lv_style_t style0_cont_main;
 static lv_style_t style0_cont_par;
+static lv_style_t style0_label_player_current;
+static lv_style_t style0_label_player_total;
 static lv_style_t style0_bar_video;
 static lv_style_t style1_bar_video;
 
@@ -48,19 +50,25 @@ void player_ui_create(player_ui_t *ui)
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_LABEL
+	lv_style_copy(&style0_label_player_current, &lv_style_transp);
+
 	ui->label_player_current = lv_label_create(ui->cont_par, NULL);
-	lv_label_set_text(ui->label_player_current, "00:00:00");
+	lv_label_set_text(ui->label_player_current, "00:00");
 	lv_label_set_long_mode(ui->label_player_current, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_player_current, 12, 0);
 	lv_obj_set_size(ui->label_player_current, 92, 22);
+	lv_label_set_style(ui->label_player_current, LV_LABEL_STYLE_MAIN, &style0_label_player_current);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LABEL
+	lv_style_copy(&style0_label_player_total, &lv_style_transp);
+
 	ui->label_player_total = lv_label_create(ui->cont_par, NULL);
-	lv_label_set_text(ui->label_player_total, "00:00:00");
+	lv_label_set_text(ui->label_player_total, "00:00");
 	lv_label_set_long_mode(ui->label_player_total, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_player_total, 370, 0);
 	lv_obj_set_size(ui->label_player_total, 95, 25);
+	lv_label_set_style(ui->label_player_total, LV_LABEL_STYLE_MAIN, &style0_label_player_total);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_BAR

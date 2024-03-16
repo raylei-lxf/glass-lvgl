@@ -35,6 +35,18 @@ static home_para_t *para = NULL;
 void *img_src[6] = {NULL};
 void *img_srcxz[6] = {NULL};
 
+typedef enum 
+{
+    FOCUS_PLAYER,
+    FOCUS_PHOTO,
+    FOCUS_MUSIC,
+    FOCUS_FILE,
+    FOCUS_SETTING,
+    FOCUS_HPONE,
+    gbMax,
+    /* data */
+}focus_page_t;
+
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -57,15 +69,6 @@ static void home_ue_destory(home_para_t *para)
 	(void)para;
 	return;
 }
-
-
-#define FOCUS_PLAYER  0
-#define FOCUS_PHOTO  1
-#define FOCUS_MUSIC  2
-#define FOCUS_FILE  3
-#define FOCUS_SETTING  4
-#define FOCUS_HPONE  5
-#define gbMax  6
 
 static int guangbiao = 0;
 
@@ -208,9 +211,17 @@ static void key_confirm_callback(void)
 {
 	app_info("......guangbiao = %d\n", guangbiao);
     home_ui_t *ui = &para->ui;
+    int photo_num = 0;
+    int music_num = 0;
+    int video_num = 0;
+
+    photo_num =  media_file_get_total_num(PHOTO_TYPE);
+    video_num = media_file_get_total_num(VIDEO_TYPE);
+    music_num = media_file_get_total_num(MUSIC_TYPE);  
+
     lv_obj_set_hidden(ui->cont_tip,true);
 	if (guangbiao == FOCUS_PLAYER) {
-        if (video_file_get_total_num() > 0) {
+        if (video_num > 0) {
         	switch_window(WINDOW_HOME, WINDOW_VIDEO_LIST);
         } else {
 	        app_info("can't find video\n");
@@ -218,7 +229,7 @@ static void key_confirm_callback(void)
             tip_count_time = 0;
         }
 	} else if (guangbiao == FOCUS_PHOTO) {
-        if (photo_file_get_total_num() > 0) {
+        if (photo_num > 0) {
 		    switch_window(WINDOW_HOME, WINDOW_PHOTO_LIST);
         } else {
 	        app_info("can't find photo\n");
@@ -226,7 +237,8 @@ static void key_confirm_callback(void)
             tip_count_time = 0;
         }
 	} else if (guangbiao == FOCUS_MUSIC) {
-        if (music_file_get_total_num()) {
+  
+        if (music_num > 0) {
 		    switch_window(WINDOW_HOME, WINDOW_MUSIC);
         } else {
 	        app_info("can't find music\n");
@@ -234,9 +246,9 @@ static void key_confirm_callback(void)
             tip_count_time = 0;
         }
 	} else if (guangbiao == FOCUS_FILE) {
-        if (video_file_get_total_num() > 0 ||
-            photo_file_get_total_num() > 0 || 
-            music_file_get_total_num()  
+        if (video_num > 0 ||
+            photo_num > 0 || 
+            music_num > 0 
         ) {
 
     		switch_window(WINDOW_HOME, WINDOW_FILE);

@@ -11,6 +11,7 @@
 ******************************************************************************/
 static lv_style_t style0_cont_main;
 static lv_style_t style0_cont_1;
+static lv_style_t style0_label_1;
 static lv_style_t style0_list_video;
 static lv_style_t style1_list_video;
 static lv_style_t style3_list_video;
@@ -66,11 +67,14 @@ void video_list_ui_create(video_list_ui_t *ui)
 #endif // LV_USE_IMG
 
 #ifdef LV_USE_LABEL
+	lv_style_copy(&style0_label_1, &lv_style_transp);
+
 	ui->label_1 = lv_label_create(ui->cont_main, NULL);
 	lv_label_set_text(ui->label_1, "Video");
 	lv_label_set_long_mode(ui->label_1, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_1, 59, 10);
 	lv_obj_set_size(ui->label_1, 89, 33);
+	lv_label_set_style(ui->label_1, LV_LABEL_STYLE_MAIN, &style0_label_1);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LIST

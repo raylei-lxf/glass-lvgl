@@ -1142,7 +1142,7 @@ void music_ui_create(music_ui_t *ui)
 	style0_label_music_start.text.line_space = 2;
 
 	ui->label_music_start = lv_label_create(ui->cont_2, NULL);
-	lv_label_set_text(ui->label_music_start, "00:00:00");
+	lv_label_set_text(ui->label_music_start, "00:00");
 	lv_label_set_long_mode(ui->label_music_start, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_music_start, 2, 11);
 	lv_obj_set_size(ui->label_music_start, 89, 27);
@@ -1156,7 +1156,7 @@ void music_ui_create(music_ui_t *ui)
 	style0_label_music_totle.text.line_space = 2;
 
 	ui->label_music_totle = lv_label_create(ui->cont_2, NULL);
-	lv_label_set_text(ui->label_music_totle, "00:00:00");
+	lv_label_set_text(ui->label_music_totle, "00:00");
 	lv_label_set_align(ui->label_music_totle, LV_LABEL_ALIGN_RIGHT);
 	lv_label_set_long_mode(ui->label_music_totle, LV_LABEL_LONG_CROP);
 	lv_obj_set_pos(ui->label_music_totle, 169, 12);

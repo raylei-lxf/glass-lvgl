@@ -6,7 +6,7 @@
 #include "public.h"
 #include "debug.h"
 #include "app_config_interface.h"
-
+#include "player_int.h"
 /******************************************************************************
 *    datas
 ******************************************************************************/
@@ -116,6 +116,7 @@ menu_val_s menu_s[MENU_MAX]={
 	}						
 };
 
+extern player_t *t113_play;
 
 static lv_task_t *menu_task_id;
 static uint32_t time_count = 0;
@@ -149,6 +150,12 @@ void menu_type_set_value(menu_type_t type, int value)
 
 	switch(type)
 	{
+		case MENU_VOL:
+		if(t113_play)
+		{
+			tplayer_volume(t113_play, value);
+		}
+		break;
 		case MENU_AUTO:
 
 		if(value == 0)

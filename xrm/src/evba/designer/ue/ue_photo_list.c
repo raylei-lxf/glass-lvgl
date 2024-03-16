@@ -11,12 +11,11 @@
 #include <ctype.h>
 #include "debug.h"
 
+#include "media_file.h"
 #include "config.h"
 /******************************************************************************
 *    datas
 ******************************************************************************/
-LV_FONT_DECLARE(chinese)
-LV_FONT_DECLARE(lv_font_roboto_28)
 
 typedef struct
 {
@@ -30,86 +29,21 @@ typedef struct
 } photo_list_para_t;
 static photo_list_para_t *para = NULL;
 
-void *photo_img_srcxz[2] = {NULL};
+static void *photo_img_srcxz[2] = {NULL};
 /******************************************************************************
 *    functions
 ******************************************************************************/
-#define MAX_PHOTO 100
-
 int m_photo_foucs = 0;
 int photo_count = 0;
-char* photo_Paths[MAX_PHOTO] = { 0 };
-
-extern char photo_name[512];
-extern char photo_play_list[100][512];
-extern int photo_index;
-extern int photo_max;
-
-int get_photo_list(void)
-{
-    const char* directory = "/mnt/app";  
-    const char* formats[] = { ".jpg", ".png" }; 
-    
-    DIR* dir = opendir(directory);
-    if (dir == NULL) {
-        app_info("can't open  folderPath：%s\n", directory);
-        return -11;
-    }
-    
-    struct dirent* entry;
-    while ((entry = readdir(dir)) != NULL) {
-        if (entry->d_type == DT_REG) {
-            char* extension = strrchr(entry->d_name, '.');
-            if (extension != NULL) {
-                int i;
-                for (i = 0; extension[i]; i++) {
-                    extension[i] = tolower(extension[i]);
-                }
-                
-                int num_formats = sizeof(formats) / sizeof(formats[0]);
-                int found = 0;
-                
-                for (i = 0; i < num_formats; i++) {
-                    if (strcasecmp(extension, formats[i]) == 0) {
-                        found = i+1;
-                        break;
-                    }
-                }
-                
-                if (found != 0) {
-                    photo_Paths[photo_count] = strdup(entry->d_name);
-                    photo_count++;
-                    if (photo_count >= MAX_PHOTO) {
-                        app_info("file max\n");
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    closedir(dir);
-
-    for (int i = 0; i < MAX_PHOTO; i++) {
-        memset(photo_play_list[i], 0, sizeof(photo_play_list[i]));
-    }
-
-    for (int i = 0; i < photo_count; i++) {
-        memcpy(photo_play_list[i], photo_Paths[i], strlen(photo_Paths[i]));
-        app_info("files: %s\n", photo_Paths[i]);
-        app_info("photo_play_list[i] = %s\n", photo_play_list[i]);
-    }
-
-    photo_max = photo_count;
-
-    return 0;
-}
 
 void set_photo_list(void)
 {
     photo_list_ui_t *ui = &para->ui;
+
+    photo_count = media_file_get_total_num(PHOTO_TYPE);
     for (int i = 0; i < photo_count; i++) {
-        void *photo_list = (void *)mal_load_image(LV_IMAGE_PATH"pictubiao.png");
-        lv_list_add_btn(ui->list_photo, photo_list, photo_Paths[i]);
+        lv_list_add_btn(ui->list_photo, photo_img_srcxz[0] , 
+        media_file_get_path_to_name(media_file_get_path(PHOTO_TYPE, i)));
     }
 }
 
@@ -155,9 +89,6 @@ void photo_set_list_focus(lv_obj_t *list, int index)
 	lv_img_set_src(focus_img, photo_img_srcxz[1]);
     lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
     lv_list_set_btn_selected(list, focus_btn);
-
-    memset(photo_name, 0, sizeof(photo_name));
-    sprintf(photo_name, "%s%s", "/mnt/app/", photo_Paths[index]);
 }
 
 static void btn_back_home_event_cb(lv_obj_t * btn, lv_event_t event)
@@ -195,7 +126,6 @@ static void photo_key_left_callback(void)
 {
     photo_list_ui_t *ui = &para->ui;
   
-
     if(photo_count <= 0)
     {
         return;
@@ -203,9 +133,7 @@ static void photo_key_left_callback(void)
 
     photo_set_list_unfocus(ui->list_photo, m_photo_foucs);
     m_photo_foucs++;
-    if (m_photo_foucs < 0) {
-        m_photo_foucs = photo_count - 1;
-    } else if (m_photo_foucs >= photo_count) {
+    if (m_photo_foucs >= photo_count) {
         m_photo_foucs = 0;
     }
     app_info(".......m_foucs = %d\n", m_photo_foucs);
@@ -226,9 +154,7 @@ static void photo_key_right_callback(void)
     m_photo_foucs--;
     if (m_photo_foucs < 0) {
         m_photo_foucs = photo_count - 1;
-    } else if (m_photo_foucs >= photo_count) {
-        m_photo_foucs = 0;
-    }
+    } 
     app_info(".......m_foucs = %d\n", m_photo_foucs);
     if (photo_count > 0) {
         photo_set_list_focus(ui->list_photo, m_photo_foucs);
@@ -248,8 +174,6 @@ static int photo_list_create(void)
 	photo_list_ue_create(para);
 
 	photo_load_image();
-
-	get_photo_list();
 	set_photo_list();
 
 	if (photo_count > 0) {
@@ -284,7 +208,6 @@ static int photo_list_create(void)
     key_callback_register(LV_KEY_3, photo_key_left_callback);
     key_callback_register(LV_KEY_2, photo_key_right_callback);
 
-
 	return 0;
 }
 
@@ -297,13 +220,6 @@ static int photo_list_destory(void)
 	para = NULL;
 
 	photo_unload_image();
-
-    for (int i = 0; i < photo_count; i++) {
-        free(photo_Paths[i]);
-    }
-	photo_count = 0;
-	m_photo_foucs = 0;
-
 	return 0;
 }
 

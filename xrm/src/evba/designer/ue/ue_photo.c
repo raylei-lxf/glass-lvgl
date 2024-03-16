@@ -26,12 +26,10 @@ typedef struct
 } photo_para_t;
 static photo_para_t *para = NULL;
 
-char photo_name[512] = { 0 };
-char photo_play_list[100][512] = { 0 };
-int photo_index = 0;
-int photo_max = 0;
-
-extern int file_to_photo;
+extern int m_photo_foucs;
+static int photo_index;
+static int photo_max;
+void *photo_play_srcxz[1] = {NULL};
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -62,25 +60,19 @@ static void photo_key_confire_callback(void)
 
 static void photo_key_canel_callback(void)
 {
-    if (file_to_photo == 0) {
-        switch_window(WINDOW_PHOTO, WINDOW_PHOTO_LIST);
-    } else {
-        file_to_photo = 0;
-        switch_window(WINDOW_PHOTO, WINDOW_FILE);
-    }
+ switch_window(WINDOW_PHOTO, get_last_window_id());
 }
-
-void *photo_play_srcxz[1] = {NULL};
 
 static void photo_play_load_image(void) 
 {
     photo_ui_t *ui = &para->ui;
     lv_obj_t *photo_play = para->ui.img_photo;
 
-	photo_play_srcxz[0] = (void *)mal_load_image(photo_name);
+    media_file_set_play_index(PHOTO_TYPE, photo_index);    
+	photo_play_srcxz[0] = (void *)mal_load_image(media_file_get_path(PHOTO_TYPE, photo_index));
     if(!photo_play_srcxz[0])
     {
-        app_err("%s:photo is error\n", photo_name);
+        app_err("%s:photo is error\n", media_file_get_path(PHOTO_TYPE, photo_index));
         return;
     }
 
@@ -118,8 +110,6 @@ static void photo_key_left_callback(void)
     if (photo_index < 0) {
         photo_index = photo_max - 1;
     } 
-    memset(photo_name, 0, sizeof(photo_name));
-    sprintf(photo_name, "%s%s", "/mnt/app/", photo_play_list[photo_index]);
     photo_play_load_image();
 }
 
@@ -130,8 +120,6 @@ static void photo_key_right_callback(void)
     if (photo_index >= photo_max) {
         photo_index = 0;
     }
-    memset(photo_name, 0, sizeof(photo_name));
-    sprintf(photo_name, "%s%s", "/mnt/app/", photo_play_list[photo_index]);
     photo_play_load_image();
 }
 
@@ -144,29 +132,21 @@ static int photo_create(void)
 	memset(para, 0, sizeof(photo_para_t));
 
 	para->ui.parent = lv_scr_act();
+
+    app_info("\n");
 	photo_ui_create(&para->ui);
 	photo_ue_create(para);
-
-    // lv_obj_t *tip = para->ui.img_photo_show;
-    // lv_obj_set_top(tip, true);
 
     key_callback_register(LV_KEY_0, photo_key_confire_callback);
     key_callback_register(LV_KEY_4, photo_key_canel_callback);
     key_callback_register(LV_KEY_2, photo_key_left_callback);
     key_callback_register(LV_KEY_3, photo_key_right_callback);
+app_info("\n");
+    photo_play_load_image();
+app_info("\n");
 
-    app_info("photo create......., photo_name = %s\n", photo_name);
-    if (access(photo_name, F_OK) != -1) {
-        photo_play_load_image();
-        // lv_obj_t *photo_play = para->ui.img_photo;
-        // lv_img_set_src(photo_play, photo_play_srcxz[0]);
-        // lv_obj_set_hidden(photo_play, false);
-    }
-    
-    for (int i = 0; i < photo_max; i++) {
-        app_info("photo_play_list[%d] = %s\n", i, photo_play_list[i]);
-    }
-    app_info("photo_index = %d\n", photo_index);
+    photo_index = media_file_get_play_index(PHOTO_TYPE);
+    photo_max = media_file_get_total_num(PHOTO_TYPE);
     
 	return 0;
 }

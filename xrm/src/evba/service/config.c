@@ -34,6 +34,14 @@ int read_menu_configure(char *name, int *val)
     read_int_type_param("menu",  name,  val);
 } 
 
+int read_menu_vol_value()
+{
+  int value = 0;
+  read_menu_configure("VOL", &value);
+  return value;
+}
+
+
 int restore_factory(void)
 {
     

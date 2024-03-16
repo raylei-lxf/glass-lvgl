@@ -4,6 +4,7 @@
 db_list_t *window_head = NULL;
 db_list_t *window_msg_head = NULL;
 window_id_t curr_id;
+window_id_t	last_id;
 
 static int compare_by_id(void *dst, void *src)
 {
@@ -87,6 +88,11 @@ window_id_t get_curr_window_id(void)
 	return curr_id;
 }
 
+window_id_t get_last_window_id(void)
+{
+	return last_id;
+}
+
 void show_window(window_id_t id)
 {
 	window_t *window = (window_t *)find_window(id);
@@ -121,6 +127,7 @@ void switch_window(window_id_t old_id, window_id_t new_id)
   	p->param[1] = (long int)new_id;
 	
  	__db_list_put_tail(window_msg_head, p);
+	last_id = old_id;
 
   	return;
 }
