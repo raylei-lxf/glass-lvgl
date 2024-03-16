@@ -36,11 +36,10 @@ static int music_total_time = 0;
 static int music_current_time = 0;
 /**********other***************/
 extern player_t *t113_play;
-int m_music_foucs = 0;
+static int m_music_foucs = 0;
 static int music_Count = 0;
 
-static char music_name[256];
-static char music_name_old[256];
+static int music_first_flag = 0;
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -83,8 +82,8 @@ void set_music_list(void)
     music_ui_t *ui = &para->ui;
     void *music_list = music_img_srcxz[0];
 
-    music_Count = media_file_get_total_num(MUSIC_TYPE);
 
+    music_Count = media_file_get_total_num(MUSIC_TYPE);
     for (int i = 0; i < music_Count; i++) { 
         lv_list_add_btn(ui->list_mp3, music_list, media_file_get_path_to_name(media_file_get_path(MUSIC_TYPE,i)));
     }
@@ -125,21 +124,26 @@ void music_set_list_focus(lv_obj_t *list, int index)
 
 static void music_key_confire_callback(void)
 {
-    memset(music_name, 0, sizeof(music_name));
-    sprintf(music_name, "%s", media_file_get_path(MUSIC_TYPE, m_music_foucs));
-  
-    app_info("music_name = %s\n", music_name);
-    if (t113_play != NULL && access(music_name, F_OK) != -1 && strcmp(music_name_old, music_name) != 0 ) {
-        char duration_c[100] = { 0 };
-        int total_time = 0;
-        music_ui_t *ui = &para->ui;
+    char duration_c[100] = { 0 };
+    int total_time = 0;
+    music_ui_t *ui = &para->ui;    
+    char music_name[256] = {0};
+
+    if(t113_play == NULL)
+    {
+        return;
+    }
+
+    //music_first_flag:表示已经进行过第一次播放。否者m_music_foucs为0时判断不正确,导致无法播放
+    if (music_first_flag == 0 ||  m_music_foucs != media_file_get_play_index(MUSIC_TYPE)) {
+        sprintf(music_name, "%s", media_file_get_path(MUSIC_TYPE, m_music_foucs));
+        app_info("music_name = %s\n", music_name);
         tplayer_play_url(t113_play, music_name);
         tplayer_play(t113_play);
         tplayer_get_duration(t113_play, &total_time);
         time_int_to_string(total_time, duration_c); 
         lv_label_set_text(ui->label_music_totle, duration_c);
         music_total_time = total_time;
-        memcpy(music_name_old, music_name, sizeof(music_name));
         media_file_set_play_index(MUSIC_TYPE, m_music_foucs);
        
         app_info("................%s, music_total_time = %d, duration_c = %s\n", music_name, music_total_time, duration_c);
@@ -151,6 +155,7 @@ static void music_key_confire_callback(void)
             tplayer_play(t113_play);
         }
     }
+    music_first_flag = 1;
 }
 
 static void music_key_canel_callback(void)
@@ -221,6 +226,7 @@ static void music_ui_task(struct _lv_task_t *param)
     } else if (status == STOP_STATUS) {
 
     }
+
 }
 
 
@@ -251,7 +257,8 @@ static int music_create(void)
         music_ui_t *ui = &para->ui;
         music_set_list_focus(ui->list_mp3, m_music_foucs);
     }
-
+    
+    music_first_flag = 0;
 
 	key_callback_register(LV_KEY_0, music_key_confire_callback);
 	key_callback_register(LV_KEY_4, music_key_canel_callback);
@@ -283,6 +290,7 @@ static int music_destory(void)
 	free(para);
 	para = NULL;
     music_unload_image();
+
 	return 0;
 }
 

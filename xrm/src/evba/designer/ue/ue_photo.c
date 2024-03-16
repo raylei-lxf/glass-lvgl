@@ -26,7 +26,6 @@ typedef struct
 } photo_para_t;
 static photo_para_t *para = NULL;
 
-extern int m_photo_foucs;
 static int photo_index;
 static int photo_max;
 void *photo_play_srcxz[1] = {NULL};
@@ -132,8 +131,6 @@ static int photo_create(void)
 	memset(para, 0, sizeof(photo_para_t));
 
 	para->ui.parent = lv_scr_act();
-
-    app_info("\n");
 	photo_ui_create(&para->ui);
 	photo_ue_create(para);
 
@@ -141,9 +138,8 @@ static int photo_create(void)
     key_callback_register(LV_KEY_4, photo_key_canel_callback);
     key_callback_register(LV_KEY_2, photo_key_left_callback);
     key_callback_register(LV_KEY_3, photo_key_right_callback);
-app_info("\n");
     photo_play_load_image();
-app_info("\n");
+
 
     photo_index = media_file_get_play_index(PHOTO_TYPE);
     photo_max = media_file_get_total_num(PHOTO_TYPE);

@@ -41,7 +41,7 @@ static int video_list_hide(void);
 
 #define MAX_VIDEO 100
 static int is_playing = 0;
-int m_video_foucs = 0;
+static int m_video_foucs = 0;
 static int video_count = 0;
 
 void set_video_list(void)
