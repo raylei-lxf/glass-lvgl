@@ -191,14 +191,6 @@ static int player_create(void)
 	player_ui_create(&para->ui);
 	player_ue_create(para);
 
-	
-    // get_mp4();
-	// if(fileCount > 0)
-	// {
-	// 	ui_set_lable(para->ui.label_1, filePaths[0]);
-	// }
-	// tplayer_init(t113_play, CEDARX_PLAYER);
-
 	system("dd if=/dev/zero of=/dev/fb0");
 	clean_screen(&para->ui);
     #if 1 

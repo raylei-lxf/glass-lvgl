@@ -40,6 +40,7 @@ static int m_music_foucs = 0;
 static int music_Count = 0;
 
 static int music_first_flag = 0;
+
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -61,6 +62,91 @@ static void music_ue_destory(music_para_t *para)
 {
 	(void)para;
 	return;
+}
+
+void ui_cont_set_color(lv_obj_t *obj, uint32_t color)
+{
+    music_ui_t *ui = &para->ui;
+    lv_style_t *style0_cont;
+
+    style0_cont = lv_cont_get_style(obj, LV_CONT_STYLE_MAIN);
+	style0_cont->body.main_color = lv_color_hex(color);
+	style0_cont->body.grad_color = lv_color_hex(color);
+	style0_cont->body.border.color = lv_color_hex(color);
+	lv_cont_set_style(obj, LV_CONT_STYLE_MAIN, style0_cont);
+
+}
+
+void music_spectum_ui(int value[5])
+{
+   
+#define SPECTUM_UI_MAX      11
+#define SPECTUM_UI_COL      5
+#define COLOR_WHITE         0xffffff
+#define COLOR_YELLOW        0xffff00
+
+    music_ui_t *ui = &para->ui;
+    lv_obj_t *music_ui_arr[5][SPECTUM_UI_MAX] = {{ui->cont_music_1_1, ui->cont_music_1_2, ui->cont_music_1_3,
+                            ui->cont_music_1_4, ui->cont_music_1_5, ui->cont_music_1_6, 
+                            ui->cont_music_1_7, ui->cont_music_1_8, ui->cont_music_1_9,
+                            ui->cont_music_1_10, ui->cont_music_1_11},
+                            {ui->cont_music_2_1, ui->cont_music_2_2, ui->cont_music_2_3,
+                            ui->cont_music_2_4, ui->cont_music_2_5, ui->cont_music_2_6, 
+                            ui->cont_music_2_7, ui->cont_music_2_8, ui->cont_music_2_9,
+                            ui->cont_music_2_10, ui->cont_music_2_11},
+                            {ui->cont_music_3_1, ui->cont_music_3_2, ui->cont_music_3_3,
+                            ui->cont_music_3_4, ui->cont_music_3_5, ui->cont_music_3_6, 
+                            ui->cont_music_3_7, ui->cont_music_3_8, ui->cont_music_3_9,
+                            ui->cont_music_3_10, ui->cont_music_3_11},
+                            {ui->cont_music_4_1, ui->cont_music_4_2, ui->cont_music_4_3,
+                            ui->cont_music_4_4, ui->cont_music_4_5, ui->cont_music_4_6, 
+                            ui->cont_music_4_7, ui->cont_music_4_8, ui->cont_music_4_9,
+                            ui->cont_music_4_10, ui->cont_music_4_11},
+                            {ui->cont_music_5_1, ui->cont_music_5_2, ui->cont_music_5_3,
+                            ui->cont_music_5_4, ui->cont_music_5_5, ui->cont_music_5_6, 
+                            ui->cont_music_5_7, ui->cont_music_5_8, ui->cont_music_5_9,
+                            ui->cont_music_5_10, ui->cont_music_5_11}
+                            };
+    for(int j = 0; j < SPECTUM_UI_COL; j++)
+    {
+        int val = value[j];
+        lv_obj_t **music_ui =  music_ui_arr[j];
+
+        if(val < 1)
+        {
+            val = 1;
+        }
+        if(val > SPECTUM_UI_MAX)
+        {
+            val = SPECTUM_UI_MAX;
+        }
+        
+        val = val - 1;
+
+        for(int i = 0; i < SPECTUM_UI_MAX; i++)
+        {
+            ui_set_hidden(music_ui[i], 1);
+            ui_cont_set_color(music_ui[i], COLOR_WHITE);
+        }
+
+        //只有一个时显示黄色
+        if(val < 1) 
+        {
+            ui_set_hidden(music_ui[val], 0);
+            ui_cont_set_color(music_ui[val], COLOR_YELLOW);
+
+        }else{
+            for(int i = 0; i <= val; i++)
+            {
+                ui_set_hidden(music_ui[i], 0);
+            }
+            //隔一个隐藏
+            ui_set_hidden(music_ui[val-1], 1);
+            //最上面这个显示黄色
+            ui_cont_set_color(music_ui[val], COLOR_YELLOW);
+        }
+    }
+
 }
 
 static void music_load_image(void)
@@ -118,8 +204,6 @@ void music_set_list_focus(lv_obj_t *list, int index)
     lv_img_set_src(focus_img, music_img_srcxz[1]);
     lv_btn_set_state(focus_btn, LV_BTN_STATE_REL);
     lv_list_set_btn_selected(list, focus_btn);
-
-
 }
 
 static void music_key_confire_callback(void)
@@ -145,7 +229,6 @@ static void music_key_confire_callback(void)
         lv_label_set_text(ui->label_music_totle, duration_c);
         music_total_time = total_time;
         media_file_set_play_index(MUSIC_TYPE, m_music_foucs);
-       
         app_info("................%s, music_total_time = %d, duration_c = %s\n", music_name, music_total_time, duration_c);
     } else {
         playerStatus status = tplayer_get_status(t113_play);
@@ -219,6 +302,15 @@ static void music_ui_task(struct _lv_task_t *param)
     	    bar_value = 10;
         }
         lv_bar_set_value(ui->bar_music, bar_value, LV_ANIM_ON);
+
+    //随机数测试，需要改成频谱值
+    int value[5];
+    for(int i = 0; i<5; i++)
+    {
+        value[i] = rand()%11 + 1;
+    }
+    music_spectum_ui(value);
+
     } else if (status == COMPLETE_STATUS){
         // lv_bar_set_value(ui->bar_music, 1000, LV_ANIM_ON);
     } else if (status == PAUSE_STATUS) {
@@ -227,8 +319,9 @@ static void music_ui_task(struct _lv_task_t *param)
 
     }
 
-}
 
+    
+}
 
 static int music_bar(music_ui_t *ui)
 {
