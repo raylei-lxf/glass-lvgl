@@ -73,7 +73,7 @@ static int CallbackForTPlayer(void* pUserData, int msg, int param0, void* param1
 	    case TPLAYER_NOTIFY_AUDIO_FRAME:
 
 			//(AudioPcmData *)param1;
-		  // media_spectrum_updata((AudioPcmData *)param1);
+		    media_spectrum_updata((AudioPcmData *)param1);
 	        break;
 	    case TPLAYER_NOTIFY_SUBTITLE_FRAME:
 	        //printf("get the decoded subtitle frame\n");

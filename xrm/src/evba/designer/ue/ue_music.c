@@ -77,11 +77,12 @@ void ui_cont_set_color(lv_obj_t *obj, uint32_t color)
 
 }
 
-void music_spectum_ui(int value[5])
-{
-   
 #define SPECTUM_UI_MAX      11
 #define SPECTUM_UI_COL      5
+
+void music_spectrum_ui(int value[SPECTUM_UI_COL])
+{
+
 #define COLOR_WHITE         0xffffff
 #define COLOR_YELLOW        0xffff00
 
@@ -147,6 +148,29 @@ void music_spectum_ui(int value[5])
         }
     }
 
+}
+
+void music_spectrum_show(void)
+{
+        //随机数测试，需要改成频谱值
+    int spectrum_val[SPECTUM_UI_COL];
+    // for(int i = 0; i<5; i++)
+    // {
+    //     spectrum_val[i] = rand()%11 + 1;
+    // }
+
+    int spectrum_size = media_get_spectrum_size()/2;
+   // app_info("spectrum_size=%d\n", spectrum_size);
+    if(spectrum_size > 0)
+    {
+        char *spectrum = media_get_spectrum();
+
+        for(int i = 0; i<SPECTUM_UI_COL; i++)
+        {
+            spectrum_val[i] = spectrum[i* spectrum_size/SPECTUM_UI_COL] % SPECTUM_UI_MAX;
+        }
+        music_spectrum_ui(spectrum_val);
+    }
 }
 
 static void music_load_image(void)
@@ -220,6 +244,7 @@ static void music_key_confire_callback(void)
 
     //music_first_flag:表示已经进行过第一次播放。否者m_music_foucs为0时判断不正确,导致无法播放
     if (music_first_flag == 0 ||  m_music_foucs != media_file_get_play_index(MUSIC_TYPE)) {
+        media_spectrum_clear();
         sprintf(music_name, "%s", media_file_get_path(MUSIC_TYPE, m_music_foucs));
         app_info("music_name = %s\n", music_name);
         tplayer_play_url(t113_play, music_name);
@@ -303,13 +328,7 @@ static void music_ui_task(struct _lv_task_t *param)
         }
         lv_bar_set_value(ui->bar_music, bar_value, LV_ANIM_ON);
 
-    //随机数测试，需要改成频谱值
-    int value[5];
-    for(int i = 0; i<5; i++)
-    {
-        value[i] = rand()%11 + 1;
-    }
-    music_spectum_ui(value);
+        music_spectrum_show();
 
     } else if (status == COMPLETE_STATUS){
         // lv_bar_set_value(ui->bar_music, 1000, LV_ANIM_ON);
@@ -318,9 +337,6 @@ static void music_ui_task(struct _lv_task_t *param)
     } else if (status == STOP_STATUS) {
 
     }
-
-
-    
 }
 
 static int music_bar(music_ui_t *ui)
