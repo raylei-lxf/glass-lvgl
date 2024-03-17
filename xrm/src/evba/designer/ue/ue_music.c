@@ -68,13 +68,29 @@ void ui_cont_set_color(lv_obj_t *obj, uint32_t color)
 {
     music_ui_t *ui = &para->ui;
     lv_style_t *style0_cont;
+    int flag = 0;
 
     style0_cont = lv_cont_get_style(obj, LV_CONT_STYLE_MAIN);
-	style0_cont->body.main_color = lv_color_hex(color);
-	style0_cont->body.grad_color = lv_color_hex(color);
-	style0_cont->body.border.color = lv_color_hex(color);
-	lv_cont_set_style(obj, LV_CONT_STYLE_MAIN, style0_cont);
 
+    if(lv_color_to32(style0_cont->body.main_color) != color)
+    {
+        style0_cont->body.main_color = lv_color_hex(color);
+        flag = 1;
+    }
+    if(lv_color_to32(style0_cont->body.grad_color) != color)
+    {
+        style0_cont->body.grad_color = lv_color_hex(color);
+        flag = 1;
+    }
+        if(lv_color_to32(style0_cont->body.border.color) != color)
+    {
+        style0_cont->body.border.color  = lv_color_hex(color);
+        flag = 1;
+    }
+    if(flag)
+    {
+        lv_cont_set_style(obj, LV_CONT_STYLE_MAIN, style0_cont);
+    }
 }
 
 #define SPECTUM_UI_MAX      11
@@ -124,11 +140,15 @@ void music_spectrum_ui(int value[SPECTUM_UI_COL])
         
         val = val - 1;
 
-        for(int i = 0; i < SPECTUM_UI_MAX; i++)
+        for(int i = val; i < SPECTUM_UI_MAX; i++)
         {
             ui_set_hidden(music_ui[i], 1);
+        }
+        for(int i = 0; i < SPECTUM_UI_MAX; i++)
+        {
             ui_cont_set_color(music_ui[i], COLOR_WHITE);
         }
+
 
         //只有一个时显示黄色
         if(val < 1) 
@@ -158,16 +178,15 @@ void music_spectrum_show(void)
     // {
     //     spectrum_val[i] = rand()%11 + 1;
     // }
-
     int spectrum_size = media_get_spectrum_size()/2;
    // app_info("spectrum_size=%d\n", spectrum_size);
     if(spectrum_size > 0)
     {
         char *spectrum = media_get_spectrum();
 
-        for(int i = 0; i<SPECTUM_UI_COL; i++)
+        for(int i = 0; i < SPECTUM_UI_COL; i++)
         {
-            spectrum_val[i] = spectrum[i* spectrum_size/SPECTUM_UI_COL] % SPECTUM_UI_MAX;
+            spectrum_val[i] = spectrum[i* spectrum_size / SPECTUM_UI_COL] % SPECTUM_UI_MAX;
         }
         music_spectrum_ui(spectrum_val);
     }
