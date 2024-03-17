@@ -268,8 +268,10 @@ static void music_key_confire_callback(void)
         sprintf(music_name, "%s", media_file_get_path(MUSIC_TYPE, m_music_foucs));
         app_info("music_name = %s\n", music_name);
         tplayer_play_url(t113_play, music_name);
+        tplayer_volume(t113_play, read_menu_vol_value());
         tplayer_play(t113_play);
         tplayer_get_duration(t113_play, &total_time);
+        tplayer_set_looping(t113_play, true);
         time_int_to_string(total_time, duration_c); 
         lv_label_set_text(ui->label_music_totle, duration_c);
         music_total_time = total_time;
@@ -334,7 +336,7 @@ lv_task_t *music_task_id = NULL;
 
 static void music_ui_task(struct _lv_task_t *param)
 {
-    music_ui_t *ui = (music_ui_t *)param->user_data;
+    music_ui_t *ui = &para->ui;
     int current_pos = 0;
     char text_current[128] = { 0 };
     
@@ -370,13 +372,6 @@ static void music_ui_task(struct _lv_task_t *param)
     //  }
 }
 
-static int music_bar(music_ui_t *ui)
-{
-    music_task_id = lv_task_create(music_ui_task, 100, LV_TASK_PRIO_LOW, (void *)ui);
-
-    return 0;
-}
-
 static int music_create(void)
 {
 	para = (music_para_t *)malloc(sizeof(music_para_t));
@@ -390,7 +385,8 @@ static int music_create(void)
 	music_ue_create(para);
     music_load_image();
     set_music_list();
-    music_bar(&para->ui);
+
+    music_task_id = lv_task_create(music_ui_task, 100, LV_TASK_PRIO_MID, NULL);
 
     m_music_foucs = media_file_get_play_index(MUSIC_TYPE);
     if (music_Count > 0) {

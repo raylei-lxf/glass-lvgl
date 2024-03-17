@@ -43,31 +43,38 @@ void player_ui_create(player_ui_t *ui)
 	style0_cont_par.body.border.opa = 0;
 
 	ui->cont_par = lv_cont_create(ui->cont_main, NULL);
-	lv_obj_set_pos(ui->cont_par, 0, 325);
-	lv_obj_set_size(ui->cont_par, 480, 35);
+	lv_obj_set_pos(ui->cont_par, 0, 305);
+	lv_obj_set_size(ui->cont_par, 480, 55);
 	lv_cont_set_fit4(ui->cont_par, LV_FIT_NONE, LV_FIT_NONE ,LV_FIT_NONE ,LV_FIT_NONE);
 	lv_cont_set_style(ui->cont_par, LV_CONT_STYLE_MAIN, &style0_cont_par);
 #endif // LV_USE_CONT
 
 #ifdef LV_USE_LABEL
 	lv_style_copy(&style0_label_player_current, &lv_style_transp);
+	style0_label_player_current.text.color = lv_color_hex(0xe4e4e4);
+	style0_label_player_current.text.font = &lv_font_roboto_22;
+	style0_label_player_current.text.line_space = 2;
 
 	ui->label_player_current = lv_label_create(ui->cont_par, NULL);
 	lv_label_set_text(ui->label_player_current, "00:00");
 	lv_label_set_long_mode(ui->label_player_current, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_player_current, 12, 0);
-	lv_obj_set_size(ui->label_player_current, 92, 22);
+	lv_obj_set_pos(ui->label_player_current, 10, 10);
+	lv_obj_set_size(ui->label_player_current, 108, 22);
 	lv_label_set_style(ui->label_player_current, LV_LABEL_STYLE_MAIN, &style0_label_player_current);
 #endif // LV_USE_LABEL
 
 #ifdef LV_USE_LABEL
 	lv_style_copy(&style0_label_player_total, &lv_style_transp);
+	style0_label_player_total.text.color = lv_color_hex(0xe2e2e2);
+	style0_label_player_total.text.font = &lv_font_roboto_22;
+	style0_label_player_total.text.line_space = 2;
 
 	ui->label_player_total = lv_label_create(ui->cont_par, NULL);
 	lv_label_set_text(ui->label_player_total, "00:00");
+	lv_label_set_align(ui->label_player_total, LV_LABEL_ALIGN_RIGHT);
 	lv_label_set_long_mode(ui->label_player_total, LV_LABEL_LONG_CROP);
-	lv_obj_set_pos(ui->label_player_total, 370, 0);
-	lv_obj_set_size(ui->label_player_total, 95, 25);
+	lv_obj_set_pos(ui->label_player_total, 348, 10);
+	lv_obj_set_size(ui->label_player_total, 104, 25);
 	lv_label_set_style(ui->label_player_total, LV_LABEL_STYLE_MAIN, &style0_label_player_total);
 #endif // LV_USE_LABEL
 

@@ -13,6 +13,16 @@
                             {
                                 "class": "lv_label",
                                 "name": "label_player_current",
+                                "styles": [
+                                    {
+                                        "base": "lv_style_transp",
+                                        "text": {
+                                            "color": "#e4e4e4",
+                                            "font": "Roboto 22"
+                                        },
+                                        "type": "LV_LABEL_STYLE_MAIN"
+                                    }
+                                ],
                                 "widget": "label",
                                 "全局global": true,
                                 "动画速度anim speed": 25,
@@ -20,9 +30,9 @@
                                 "名字name": "label_player_current",
                                 "坐标geometry": {
                                     "height": 22,
-                                    "width": 92,
-                                    "x": 12,
-                                    "y": 0
+                                    "width": 108,
+                                    "x": 10,
+                                    "y": 10
                                 },
                                 "对齐align": "Left",
                                 "文本text": "00:00",
@@ -35,6 +45,16 @@
                             {
                                 "class": "lv_label",
                                 "name": "label_player_total",
+                                "styles": [
+                                    {
+                                        "base": "lv_style_transp",
+                                        "text": {
+                                            "color": "#e2e2e2",
+                                            "font": "Roboto 22"
+                                        },
+                                        "type": "LV_LABEL_STYLE_MAIN"
+                                    }
+                                ],
                                 "widget": "label",
                                 "全局global": true,
                                 "动画速度anim speed": 25,
@@ -42,11 +62,11 @@
                                 "名字name": "label_player_total",
                                 "坐标geometry": {
                                     "height": 25,
-                                    "width": 95,
-                                    "x": 370,
-                                    "y": 0
+                                    "width": 104,
+                                    "x": 348,
+                                    "y": 10
                                 },
-                                "对齐align": "Left",
+                                "对齐align": "Right",
                                 "文本text": "00:00",
                                 "显示visible": true,
                                 "模式mode": "Corp",
@@ -74,10 +94,10 @@
                         "可拖动drag": false,
                         "名字name": "cont_par",
                         "坐标geometry": {
-                            "height": 35,
+                            "height": 55,
                             "width": 480,
                             "x": 0,
-                            "y": 325
+                            "y": 305
                         },
                         "布局layout": "Off",
                         "显示visible": true,
@@ -94,18 +114,6 @@
                         "name": "bar_video",
                         "styles": [
                             {
-                                "base": "lv_style_pretty",
-                                "body": {
-                                    "border": {
-                                        "opa": 255,
-                                        "width": 0
-                                    },
-                                    "grad_color": "#ffffff",
-                                    "radius": 0
-                                },
-                                "type": "LV_BAR_STYLE_BG"
-                            },
-                            {
                                 "base": "lv_style_pretty_color",
                                 "body": {
                                     "border": {
@@ -118,6 +126,18 @@
                                     "radius": 0
                                 },
                                 "type": "LV_BAR_STYLE_INDIC"
+                            },
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "border": {
+                                        "opa": 255,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#ffffff",
+                                    "radius": 0
+                                },
+                                "type": "LV_BAR_STYLE_BG"
                             }
                         ],
                         "widget": "bar",
