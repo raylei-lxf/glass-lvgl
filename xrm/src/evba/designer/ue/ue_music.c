@@ -149,7 +149,6 @@ void music_spectrum_ui(int value[SPECTUM_UI_COL])
             ui_cont_set_color(music_ui[i], COLOR_WHITE);
         }
 
-
         //只有一个时显示黄色
         if(val < 1) 
         {
@@ -261,8 +260,10 @@ static void music_key_confire_callback(void)
         return;
     }
 
+    playerStatus status = tplayer_get_status(t113_play);
+    app_info("status %d\n", status);
     //music_first_flag:表示已经进行过第一次播放。否者m_music_foucs为0时判断不正确,导致无法播放
-    if (music_first_flag == 0 ||  m_music_foucs != media_file_get_play_index(MUSIC_TYPE)) {
+    if (music_first_flag == 0 ||  m_music_foucs != media_file_get_play_index(MUSIC_TYPE) || status == INIT_STATUS) {
         media_spectrum_clear();
         sprintf(music_name, "%s", media_file_get_path(MUSIC_TYPE, m_music_foucs));
         app_info("music_name = %s\n", music_name);
@@ -273,6 +274,7 @@ static void music_key_confire_callback(void)
         lv_label_set_text(ui->label_music_totle, duration_c);
         music_total_time = total_time;
         media_file_set_play_index(MUSIC_TYPE, m_music_foucs);
+         music_first_flag = 1;
         app_info("................%s, music_total_time = %d, duration_c = %s\n", music_name, music_total_time, duration_c);
     } else {
         playerStatus status = tplayer_get_status(t113_play);
@@ -282,7 +284,7 @@ static void music_key_confire_callback(void)
             tplayer_play(t113_play);
         }
     }
-    music_first_flag = 1;
+   
 }
 
 static void music_key_canel_callback(void)
@@ -334,11 +336,13 @@ static void music_ui_task(struct _lv_task_t *param)
 {
     music_ui_t *ui = (music_ui_t *)param->user_data;
     int current_pos = 0;
-    char text_current[100] = { 0 };
+    char text_current[128] = { 0 };
     
     playerStatus status = tplayer_get_status(t113_play);
     if (status == PLAY_STATUS) {
         tplayer_get_current_pos(t113_play, &current_pos);
+        //多加1s,使得停止的时进度条能完整
+        current_pos += 1;
         time_int_to_string(current_pos, text_current);
         lv_label_set_text(ui->label_music_start, text_current);
         int bar_value = current_pos * 1000 / music_total_time;
@@ -349,13 +353,21 @@ static void music_ui_task(struct _lv_task_t *param)
 
         music_spectrum_show();
 
-    } else if (status == COMPLETE_STATUS){
+    } else if (status == PRE_COMPLETE_STATUS){
+        app_info("PRE_COMPLETE_STATUS\n");
+    }else if (status == COMPLETE_STATUS){
+        app_info("COMPLETE_STATUS\n");
+  
         // lv_bar_set_value(ui->bar_music, 1000, LV_ANIM_ON);
     } else if (status == PAUSE_STATUS) {
 
     } else if (status == STOP_STATUS) {
 
     }
+    //  if (status != PLAY_STATUS && status != PAUSE_STATUS ) 
+    //  {
+    //     app_info("COMPLETE_STATUS %d\n", status);
+    //  }
 }
 
 static int music_bar(music_ui_t *ui)
@@ -405,14 +417,15 @@ static int music_create(void)
 
 static int music_destory(void)
 {
-    if (music_task_id != NULL) {
-	    lv_task_del(music_task_id);
-	}
+    key_callback_unregister();
+
     if (t113_play != NULL) {
         tplayer_stop(t113_play);
     }
+    if (music_task_id != NULL) {
+	    lv_task_del(music_task_id);
+	}
 
-    key_callback_unregister();
 	music_ue_destory(para);
 	music_ui_destory(&para->ui);
 	free(para);
