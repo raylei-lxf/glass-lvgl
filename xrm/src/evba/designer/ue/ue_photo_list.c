@@ -114,6 +114,7 @@ static void photo_list_ue_destory(photo_list_para_t *para)
 static void photo_key_confire_callback(void)
 {
     app_info("photo_key_confire......\n");
+    media_file_set_play_index(PHOTO_TYPE, m_photo_foucs);
     switch_window(WINDOW_PHOTO_LIST, WINDOW_PHOTO);
 }
 

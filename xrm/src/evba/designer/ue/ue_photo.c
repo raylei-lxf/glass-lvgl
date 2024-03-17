@@ -138,11 +138,13 @@ static int photo_create(void)
     key_callback_register(LV_KEY_4, photo_key_canel_callback);
     key_callback_register(LV_KEY_2, photo_key_left_callback);
     key_callback_register(LV_KEY_3, photo_key_right_callback);
-    photo_play_load_image();
-
 
     photo_index = media_file_get_play_index(PHOTO_TYPE);
     photo_max = media_file_get_total_num(PHOTO_TYPE);
+    photo_play_load_image();
+
+
+
     
 	return 0;
 }
