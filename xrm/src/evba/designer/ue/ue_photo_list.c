@@ -45,6 +45,21 @@ void set_photo_list(void)
         lv_list_add_btn(ui->list_photo, photo_img_srcxz[0] , 
         media_file_get_path_to_name(media_file_get_path(PHOTO_TYPE, i)));
     }
+
+    int list_size = lv_list_get_size(ui->list_photo);
+    if(list_size <= 0)
+    {
+        return;
+    }
+
+    lv_obj_t *btn = NULL; 
+    lv_obj_t *label;
+    
+    for (int i = 0; i < list_size; i++) {
+        btn =  lv_list_get_next_btn(ui->list_photo, btn);
+        label = lv_list_get_btn_label(btn);
+        ui_lable_set_font(label, &chinese_16_4);  
+    }
 }
 
 static void photo_load_image(void) 

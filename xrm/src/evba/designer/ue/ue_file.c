@@ -164,6 +164,22 @@ void set_file_list(void)
         lv_list_add_btn(ui->file_list, img_src,
         media_file_get_path_to_name(media_file_get_path(type, get_media_file_focus(i))));       
     }
+
+    int list_size = lv_list_get_size(ui->file_list);
+    if(list_size <= 0)
+    {
+        return;
+    }
+
+    lv_obj_t *btn = NULL; 
+    lv_obj_t *label;
+    
+    for (int i = 0; i < list_size; i++) {
+        btn =  lv_list_get_next_btn(ui->file_list, btn);
+        label = lv_list_get_btn_label(btn);
+        ui_lable_set_font(label, &chinese_16_4);  
+    }
+
 }
 
 void file_set_list_unfocus(lv_obj_t *list, int index)
