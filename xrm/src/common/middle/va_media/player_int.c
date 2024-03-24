@@ -319,11 +319,13 @@ static void *tplayer_pthread(void *arg)
 		queue = (struct player_param *)__db_list_pop(tplayer->queue_head);
 		if (NULL == queue) {
 			com_info("queue null");
+			usleep(10000);
 			continue;
 		}
 		com_info("cmd = %u\n", queue->cmd);
 		tplayer_queue(tplayer, queue);
 		free(queue);
+		usleep(10000);
 	}
     return NULL;
 }

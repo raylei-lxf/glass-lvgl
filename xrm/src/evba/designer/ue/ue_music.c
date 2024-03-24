@@ -41,6 +41,9 @@ static int music_Count = 0;
 
 static int music_first_flag = 0;
 
+#define SPECTUM_UI_MAX      11
+#define SPECTUM_UI_COL      5
+
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -93,8 +96,6 @@ void ui_cont_set_color(lv_obj_t *obj, uint32_t color)
     }
 }
 
-#define SPECTUM_UI_MAX      11
-#define SPECTUM_UI_COL      5
 
 void music_spectrum_ui(int value[SPECTUM_UI_COL])
 {
@@ -183,10 +184,12 @@ void music_spectrum_show(void)
     {
         char *spectrum = media_get_spectrum();
 
+        media_specturm_lock();
         for(int i = 0; i < SPECTUM_UI_COL; i++)
         {
             spectrum_val[i] = spectrum[i* spectrum_size / SPECTUM_UI_COL] % SPECTUM_UI_MAX;
         }
+        media_specturm_unlock();
         music_spectrum_ui(spectrum_val);
     }
 }
@@ -277,7 +280,6 @@ static void music_key_confire_callback(void)
     app_info("status %d\n", status);
     //music_first_flag:表示已经进行过第一次播放。否者m_music_foucs为0时判断不正确,导致无法播放
     if (music_first_flag == 0 ||  m_music_foucs != media_file_get_play_index(MUSIC_TYPE) || status == INIT_STATUS) {
-        media_spectrum_clear();
         sprintf(music_name, "%s", media_file_get_path(MUSIC_TYPE, m_music_foucs));
         app_info("music_name = %s\n", music_name);
         tplayer_play_url(t113_play, music_name);

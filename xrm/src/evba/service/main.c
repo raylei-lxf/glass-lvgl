@@ -662,7 +662,7 @@ void key_task(lv_task_t * param)
 			app_info("key_time = %d\n", key_time);
 			if(key_time > 3000 && key_value == LV_KEY_0)
 			{
-				power_off_set(0);
+				//power_off_set(0);
 				break;
 			}
 			if(key_func[key_value] && key_mode[key_value] == 0)

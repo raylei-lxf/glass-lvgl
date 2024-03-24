@@ -32,6 +32,25 @@ int debug = 0;
 
 #define SET_POWER_CMD            _IO(0xEF, 3)
 
+static float get_diff_time(struct timespec * start , bool update)
+{
+	float dt;
+	struct timespec now;
+
+	clock_gettime(CLOCK_MONOTONIC,&now);
+	dt = (float)(now.tv_sec  - start->tv_sec);
+	dt += (float)(now.tv_nsec - start->tv_nsec) * 1e-9;
+
+	if(update == true){
+		start->tv_sec = now.tv_sec;
+		start->tv_nsec = now.tv_nsec;
+	}else{
+	}
+
+	return dt;
+}
+
+
 void *keydev_thread(void * data)
 {
 	(void)data;
@@ -70,8 +89,9 @@ void *keydev_thread(void * data)
 
 void *power_thread(void * data)
 {
-
+	struct timespec key_start;
 	char key_value = 0;
+	int status_next = 0;
 
 	while(1)
 	{
@@ -84,8 +104,21 @@ void *power_thread(void * data)
 		pthread_mutex_lock(&keydev_mutex);
 		last_key_value = key_value;
 		last_key_num = 116;
-			//power_off_set(0);
 
+		int state = last_key_value == 0 ? LV_INDEV_STATE_REL:LV_INDEV_STATE_PR;
+
+		if(state == LV_INDEV_STATE_PR)
+		{
+			status_next++;
+			get_diff_time(&key_start, 1);
+		}else{
+			uint32_t key_time = (uint32_t)(get_diff_time(&key_start, 0)*1000.0);
+			if(key_time > 3000)
+			{
+				printf("poweroff key_time = %d\n", key_time);
+				power_off_set(0);
+			}
+		}
 		debug = 1;
 		printf("power input info:(%d, %d, %d)\n", last_key_num, 0, last_key_value);
 		pthread_mutex_unlock(&keydev_mutex);

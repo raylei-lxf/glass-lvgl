@@ -11,12 +11,15 @@ typedef struct spectrum_t{
 	unsigned int size;
 	int ps_size;
 	int *ps_buffer;
+	pthread_mutex_t mutex;
 	int init_flag;
 }spectrum_t;
 
-void media_spectrum_clear(void);
+void media_spectrum_deinit(void);
 void media_spectrum_updata(AudioPcmData *audio_info);
 int  *media_get_spectrum(void);
 int media_get_spectrum_size(void);
+void media_specturm_lock(void);
+void media_specturm_unlock(void);
 
 #endif
