@@ -52,9 +52,6 @@ void set_video_list(void)
     video_count = media_file_get_total_num(VIDEO_TYPE);
     for (int i = 0; i < video_count; i++) {
         lv_list_add_btn(ui->list_video, video_img_srcxz[0],  media_file_get_path_to_name(media_file_get_path(VIDEO_TYPE, i)));
-        lv_obj_t *btn = lv_list_get_btn_index(ui->list_video, i);
-        lv_obj_t * label = lv_list_get_btn_label(btn);
-        ui_lable_set_font(label, &chinese);  
     }
 
     int list_size = lv_list_get_size(ui->list_video);
