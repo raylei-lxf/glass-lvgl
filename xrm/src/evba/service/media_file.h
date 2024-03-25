@@ -14,6 +14,8 @@ typedef enum{
 
 void media_file_find(void);
 
+void media_release_file(void);
+
 int media_file_get_total_num(media_type_t type);
 
 char *media_file_get_path(media_type_t type, int index);

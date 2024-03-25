@@ -63,14 +63,14 @@ static MountPoint_Info_t UsbMountPoint[] = {
 	{1, "/tmp/exUDISK_6"}
 };
 static MountPoint_Info_t SdcardMountPoint[] = {
-	{0, "/mnt/SDCARD"},
-	{1, "/tmp/SDCARD_0"},
-	{1, "/tmp/SDCARD_1"},
-	{1, "/tmp/SDCARD_2"},
-	{1, "/tmp/SDCARD_3"},
-	{1, "/tmp/SDCARD_4"},
-	{1, "/tmp/SDCARD_5"},
-	{1, "/tmp/SDCARD_6"}
+	{0, "/mnt/app"},
+	{1, "/mnt/app"},
+	{1, "/mnt/app"},
+	{1, "/mnt/app"},
+	{1, "/mnt/app"},
+	{1, "/mnt/app"},
+	{1, "/mnt/app"},
+	{1, "/mnt/app"}
 };
 static char *FileSystemType[] = {
 	"vfat",

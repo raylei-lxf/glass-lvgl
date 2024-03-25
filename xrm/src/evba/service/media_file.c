@@ -9,6 +9,22 @@ void media_file_find(void)
     meida_list[MUSIC_TYPE] = media_load_file(RAT_MEDIA_TYPE_AUDIO, MEDIA_PATH);
 }
 
+void media_release_file(void)
+{
+    if (meida_list[VIDEO_TYPE]) { 
+        media_unload_file(meida_list[VIDEO_TYPE]);
+        meida_list[VIDEO_TYPE] = NULL;
+    }
+    if (meida_list[PHOTO_TYPE]) {
+        media_unload_file(meida_list[PHOTO_TYPE]);
+        meida_list[PHOTO_TYPE] = NULL;
+    } 
+    if (meida_list[MUSIC_TYPE]) {
+        media_unload_file(meida_list[MUSIC_TYPE]);
+        meida_list[MUSIC_TYPE] = NULL;
+    }
+}
+
 int media_file_get_total_num(media_type_t type)
 {
     if(!meida_list[type])

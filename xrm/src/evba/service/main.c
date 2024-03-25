@@ -15,6 +15,7 @@
 #include "mbedtls_md5.h"
 #include "uart.h"
 #include "player_int.h"
+#include "DiskManager.h"
 
 lv_task_t *window_task_id = NULL; 
 static lv_indev_t *key_dev = NULL;
@@ -397,6 +398,13 @@ static int chip_verify()
  * 
 */
 
+static hotplug_message_focus_win_t *RegisterInfo = NULL;
+static void main_diskhotplugcallback(DiskInfo_t *DiskInfo) {
+    media_release_file();
+    media_file_find();
+}
+
+
 int main(int argc, char **argv)
 {
     (void)argc;    /*Unused*/
@@ -412,6 +420,24 @@ int main(int argc, char **argv)
 		return 0;
 	}
 
+    {
+        DiskManager_Init();
+        DiskInfo_t Static_DeviceInfo;
+        RegisterInfo = malloc(sizeof(hotplug_message_focus_win_t));
+        if (RegisterInfo != NULL) {
+            memset(RegisterInfo, 0x00, sizeof(hotplug_message_focus_win_t));
+            strcpy(RegisterInfo->Cur_Win, "main");
+            RegisterInfo->CallBackFunction = main_diskhotplugcallback;
+            DiskManager_Register(RegisterInfo);
+        }
+
+        strncpy(Static_DeviceInfo.DeviceName, "/dev/mmcblk0p1", strlen("/dev/mmcblk0p1"));
+        strncpy(Static_DeviceInfo.MountPoint, "/mnt/app/",strlen("/mnt/app/"));
+        Static_DeviceInfo.MediaType =  MEDIUM_SD_CARD;
+        DiskManager_Register_StaticDisk(&Static_DeviceInfo);
+        DiskManager_detect();
+    }
+
 	int check = 0;
 	//check = chip_verify();
 	lv_init();
@@ -421,7 +447,8 @@ int main(int argc, char **argv)
 	tplayer_init(t113_play, CEDARX_PLAYER);
 	//fbdev_set_brightness(0);
 	param_config_init();
-	media_file_find();
+	// media_file_find();
+    
 	
     REGISTER_WINDOW(WINDOW_HOME);
 	REGISTER_WINDOW(WINDOW_MUSIC);
