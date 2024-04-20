@@ -14,6 +14,7 @@
 #include <fcntl.h>
 #include <linux/input.h>
 #include <pthread.h>
+#include "dbList.h"
 
 /*********************
  *      DEFINES
@@ -25,10 +26,16 @@ static pthread_t keydev_pthread_id;
 static pthread_t power_pthread_id;
 static pthread_t key_id;
 
-uint32_t last_key_value;
-lv_indev_state_t last_key_state = LV_INDEV_STATE_REL;
-uint32_t last_key_num = 0;
-int debug = 0;
+typedef struct
+{
+	uint32_t num;
+	uint32_t value;
+	lv_indev_state_t state;
+	/* data */
+}key_data_s;
+
+key_data_s lv_key = {0, 0, 0};
+db_list_t *key_list = NULL;
 
 #define SET_POWER_CMD            _IO(0xEF, 3)
 
@@ -72,15 +79,16 @@ void *keydev_thread(void * data)
 	    	if(FD_ISSET(keydev_fd,&readfd)) {
 	        	FD_CLR(keydev_fd, &readfd);
 				read(keydev_fd, &in, sizeof(in));
-				pthread_mutex_lock(&keydev_mutex);
+			
 				if(in.code != 0){
 					printf("input info:(%d, %d, %d)\n", in.code, in.type, in.value);
-					last_key_value = in.value;
-					last_key_num = in.code;
-					debug = 1;
+					key_data_s *key_data = (key_data_s *)malloc(sizeof(key_data_s));
 
+					key_data->num = in.code;
+					key_data->value = in.value;
+					key_data->state = key_data->value == 0 ? LV_INDEV_STATE_REL:LV_INDEV_STATE_PR;		
+					__db_list_put_tail(key_list, key_data);
 				}
-				pthread_mutex_unlock(&keydev_mutex);
 			}
 		}
 	}
@@ -101,13 +109,14 @@ void *power_thread(void * data)
 			printf("input error\n");
 		}
 
-		pthread_mutex_lock(&keydev_mutex);
-		last_key_value = key_value;
-		last_key_num = 116;
+		key_data_s *key_data = (key_data_s *)malloc(sizeof(key_data_s));
 
-		int state = last_key_value == 0 ? LV_INDEV_STATE_REL:LV_INDEV_STATE_PR;
+		key_data->num = 116;
+		key_data->value = key_value;
+		key_data->state = key_data->value == 0 ? LV_INDEV_STATE_REL:LV_INDEV_STATE_PR;
+		__db_list_put_tail(key_list, key_data);
 
-		if(state == LV_INDEV_STATE_PR)
+		if(key_data->state == LV_INDEV_STATE_PR)
 		{
 			status_next++;
 			get_diff_time(&key_start, 1);
@@ -119,9 +128,9 @@ void *power_thread(void * data)
 				power_off_set(0);
 			}
 		}
-		debug = 1;
-		printf("power input info:(%d, %d, %d)\n", last_key_num, 0, last_key_value);
-		pthread_mutex_unlock(&keydev_mutex);
+
+		printf("power input info:(%d, %d, %d)\n", key_data->num, 0, key_data->value);
+		
 	}
 	return NULL;
 }
@@ -144,11 +153,9 @@ void keydev_init(void)
         perror("unable open evdev interface:");
         return;
     }
-	
-	last_key_value = 0;
-	last_key_state = LV_INDEV_STATE_REL;
-	last_key_num = 0;
-	pthread_mutex_init (&keydev_mutex, NULL);
+
+	key_list = db_list_create("sunxi key list", 0);
+	pthread_mutex_init(&keydev_mutex, NULL);
 		
 	ret = pthread_create(&keydev_pthread_id, NULL, keydev_thread, NULL);
 	if (ret == -1) {
@@ -175,10 +182,7 @@ void keydev_uninit(void)
 	pthread_join(keydev_pthread_id, NULL);
 	pthread_join(power_pthread_id, NULL);
 	pthread_mutex_destroy(&keydev_mutex);
-
-	last_key_value = 0;
-	last_key_state = LV_INDEV_STATE_REL;
-
+	
 	if (keydev_fd != -1){
 		close(keydev_fd);
 	}
@@ -204,35 +208,29 @@ uint32_t key_switch(uint32_t in)
 	return key;
 }
 
-int last_statue = 0;
+static key_data_s last_key_data = {0, 0, 0};
 
 bool keydev_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
+	key_data_s *key_data = NULL;
     (void) indev_drv;      /*Unused*/
-	bool ret = 0;
 
-	pthread_mutex_lock(&keydev_mutex);
-    data->state = last_key_value == 0 ? LV_INDEV_STATE_REL:LV_INDEV_STATE_PR;
-    data->key = key_switch(last_key_num);
-	
-	if(last_statue != data->state)
+	//("%s %d\n", __func__, __LINE__);
+	key_data =  __db_list_pop(key_list);
+	if(!key_data)
 	{
-		ret = true;
-		printf("key=%d, state=%d\n", data->key, data->state);
-	}else{
-		ret = false;
-	}
-	
-	last_statue = data->state;
-
-	pthread_mutex_unlock(&keydev_mutex);
-
-	if(data->key < LV_KEY_5)
-	{
-		return ret;
+		data->state = last_key_data.state;
+    	data->key = key_switch(last_key_data.num);	
+		return false;
 	}
 
-    return false;
+    data->state = key_data->state;
+    data->key = key_switch(key_data->num);
+	last_key_data = *key_data;
+//	printf("%s %d: key=%d %d\n", __func__, __LINE__, data->key, key_data->num);
+	free(key_data);
+
+    return true;
 }
 
 #endif
