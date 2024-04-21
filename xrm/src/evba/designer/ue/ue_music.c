@@ -229,7 +229,7 @@ void set_music_list(void)
         lv_list_add_btn(ui->list_mp3, music_img_srcxz[0], media_file_get_path_to_name(media_file_get_path(DISK_TYPE_SD, MUSIC_TYPE,i)));
     }
     for (int i = music_Count_sd; i < music_Count; i++) { 
-        lv_list_add_btn(ui->list_mp3, music_img_srcxz[0], media_file_get_path_to_name(media_file_get_path(DISK_TYPE_U, MUSIC_TYPE,i)));
+        lv_list_add_btn(ui->list_mp3, music_img_srcxz[0], media_file_get_path_to_name(media_file_get_path(DISK_TYPE_U, MUSIC_TYPE,i - music_Count_sd)));
     }
     
 

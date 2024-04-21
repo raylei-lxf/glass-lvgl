@@ -60,7 +60,7 @@ void set_photo_list(void)
     } 
     for (int i = photo_count_sd; i < photo_count; i++) {
         lv_list_add_btn(ui->list_photo, photo_img_srcxz[0],
-        media_file_get_path_to_name(media_file_get_path(DISK_TYPE_U, PHOTO_TYPE, i)));
+        media_file_get_path_to_name(media_file_get_path(DISK_TYPE_U, PHOTO_TYPE, i - photo_count_sd)));
     }
 
     int list_size = lv_list_get_size(ui->list_photo);

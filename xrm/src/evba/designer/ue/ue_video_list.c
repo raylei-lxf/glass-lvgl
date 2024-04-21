@@ -65,7 +65,7 @@ void set_video_list(void)
     }
 
     for (int i = video_count_sd; i < video_count; i++) {
-        lv_list_add_btn(ui->list_video, video_img_srcxz[0],  media_file_get_path_to_name(media_file_get_path(DISK_TYPE_U, VIDEO_TYPE, i)));
+        lv_list_add_btn(ui->list_video, video_img_srcxz[0],  media_file_get_path_to_name(media_file_get_path(DISK_TYPE_U, VIDEO_TYPE, i - video_count_sd)));
     }
 
     int list_size = lv_list_get_size(ui->list_video);
@@ -81,7 +81,7 @@ void set_video_list(void)
         btn =  lv_list_get_next_btn(ui->list_video, btn);
         label = lv_list_get_btn_label(btn);
         ui_lable_set_font(label, &chinese_16_4);  
-    }  
+    }
 }
 
 static void video_load_image(void) 
@@ -150,7 +150,7 @@ static void video_list_ue_destory(video_list_para_t *para)
 
 static void video_key_confire_callback(void)
 {
-    if (m_video_foucs > video_count_sd) {
+    if (m_video_foucs >= video_count_sd) {
         media_file_set_play_index(DISK_TYPE_SD, VIDEO_TYPE, m_video_foucs);
         g_file_using_position = FILE_SD;
     } else {

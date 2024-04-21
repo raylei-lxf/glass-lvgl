@@ -1,6 +1,6 @@
 #include "media_file.h"
 
-media_file_list_t   *meida_list[2][MEIDA_TYPE_MAX];
+media_file_list_t   *meida_list[FILE_MAX][MEIDA_TYPE_MAX];
 
 void media_file_find(int disk_type)
 {
