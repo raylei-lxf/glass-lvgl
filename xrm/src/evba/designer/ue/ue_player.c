@@ -77,7 +77,7 @@ void video_player(void)
     char duration_c[100] = { 0 };    
     char player_name[512] = {0};
 
-    sprintf(player_name, "%s", media_file_get_path(VIDEO_TYPE, media_file_get_play_index(VIDEO_TYPE)));
+    sprintf(player_name, "%s", media_file_get_path(DISK_TYPE_SD, VIDEO_TYPE, media_file_get_play_index(DISK_TYPE_SD, VIDEO_TYPE)));
 	if (t113_play != NULL /*&& access(player_name , F_OK) != -1*/) {
 		app_info("..........%s ", player_name);
 

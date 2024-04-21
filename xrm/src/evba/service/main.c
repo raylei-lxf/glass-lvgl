@@ -34,6 +34,8 @@ static lv_task_t *key_task_id = NULL;
 void key_task(lv_task_t * param);
 
 player_t *t113_play =  NULL;
+
+File_Using_Position g_file_using_position = FILE_SD;
 /***************************系统看门狗********************************/
 
 
@@ -398,10 +400,47 @@ static int chip_verify()
  * 
 */
 
+void switch_page(void)
+{
+    if (get_curr_window_id() != WINDOW_HOME) {
+        switch_window(get_curr_window_id(), WINDOW_HOME);
+    }
+    app_info("........\n");
+}
+
 static hotplug_message_focus_win_t *RegisterInfo = NULL;
-static void main_diskhotplugcallback(DiskInfo_t *DiskInfo) {
-    media_release_file();
-    media_file_find();
+static void main_diskhotplugcallback(hotplug_disk_message_t *hotplug_message) 
+{
+    if (hotplug_message->diskinfo->MediaType == MEDIUM_SD_CARD) {
+        if (hotplug_message->operate == MEDIUM_PLUGOUT) {
+            switch_page();
+            sleep(1);
+            media_release_file(DISK_TYPE_SD);
+            system("umount -f /mnt/app");
+        } else {
+            media_file_find(DISK_TYPE_SD);
+        }
+        app_info("sd..............., hotplug_message->operate = %d\n", hotplug_message->operate);
+    } else if (hotplug_message->diskinfo->MediaType == MEDIUM_USB_MASSSTORAGE) {
+        if (hotplug_message->operate == MEDIUM_PLUGOUT) {
+            switch_page();
+            sleep(1);
+            media_release_file(DISK_TYPE_U);
+            system("umount -f /mnt/exUDISK");
+        } else {
+            media_file_find(DISK_TYPE_U);
+        }
+        app_info("u..............., hotplug_message->operate = %d\n", hotplug_message->operate);
+    }
+#if 0 
+    app_info(".....main_diskhotplugcallback \n ");
+	app_info("DiskInfo->DeviceName=%s\n", hotplug_message->diskinfo->DeviceName);
+	app_info("DiskInfo->MountPoint=%s\n", hotplug_message->diskinfo->MountPoint);
+	app_info("DiskInfo->operate=%d\n", (int)hotplug_message->operate);
+	app_info("DiskInfo->MediaType=%d\n", (int)hotplug_message->diskinfo->MediaType);
+	app_info("DiskInfo->Major=%d\n", (int)hotplug_message->diskinfo->Major);
+	app_info("DiskInfo->Minor=%d\n", (int)hotplug_message->diskinfo->Minor);
+#endif
 }
 
 
@@ -423,6 +462,12 @@ int main(int argc, char **argv)
     {
         DiskManager_Init();
         DiskInfo_t Static_DeviceInfo;
+
+        strncpy(Static_DeviceInfo.DeviceName, "/dev/mmcblk0p1", strlen("/dev/mmcblk0p1"));
+        strncpy(Static_DeviceInfo.MountPoint, "/mnt/app/",strlen("/mnt/app/"));
+        Static_DeviceInfo.MediaType = MEDIUM_SD_CARD;
+        DiskManager_Register_StaticDisk(&Static_DeviceInfo);
+
         RegisterInfo = malloc(sizeof(hotplug_message_focus_win_t));
         if (RegisterInfo != NULL) {
             memset(RegisterInfo, 0x00, sizeof(hotplug_message_focus_win_t));
@@ -431,10 +476,14 @@ int main(int argc, char **argv)
             DiskManager_Register(RegisterInfo);
         }
 
+        
+        #if 0 // 增加U盘挂载
         strncpy(Static_DeviceInfo.DeviceName, "/dev/mmcblk0p1", strlen("/dev/mmcblk0p1"));
         strncpy(Static_DeviceInfo.MountPoint, "/mnt/app/",strlen("/mnt/app/"));
-        Static_DeviceInfo.MediaType =  MEDIUM_SD_CARD;
+        Static_DeviceInfo.MediaType = MEDIUM_USB_MASSSTORAGE;
         DiskManager_Register_StaticDisk(&Static_DeviceInfo);
+        #endif 
+
         DiskManager_detect();
     }
 
@@ -462,6 +511,7 @@ int main(int argc, char **argv)
 	REGISTER_WINDOW(WINDOW_MENU);
 	REGISTER_WINDOW(WINDOW_POWEROFF);
 	REGISTER_WINDOW(WINDOW_ERR_TIP);
+	REGISTER_WINDOW(WINDOW_FILE_STORE);
 	
 	fbdev_set_brightness(255);
     //REGISTER_WINDOW(WINDOW_VERIFY);

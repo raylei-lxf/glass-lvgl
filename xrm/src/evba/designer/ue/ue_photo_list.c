@@ -35,15 +35,32 @@ static void *photo_img_srcxz[2] = {NULL};
 ******************************************************************************/
 int m_photo_foucs = 0;
 int photo_count = 0;
+int photo_count_sd = 0;
+int photo_count_u = 0;
+extern File_Using_Position g_file_using_position;
 
 void set_photo_list(void)
 {
     photo_list_ui_t *ui = &para->ui;
 
-    photo_count = media_file_get_total_num(PHOTO_TYPE);
+    #if 0
+    photo_count = media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE);
     for (int i = 0; i < photo_count; i++) {
         lv_list_add_btn(ui->list_photo, photo_img_srcxz[0] , 
-        media_file_get_path_to_name(media_file_get_path(PHOTO_TYPE, i)));
+        media_file_get_path_to_name(media_file_get_path(DISK_TYPE_SD, PHOTO_TYPE, i)));
+    }
+    #endif
+    photo_count_sd = media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE);
+    photo_count_u = media_file_get_total_num(DISK_TYPE_U, PHOTO_TYPE);
+    photo_count = photo_count_sd + photo_count_u;
+
+    for (int i = 0; i < photo_count_sd; i++) {
+        lv_list_add_btn(ui->list_photo, photo_img_srcxz[0], 
+        media_file_get_path_to_name(media_file_get_path(DISK_TYPE_SD, PHOTO_TYPE, i)));
+    } 
+    for (int i = photo_count_sd; i < photo_count; i++) {
+        lv_list_add_btn(ui->list_photo, photo_img_srcxz[0],
+        media_file_get_path_to_name(media_file_get_path(DISK_TYPE_U, PHOTO_TYPE, i)));
     }
 
     int list_size = lv_list_get_size(ui->list_photo);
@@ -129,7 +146,13 @@ static void photo_list_ue_destory(photo_list_para_t *para)
 static void photo_key_confire_callback(void)
 {
     app_info("photo_key_confire......\n");
-    media_file_set_play_index(PHOTO_TYPE, m_photo_foucs);
+    if (m_photo_foucs < photo_count_sd) {
+        media_file_set_play_index(DISK_TYPE_SD, PHOTO_TYPE, m_photo_foucs);
+        g_file_using_position = FILE_SD;
+    } else {
+        media_file_set_play_index(DISK_TYPE_U, PHOTO_TYPE, m_photo_foucs - photo_count_sd);    
+        g_file_using_position = FILE_U;
+    }
     switch_window(WINDOW_PHOTO_LIST, WINDOW_PHOTO);
 }
 
@@ -235,6 +258,7 @@ static int photo_list_destory(void)
 	free(para);
 	para = NULL;
 
+    g_file_using_position = FILE_SD;
 	photo_unload_image();
 	return 0;
 }

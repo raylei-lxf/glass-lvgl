@@ -13,6 +13,7 @@ typedef struct media_file_list_tag {
 	int				total_num;
 	int				play_index;
 	int				used_count;
+    int             disk_type;
 } media_file_list_t;
 
 #define MEDIA_FILE_LIST_MAX_NUM		500

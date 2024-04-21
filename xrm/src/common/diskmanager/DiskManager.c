@@ -54,13 +54,13 @@ static db_list_t *hotplug_message_focus_app_list = NULL;
 
 static MountPoint_Info_t UsbMountPoint[] = {
 	{0, "/mnt/exUDISK"},
-	{1, "/tmp/exUDISK_0"},
-	{1, "/tmp/exUDISK_1"},
-	{1, "/tmp/exUDISK_2"},
-	{1, "/tmp/exUDISK_3"},
-	{1, "/tmp/exUDISK_4"},
-	{1, "/tmp/exUDISK_5"},
-	{1, "/tmp/exUDISK_6"}
+	{1, "/mnt/exUDISK"},
+	{1, "/mnt/exUDISK"},
+	{1, "/mnt/exUDISK"},
+	{1, "/mnt/exUDISK"},
+	{1, "/mnt/exUDISK"},
+	{1, "/mnt/exUDISK"},
+	{1, "/mnt/exUDISK"}
 };
 static MountPoint_Info_t SdcardMountPoint[] = {
 	{0, "/mnt/app"},
@@ -481,6 +481,7 @@ static int DiskManager_MountDevice(DiskInfo_t *DeviceInfo, int bootcheck) {
 			com_err("DiskManager_GetMountPoint fail\n");
 			return -1;
 		}
+
 		for (Index = 0; Index < sizeof(FileSystemType)/sizeof(FileSystemType[0]); Index++) {
 			if (0) {
 				ret = mount(DeviceInfo->DeviceName, DeviceInfo->MountPoint, FileSystemType[Index], 0, NULL);
@@ -903,18 +904,20 @@ static void *hotplug_message_process_loop(void *arg) {
 		hotplug_message = (hotplug_disk_message_t *)__db_list_pop(hotplug_message_list);
 		__db_list_for_each_entry_and_pop(hotplug_message_focus_app_list, hotplug_message, scan_register_info_proccess_mesg);
 		if (hotplug_message->operate == MEDIUM_PLUGOUT) {
+            #if 0
 			ret = umount(hotplug_message->diskinfo->MountPoint);
 			if (ret != 0) {
-//				printf("%s %d %s DeviceName:%s MountPoint:%s\n", __FILE__, __LINE__, __func__, hotplug_message->diskinfo->DeviceName, hotplug_message->diskinfo->MountPoint);
+                // printf("%s %d %s DeviceName:%s MountPoint:%s\n", __FILE__, __LINE__, __func__, hotplug_message->diskinfo->DeviceName, hotplug_message->diskinfo->MountPoint);
 				perror("umount fail 0:");
 				ret = umount(hotplug_message->diskinfo->MountPoint);
 				if (ret != 0) {
 					perror("umount fail 1:");
-//					system("lsof");
-//					system("mount");
+                    // system("lsof");
+                    // system("mount");
 				}
 			}
-//			printf("%s %d %s DeviceName:%s MountPoint:%s\n", __FILE__, __LINE__, __func__, hotplug_message->diskinfo->DeviceName, hotplug_message->diskinfo->MountPoint);
+            // printf("%s %d %s DeviceName:%s MountPoint:%s\n", __FILE__, __LINE__, __func__, hotplug_message->diskinfo->DeviceName, hotplug_message->diskinfo->MountPoint);
+            #endif
 			DiskManager_Free_MountPoint(hotplug_message->diskinfo);
 			DiskManager_Del_DiskInfo(hotplug_message->diskinfo);
 			free(hotplug_message->diskinfo);

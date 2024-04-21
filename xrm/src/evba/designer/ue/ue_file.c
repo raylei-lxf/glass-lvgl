@@ -35,6 +35,7 @@ void *file_img_srcxz[6] = {NULL};
 static int m_foucs = 0;
 static int fileCount = 0;
 
+extern int m_file_store_focus;
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -88,9 +89,15 @@ int get_file_type(int index)
     int music_num = 0;
     int video_num = 0;
 
-    photo_num =  media_file_get_total_num(PHOTO_TYPE);
-    video_num = media_file_get_total_num(VIDEO_TYPE);
-    music_num = media_file_get_total_num(MUSIC_TYPE);
+    #if 0
+    photo_num =  media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE);
+    video_num = media_file_get_total_num(DISK_TYPE_SD, VIDEO_TYPE);
+    music_num = media_file_get_total_num(DISK_TYPE_SD, MUSIC_TYPE);
+    #endif
+
+    photo_num =  media_file_get_total_num(m_file_store_focus, PHOTO_TYPE);
+    video_num = media_file_get_total_num(m_file_store_focus, VIDEO_TYPE);
+    music_num = media_file_get_total_num(m_file_store_focus, MUSIC_TYPE);
 
     if(index < video_num && video_num > 0)
     {
@@ -113,9 +120,15 @@ int get_media_file_focus(int focus)
     int music_num = 0;
     int video_num = 0;
 
-    photo_num =  media_file_get_total_num(PHOTO_TYPE);
-    video_num = media_file_get_total_num(VIDEO_TYPE);
-    music_num = media_file_get_total_num(MUSIC_TYPE);
+    photo_num =  media_file_get_total_num(m_file_store_focus, PHOTO_TYPE);
+    video_num = media_file_get_total_num(m_file_store_focus, VIDEO_TYPE);
+    music_num = media_file_get_total_num(m_file_store_focus, MUSIC_TYPE);
+
+    #if 0
+    photo_num =  media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE);
+    video_num = media_file_get_total_num(DISK_TYPE_SD, VIDEO_TYPE);
+    music_num = media_file_get_total_num(DISK_TYPE_SD, MUSIC_TYPE);
+    #endif
 
     switch(type)
     {
@@ -140,9 +153,15 @@ void set_file_list(void)
     int music_num = 0;
     int video_num = 0;
 
-    photo_num =  media_file_get_total_num(PHOTO_TYPE);
-    video_num = media_file_get_total_num(VIDEO_TYPE);
-    music_num = media_file_get_total_num(MUSIC_TYPE);
+    #if 0 
+    photo_num =  media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE);
+    video_num = media_file_get_total_num(DISK_TYPE_SD, VIDEO_TYPE);
+    music_num = media_file_get_total_num(DISK_TYPE_SD, MUSIC_TYPE);
+    #endif
+    
+    photo_num =  media_file_get_total_num(m_file_store_focus, PHOTO_TYPE);
+    video_num = media_file_get_total_num(m_file_store_focus, VIDEO_TYPE);
+    music_num = media_file_get_total_num(m_file_store_focus, MUSIC_TYPE);
 
     fileCount = photo_num + video_num + music_num;
 
@@ -162,7 +181,7 @@ void set_file_list(void)
             default:break;
         }
         lv_list_add_btn(ui->file_list, img_src,
-        media_file_get_path_to_name(media_file_get_path(type, get_media_file_focus(i))));       
+        media_file_get_path_to_name(media_file_get_path(m_file_store_focus, type, get_media_file_focus(i))));       
     }
 
     int list_size = lv_list_get_size(ui->file_list);
@@ -259,12 +278,12 @@ static void file_key_confire_callback(void)
         default:break;
     }
     
-    media_file_set_play_index(type, get_media_file_focus(m_foucs));
+    media_file_set_play_index(m_file_store_focus, type, get_media_file_focus(m_foucs));
 }
 
 static void file_key_canel_callback(void)
 {
-    switch_window(WINDOW_FILE, WINDOW_HOME);    
+    switch_window(WINDOW_FILE, WINDOW_FILE_STORE);    
 }
 
 static void key_up_callback(void)
@@ -318,16 +337,14 @@ static int file_create(void)
 	file_ui_create(&para->ui);
 	file_ue_create(para);
     file_load_image();
-    app_info("\n");
 
     set_file_list();    
-    app_info("\n");
+    app_info(".................\n");
   //  m_foucs = 0;
     if (fileCount > 0) {
         file_ui_t *ui = &para->ui;
         file_set_list_focus(ui->file_list, m_foucs);
     }
-        app_info("\n");
     
     E_LANGUAGE value = E_CHINESE;
     value = query_language();

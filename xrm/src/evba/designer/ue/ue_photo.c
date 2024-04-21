@@ -59,7 +59,7 @@ static void photo_key_confire_callback(void)
 
 static void photo_key_canel_callback(void)
 {
- switch_window(WINDOW_PHOTO, get_last_window_id());
+    switch_window(WINDOW_PHOTO, get_last_window_id());
 }
 
 static void photo_play_load_image(void) 
@@ -67,11 +67,11 @@ static void photo_play_load_image(void)
     photo_ui_t *ui = &para->ui;
     lv_obj_t *photo_play = para->ui.img_photo;
 
-    media_file_set_play_index(PHOTO_TYPE, photo_index);    
-	photo_play_srcxz[0] = (void *)mal_load_image(media_file_get_path(PHOTO_TYPE, photo_index));
+    media_file_set_play_index(DISK_TYPE_SD, PHOTO_TYPE, photo_index);    
+	photo_play_srcxz[0] = (void *)mal_load_image(media_file_get_path(DISK_TYPE_SD, PHOTO_TYPE, photo_index));
     if(!photo_play_srcxz[0])
     {
-        app_err("%s:photo is error\n", media_file_get_path(PHOTO_TYPE, photo_index));
+        app_err("%s:photo is error\n", media_file_get_path(DISK_TYPE_SD, PHOTO_TYPE, photo_index));
         return;
     }
 
@@ -139,8 +139,8 @@ static int photo_create(void)
     key_callback_register(LV_KEY_2, photo_key_left_callback);
     key_callback_register(LV_KEY_3, photo_key_right_callback);
 
-    photo_index = media_file_get_play_index(PHOTO_TYPE);
-    photo_max = media_file_get_total_num(PHOTO_TYPE);
+    photo_index = media_file_get_play_index(DISK_TYPE_SD, PHOTO_TYPE);
+    photo_max = media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE);
     photo_play_load_image();
 
 

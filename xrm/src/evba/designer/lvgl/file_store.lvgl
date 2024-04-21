@@ -1,0 +1,180 @@
+{
+    "lvgl": {
+        "name": "file_store.lvgl",
+        "resolution": {
+            "height": 360,
+            "width": 480
+        },
+        "widgets": [
+            {
+                "children": [
+                    {
+                        "class": "lv_img",
+                        "name": "img_file_store_title",
+                        "widget": "img",
+                        "偏移offset": {
+                            "X": 0,
+                            "Y": 0
+                        },
+                        "全局global": true,
+                        "可拖动drag": false,
+                        "名字name": "img_file_store_title",
+                        "坐标geometry": {
+                            "height": 36,
+                            "width": 35,
+                            "x": 17,
+                            "y": 7
+                        },
+                        "显示visible": true,
+                        "源图source": "file_title.png",
+                        "自动大小auto size": true,
+                        "锁住locked": false
+                    },
+                    {
+                        "class": "lv_cont",
+                        "name": "cont_file_store_line",
+                        "styles": [
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "border": {
+                                        "color": "#ffffff",
+                                        "width": 0
+                                    },
+                                    "grad_color": "#ffffff",
+                                    "radius": 0
+                                },
+                                "type": "LV_CONT_STYLE_MAIN"
+                            }
+                        ],
+                        "widget": "cont",
+                        "全局global": true,
+                        "可拖动drag": false,
+                        "名字name": "cont_file_store_line",
+                        "坐标geometry": {
+                            "height": 2,
+                            "width": 480,
+                            "x": 0,
+                            "y": 48
+                        },
+                        "布局layout": "Off",
+                        "显示visible": true,
+                        "自动调整策略fit": {
+                            "cont_bottom_fit": 0,
+                            "cont_left_fit": 0,
+                            "cont_right_fit": 0,
+                            "cont_top_fit": 0
+                        },
+                        "锁住locked": false
+                    },
+                    {
+                        "class": "lv_label",
+                        "name": "label_usb",
+                        "widget": "label",
+                        "全局global": true,
+                        "动画速度anim speed": 25,
+                        "可拖动drag": false,
+                        "名字name": "label_usb",
+                        "坐标geometry": {
+                            "height": 36,
+                            "width": 359,
+                            "x": 15,
+                            "y": 118
+                        },
+                        "对齐align": "Left",
+                        "文本text": "USB",
+                        "显示visible": true,
+                        "模式mode": "Corp",
+                        "背景绘制body draw": false,
+                        "重着色recolor": false,
+                        "锁住locked": false
+                    },
+                    {
+                        "class": "lv_label",
+                        "name": "label_sd",
+                        "widget": "label",
+                        "全局global": true,
+                        "动画速度anim speed": 25,
+                        "可拖动drag": false,
+                        "名字name": "label_sd",
+                        "坐标geometry": {
+                            "height": 36,
+                            "width": 359,
+                            "x": 16,
+                            "y": 64
+                        },
+                        "对齐align": "Left",
+                        "文本text": "SD card",
+                        "显示visible": true,
+                        "模式mode": "Corp",
+                        "背景绘制body draw": false,
+                        "重着色recolor": false,
+                        "锁住locked": false
+                    }
+                ],
+                "class": "lv_cont",
+                "name": "cont_main",
+                "styles": [
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "border": {
+                                "color": "#4456c6",
+                                "opa": 255,
+                                "width": 0
+                            },
+                            "grad_color": "#4456c6",
+                            "main_color": "#4456c6",
+                            "radius": 0,
+                            "shadow": {
+                                "color": "#4456c6"
+                            }
+                        },
+                        "type": "LV_CONT_STYLE_MAIN"
+                    }
+                ],
+                "widget": "cont",
+                "全局global": true,
+                "可拖动drag": false,
+                "名字name": "cont_main",
+                "坐标geometry": {
+                    "height": 360,
+                    "width": 480,
+                    "x": 0,
+                    "y": 0
+                },
+                "布局layout": "Off",
+                "显示visible": true,
+                "自动调整策略fit": {
+                    "cont_bottom_fit": 0,
+                    "cont_left_fit": 0,
+                    "cont_right_fit": 0,
+                    "cont_top_fit": 0
+                },
+                "锁住locked": false
+            },
+            {
+                "class": "lv_label",
+                "name": "label_file_store_title",
+                "widget": "label",
+                "全局global": true,
+                "动画速度anim speed": 25,
+                "可拖动drag": false,
+                "名字name": "label_file_store_title",
+                "坐标geometry": {
+                    "height": 36,
+                    "width": 166,
+                    "x": 59,
+                    "y": 9
+                },
+                "对齐align": "Left",
+                "文本text": "File",
+                "显示visible": true,
+                "模式mode": "Corp",
+                "背景绘制body draw": false,
+                "重着色recolor": false,
+                "锁住locked": false
+            }
+        ]
+    }
+}

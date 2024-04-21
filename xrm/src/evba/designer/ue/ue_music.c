@@ -36,8 +36,12 @@ static int music_total_time = 0;
 static int music_current_time = 0;
 /**********other***************/
 extern player_t *t113_play;
+extern File_Using_Position g_file_using_position;
 static int m_music_foucs = 0;
 static int music_Count = 0;
+static int music_Count_sd = 0;
+static int music_Count_u = 0;
+
 
 static int music_first_flag = 0;
 
@@ -212,10 +216,22 @@ void set_music_list(void)
 {
     music_ui_t *ui = &para->ui;
 
-    music_Count = media_file_get_total_num(MUSIC_TYPE);
+    #if 0
+    music_Count = media_file_get_total_num(DISK_TYPE_SD, MUSIC_TYPE);
     for (int i = 0; i < music_Count; i++) { 
-        lv_list_add_btn(ui->list_mp3, music_img_srcxz[0], media_file_get_path_to_name(media_file_get_path(MUSIC_TYPE,i)));
+        lv_list_add_btn(ui->list_mp3, music_img_srcxz[0], media_file_get_path_to_name(media_file_get_path(DISK_TYPE_SD, MUSIC_TYPE,i)));
     }
+    #endif
+    music_Count_sd = media_file_get_total_num(DISK_TYPE_SD, MUSIC_TYPE);
+    music_Count_u = media_file_get_total_num(DISK_TYPE_U, MUSIC_TYPE);
+    music_Count = music_Count_u + music_Count_sd;
+    for (int i = 0; i < music_Count_sd; i++) { 
+        lv_list_add_btn(ui->list_mp3, music_img_srcxz[0], media_file_get_path_to_name(media_file_get_path(DISK_TYPE_SD, MUSIC_TYPE,i)));
+    }
+    for (int i = music_Count_sd; i < music_Count; i++) { 
+        lv_list_add_btn(ui->list_mp3, music_img_srcxz[0], media_file_get_path_to_name(media_file_get_path(DISK_TYPE_U, MUSIC_TYPE,i)));
+    }
+    
 
     int list_size = lv_list_get_size(ui->list_mp3);
     if(list_size <= 0)
@@ -279,8 +295,8 @@ static void music_key_confire_callback(void)
     playerStatus status = tplayer_get_status(t113_play);
     app_info("status %d\n", status);
     //music_first_flag:表示已经进行过第一次播放。否者m_music_foucs为0时判断不正确,导致无法播放
-    if (music_first_flag == 0 ||  m_music_foucs != media_file_get_play_index(MUSIC_TYPE) || status == INIT_STATUS) {
-        sprintf(music_name, "%s", media_file_get_path(MUSIC_TYPE, m_music_foucs));
+    if (music_first_flag == 0 ||  m_music_foucs != media_file_get_play_index(DISK_TYPE_SD, MUSIC_TYPE) || status == INIT_STATUS) {
+        sprintf(music_name, "%s", media_file_get_path(DISK_TYPE_SD, MUSIC_TYPE, m_music_foucs));
         app_info("music_name = %s\n", music_name);
         tplayer_play_url(t113_play, music_name);
         tplayer_volume(t113_play, read_menu_vol_value());
@@ -290,8 +306,8 @@ static void music_key_confire_callback(void)
         time_int_to_string(total_time, duration_c); 
         lv_label_set_text(ui->label_music_totle, duration_c);
         music_total_time = total_time;
-        media_file_set_play_index(MUSIC_TYPE, m_music_foucs);
-         music_first_flag = 1;
+        media_file_set_play_index(DISK_TYPE_SD, MUSIC_TYPE, m_music_foucs);
+        music_first_flag = 1;
         app_info("................%s, music_total_time = %d, duration_c = %s\n", music_name, music_total_time, duration_c);
     } else {
         playerStatus status = tplayer_get_status(t113_play);
@@ -403,11 +419,13 @@ static int music_create(void)
 
     music_task_id = lv_task_create(music_ui_task, 100, LV_TASK_PRIO_MID, NULL);
 
-    m_music_foucs = media_file_get_play_index(MUSIC_TYPE);
+    #if 0
+    m_music_foucs = media_file_get_play_index(DISK_TYPE_SD, MUSIC_TYPE);
     if (music_Count > 0) {
         music_ui_t *ui = &para->ui;
         music_set_list_focus(ui->list_mp3, m_music_foucs);
     }
+    #endif
     
     music_first_flag = 0;
 

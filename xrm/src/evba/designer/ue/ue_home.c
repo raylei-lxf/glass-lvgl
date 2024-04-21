@@ -215,9 +215,15 @@ static void key_confirm_callback(void)
     int music_num = 0;
     int video_num = 0;
 
-    photo_num =  media_file_get_total_num(PHOTO_TYPE);
-    video_num = media_file_get_total_num(VIDEO_TYPE);
-    music_num = media_file_get_total_num(MUSIC_TYPE);  
+    #if 0
+    photo_num =  media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE);
+    video_num = media_file_get_total_num(DISK_TYPE_SD, VIDEO_TYPE);
+    music_num = media_file_get_total_num(DISK_TYPE_SD, MUSIC_TYPE);  
+    #endif
+    
+    photo_num =  media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE) + media_file_get_total_num(DISK_TYPE_U, PHOTO_TYPE);
+    video_num = media_file_get_total_num(DISK_TYPE_SD, VIDEO_TYPE) + media_file_get_total_num(DISK_TYPE_U, PHOTO_TYPE);
+    music_num = media_file_get_total_num(DISK_TYPE_SD, MUSIC_TYPE) + media_file_get_total_num(DISK_TYPE_U, PHOTO_TYPE);  
 
     lv_obj_set_hidden(ui->cont_tip,true);
 	if (guangbiao == FOCUS_PLAYER) {
@@ -251,7 +257,7 @@ static void key_confirm_callback(void)
             music_num > 0 
         ) {
 
-    		switch_window(WINDOW_HOME, WINDOW_FILE);
+    		switch_window(WINDOW_HOME, WINDOW_FILE_STORE);
         } else {
 	        app_info("can't find music\n");
             lv_obj_set_hidden(ui->cont_tip, false);
