@@ -60,6 +60,7 @@ void set_video_list(void)
     video_count_sd  = media_file_get_total_num(DISK_TYPE_SD, VIDEO_TYPE);
     video_count_u = media_file_get_total_num(DISK_TYPE_U, VIDEO_TYPE);
     video_count = video_count_u + video_count_sd;
+    app_info("video_count = %d, video_count_sd = %d, video_count_u = %d\n", video_count, video_count_sd, video_count_u);
     for (int i = 0; i < video_count_sd; i++) {
         lv_list_add_btn(ui->list_video, video_img_srcxz[0],  media_file_get_path_to_name(media_file_get_path(DISK_TYPE_SD, VIDEO_TYPE, i)));
     }
@@ -150,7 +151,7 @@ static void video_list_ue_destory(video_list_para_t *para)
 
 static void video_key_confire_callback(void)
 {
-    if (m_video_foucs > video_count_sd) {
+    if (m_video_foucs < video_count_sd) {
         media_file_set_play_index(DISK_TYPE_SD, VIDEO_TYPE, m_video_foucs);
         g_file_using_position = FILE_SD;
     } else {
