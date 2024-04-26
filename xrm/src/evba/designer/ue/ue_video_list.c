@@ -150,7 +150,7 @@ static void video_list_ue_destory(video_list_para_t *para)
 
 static void video_key_confire_callback(void)
 {
-    if (m_video_foucs >= video_count_sd) {
+    if (m_video_foucs > video_count_sd) {
         media_file_set_play_index(DISK_TYPE_SD, VIDEO_TYPE, m_video_foucs);
         g_file_using_position = FILE_SD;
     } else {
@@ -277,7 +277,6 @@ static int video_list_destory(void)
 	free(para);
 	para = NULL;
 
-    g_file_using_position = FILE_SD;
 	video_unload_image();
 
 	return 0;

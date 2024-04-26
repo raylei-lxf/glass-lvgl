@@ -100,6 +100,7 @@ void photo_set_list_unfocus(lv_obj_t *list, int index)
     int i = 0;
     focus_btn = lv_list_get_next_btn(list, NULL);
     for(i = 0; i < index; i++){
+        lv_list_set_sb_mode(list, LV_LIST_STYLE_BG);
         focus_btn = lv_list_get_next_btn(list, focus_btn);
     }
     focus_img = lv_list_get_btn_img(focus_btn);
@@ -114,6 +115,7 @@ void photo_set_list_focus(lv_obj_t *list, int index)
 
     focus_btn = lv_list_get_next_btn(list, NULL);
     for(i = 0; i < index; i++){
+        lv_list_set_sb_mode(list, LV_LIST_STYLE_BG);
         focus_btn = lv_list_get_next_btn(list, focus_btn);
     }
     focus_img = lv_list_get_btn_img(focus_btn);
@@ -189,7 +191,8 @@ static void photo_key_right_callback(void)
     {
         return;
     }
-     photo_set_list_unfocus(ui->list_photo, m_photo_foucs);
+
+    photo_set_list_unfocus(ui->list_photo, m_photo_foucs);
     m_photo_foucs--;
     if (m_photo_foucs < 0) {
         m_photo_foucs = photo_count - 1;
@@ -258,7 +261,6 @@ static int photo_list_destory(void)
 	free(para);
 	para = NULL;
 
-    g_file_using_position = FILE_SD;
 	photo_unload_image();
 	return 0;
 }

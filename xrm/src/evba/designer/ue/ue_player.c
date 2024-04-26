@@ -30,6 +30,7 @@ static int video_total_time = 0;
 static int video_current_time = 0;
 lv_task_t *player_task_id = NULL;
 extern player_t *t113_play;
+extern File_Using_Position g_file_using_position;
 
 /******************************************************************************
 *    functions
@@ -77,7 +78,11 @@ void video_player(void)
     char duration_c[100] = { 0 };    
     char player_name[512] = {0};
 
-    sprintf(player_name, "%s", media_file_get_path(DISK_TYPE_SD, VIDEO_TYPE, media_file_get_play_index(DISK_TYPE_SD, VIDEO_TYPE)));
+    if (g_file_using_position == FILE_SD) {
+        sprintf(player_name, "%s", media_file_get_path(DISK_TYPE_SD, VIDEO_TYPE, media_file_get_play_index(DISK_TYPE_SD, VIDEO_TYPE)));
+    } else {
+        sprintf(player_name, "%s", media_file_get_path(DISK_TYPE_U, VIDEO_TYPE, media_file_get_play_index(DISK_TYPE_U, VIDEO_TYPE)));
+    }
 	if (t113_play != NULL /*&& access(player_name , F_OK) != -1*/) {
 		app_info("..........%s ", player_name);
 

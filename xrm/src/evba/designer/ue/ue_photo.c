@@ -27,8 +27,12 @@ typedef struct
 static photo_para_t *para = NULL;
 
 static int photo_index;
+static int photo_count_sd;
+static int photo_count_u;
 static int photo_max;
 void *photo_play_srcxz[1] = {NULL};
+
+extern File_Using_Position g_file_using_position;
 /******************************************************************************
 *    functions
 ******************************************************************************/
@@ -67,16 +71,22 @@ static void photo_play_load_image(void)
     photo_ui_t *ui = &para->ui;
     lv_obj_t *photo_play = para->ui.img_photo;
 
-    media_file_set_play_index(DISK_TYPE_SD, PHOTO_TYPE, photo_index);    
-	photo_play_srcxz[0] = (void *)mal_load_image(media_file_get_path(DISK_TYPE_SD, PHOTO_TYPE, photo_index));
+    if (photo_index < photo_count_sd) {
+        media_file_set_play_index(DISK_TYPE_SD, PHOTO_TYPE, photo_index);    
+	    photo_play_srcxz[0] = (void *)mal_load_image(media_file_get_path(DISK_TYPE_SD, PHOTO_TYPE, photo_index));
+    } else {
+        media_file_set_play_index(DISK_TYPE_U, PHOTO_TYPE, photo_index - photo_count_sd);
+	    photo_play_srcxz[0] = (void *)mal_load_image(media_file_get_path(DISK_TYPE_U, PHOTO_TYPE, photo_index - photo_count_sd));
+    }
+    app_info("photo_index = %d\n", photo_index);
     if(!photo_play_srcxz[0])
     {
-        app_err("%s:photo is error\n", media_file_get_path(DISK_TYPE_SD, PHOTO_TYPE, photo_index));
+        app_err("[%s-%d]:photo is error[photo_index = %d]\n", __func__, __LINE__, photo_index);
         return;
     }
 
     lv_img_dsc_t *dsc = photo_play_srcxz[0];
-//如果图片太大则resize
+    //如果图片太大则resize
     if(dsc->header.w > (LV_HOR_RES_MAX) || dsc->header.h > (LV_VER_RES_MAX))
     {
         dsc = resize_image(dsc, LV_HOR_RES_MAX, LV_VER_RES_MAX);
@@ -86,7 +96,7 @@ static void photo_play_load_image(void)
     
     lv_img_set_src(photo_play, dsc);
 
-//图片居中显示
+    //图片居中显示
     int pos_x, pos_y;
     pos_x = (LV_HOR_RES_MAX - dsc->header.w) / 2;
     pos_y = (LV_VER_RES_MAX - dsc->header.h) / 2;
@@ -139,12 +149,21 @@ static int photo_create(void)
     key_callback_register(LV_KEY_2, photo_key_left_callback);
     key_callback_register(LV_KEY_3, photo_key_right_callback);
 
-    photo_index = media_file_get_play_index(DISK_TYPE_SD, PHOTO_TYPE);
-    photo_max = media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE);
+    
+    // photo_index = media_file_get_play_index(DISK_TYPE_SD, PHOTO_TYPE);
+    
+    // photo_max = media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE);
+
+    photo_count_sd = media_file_get_total_num(DISK_TYPE_SD, PHOTO_TYPE);
+    photo_count_u = media_file_get_total_num(DISK_TYPE_U, PHOTO_TYPE);
+    photo_max = photo_count_sd + photo_count_u;
+    if (g_file_using_position == FILE_SD) {
+        photo_index = media_file_get_play_index(DISK_TYPE_SD, PHOTO_TYPE);
+    } else {
+        photo_index = media_file_get_play_index(DISK_TYPE_U, PHOTO_TYPE) + photo_count_sd;
+    }
+    app_info("photo_max = %d,photo_count_sd = %d, photo_count_u = %d\n ", photo_max, photo_count_sd, photo_count_u);
     photo_play_load_image();
-
-
-
     
 	return 0;
 }
@@ -157,6 +176,10 @@ static int photo_destory(void)
 	free(para);
 	para = NULL;
     photo_play_unload_image();
+    photo_index = 0;
+    photo_count_sd = 0;
+    photo_count_u = 0;
+    photo_max = 0;
 
 	return 0;
 }

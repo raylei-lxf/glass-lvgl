@@ -43,7 +43,7 @@ static int music_Count_sd = 0;
 static int music_Count_u = 0;
 
 
-static int music_first_flag = 0;
+static int music_current_playing = -1;
 
 #define SPECTUM_UI_MAX      11
 #define SPECTUM_UI_COL      5
@@ -295,6 +295,7 @@ static void music_key_confire_callback(void)
     playerStatus status = tplayer_get_status(t113_play);
     app_info("status %d\n", status);
     //music_first_flag:表示已经进行过第一次播放。否者m_music_foucs为0时判断不正确,导致无法播放
+    #if 0
     if (music_first_flag == 0 ||  m_music_foucs != media_file_get_play_index(DISK_TYPE_SD, MUSIC_TYPE) || status == INIT_STATUS) {
         sprintf(music_name, "%s", media_file_get_path(DISK_TYPE_SD, MUSIC_TYPE, m_music_foucs));
         app_info("music_name = %s\n", music_name);
@@ -317,6 +318,39 @@ static void music_key_confire_callback(void)
             tplayer_play(t113_play);
         }
     }
+    #endif
+    if (music_current_playing != m_music_foucs || status == INIT_STATUS) {
+        if (m_music_foucs >= music_Count_sd) {
+            sprintf(music_name, "%s", media_file_get_path(DISK_TYPE_U, MUSIC_TYPE, m_music_foucs - music_Count_sd));
+        } else {
+            sprintf(music_name, "%s", media_file_get_path(DISK_TYPE_SD, MUSIC_TYPE, m_music_foucs));
+        }
+        app_info("music_name = %s\n", music_name);
+        tplayer_play_url(t113_play, music_name);
+        tplayer_volume(t113_play, read_menu_vol_value());
+        tplayer_play(t113_play);
+        tplayer_get_duration(t113_play, &total_time);
+        tplayer_set_looping(t113_play, true);
+        time_int_to_string(total_time, duration_c); 
+        lv_label_set_text(ui->label_music_totle, duration_c);
+        music_total_time = total_time;
+        
+        if (m_music_foucs >= music_Count_sd) {
+            media_file_set_play_index(DISK_TYPE_U, MUSIC_TYPE, m_music_foucs - music_Count_sd);
+        } else {
+            media_file_set_play_index(DISK_TYPE_SD, MUSIC_TYPE, m_music_foucs);
+        }
+        music_current_playing = m_music_foucs;
+        app_info("................%s, music_total_time = %d, duration_c = %s\n", music_name, music_total_time, duration_c);
+    } else {
+        playerStatus status = tplayer_get_status(t113_play);
+        if (status == PLAY_STATUS) {
+            tplayer_pause(t113_play);
+        } else if (status == PAUSE_STATUS) {
+            tplayer_play(t113_play);
+        }
+    }
+    
    
 }
 
@@ -421,13 +455,15 @@ static int music_create(void)
 
     #if 0
     m_music_foucs = media_file_get_play_index(DISK_TYPE_SD, MUSIC_TYPE);
+    #endif
+    m_music_foucs = 0;
     if (music_Count > 0) {
         music_ui_t *ui = &para->ui;
         music_set_list_focus(ui->list_mp3, m_music_foucs);
     }
-    #endif
     
-    music_first_flag = 0;
+    // music_first_flag = 0;
+    music_current_playing = -1;
 
 	key_callback_register(LV_KEY_0, music_key_confire_callback);
 	key_callback_register(LV_KEY_4, music_key_canel_callback);
