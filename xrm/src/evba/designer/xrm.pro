@@ -32,6 +32,9 @@
         },
         {
             "name": "err_tip.lvgl"
+        },
+        {
+            "name": "phone.lvgl"
         }
     ],
     "fonts": [

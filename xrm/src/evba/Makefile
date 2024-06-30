@@ -11,7 +11,7 @@ SRCS = $(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.c))
 OBJS = $(SRCS:.c=.o)
 #LOCAL_LDFLAGS += -Werror -Wall -Wno-unused-but-set-variable -Wno-unused-function  -lpthread -ldl -lc -lm  -luapi -lisp -lisp_ini -lAWIspApi
 
-LOCAL_LDFLAGS += -Werror -Wall -Wno-unused-but-set-variable -Wno-unused-function  -lpthread -ldl -lc -lm -ltplayer -lspeexdsp
+LOCAL_LDFLAGS += -Werror -Wall -Wno-unused-but-set-variable -Wno-unused-function  -lpthread -ldl -lc -lm -ltplayer -lspeexdsp -luapi -ljpegdecode
 
 %.o: %.c
 	$(CC) $(INCLUDES) $(CFLAGS) $(LOCAL_CFLAGS) $(LDFLAGS)$(LOCAL_LDFLAGS) -c -o $@ $< 

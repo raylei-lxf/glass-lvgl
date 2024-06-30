@@ -266,7 +266,7 @@ static void key_confirm_callback(void)
 	} else if (guangbiao == FOCUS_SETTING) {
 		switch_window(WINDOW_HOME, WINDOW_SETTING);
 	} else if (guangbiao == FOCUS_HPONE) {
-		// switch_window(WINDOW_HOME, WINDOW_PHOTO);
+		switch_window(WINDOW_HOME, WINDOW_PHONE);
 	}	
 }
 

@@ -20,7 +20,7 @@ define Package/$(PKG_NAME)
   SECTION:=gui
   SUBMENU:=Littlevgl
   CATEGORY:=Gui
-  DEPENDS:=+libcedarx +libstdcpp +libspeexdsp 
+  DEPENDS:=+libcedarx +libstdcpp +libspeexdsp +libuapi 
   TITLE:= xrm
   MAINTAINER:= xrm
 endef

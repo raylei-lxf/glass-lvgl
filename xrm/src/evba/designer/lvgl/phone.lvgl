@@ -1,0 +1,73 @@
+{
+    "lvgl": {
+        "name": "phone.lvgl",
+        "resolution": {
+            "height": 360,
+            "width": 480
+        },
+        "widgets": [
+            {
+                "children": [
+                    {
+                        "class": "lv_img",
+                        "name": "img_1",
+                        "widget": "img",
+                        "偏移offset": {
+                            "X": 0,
+                            "Y": 0
+                        },
+                        "全局global": true,
+                        "可拖动drag": false,
+                        "名字name": "img_1",
+                        "坐标geometry": {
+                            "height": 357,
+                            "width": 480,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "显示visible": true,
+                        "源图source": "",
+                        "自动大小auto size": true,
+                        "锁住locked": false
+                    }
+                ],
+                "class": "lv_cont",
+                "name": "cont_main",
+                "styles": [
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "border": {
+                                "width": 1
+                            },
+                            "grad_color": "#f4f4f4",
+                            "main_color": "#f4f4f4",
+                            "opa": 0,
+                            "radius": 0
+                        },
+                        "type": "LV_CONT_STYLE_MAIN"
+                    }
+                ],
+                "widget": "cont",
+                "全局global": true,
+                "可拖动drag": false,
+                "名字name": "cont_main",
+                "坐标geometry": {
+                    "height": 360,
+                    "width": 480,
+                    "x": 0,
+                    "y": 0
+                },
+                "布局layout": "Off",
+                "显示visible": true,
+                "自动调整策略fit": {
+                    "cont_bottom_fit": 0,
+                    "cont_left_fit": 0,
+                    "cont_right_fit": 0,
+                    "cont_top_fit": 0
+                },
+                "锁住locked": false
+            }
+        ]
+    }
+}
