@@ -42,7 +42,7 @@ typedef enum
     FOCUS_MUSIC,
     FOCUS_FILE,
     FOCUS_SETTING,
-    FOCUS_HPONE,
+    FOCUS_PHONE,
     gbMax,
     /* data */
 }focus_page_t;
@@ -90,7 +90,7 @@ lv_obj_t *get_guanbiao_widget(int gb)
 		return ui->img_file;
 		case FOCUS_SETTING:
 		return ui->img_setting;
-		case FOCUS_HPONE:
+		case FOCUS_PHONE:
 		return ui->img_phone;
 		default: return NULL;
 	}
@@ -193,7 +193,7 @@ void home_text_focus(void)
         lv_obj_set_style(para->ui.label_file, &style_unselected);
         lv_obj_set_style(para->ui.label_setting, &style_selected);
         lv_obj_set_style(para->ui.label_phone, &style_unselected);
-    } else if (guangbiao == FOCUS_HPONE) {
+    } else if (guangbiao == FOCUS_PHONE) {
     	lv_obj_set_style(para->ui.label_player, &style_unselected);
         lv_obj_set_style(para->ui.label_photo, &style_unselected);
         lv_obj_set_style(para->ui.label_music, &style_unselected);
@@ -265,7 +265,7 @@ static void key_confirm_callback(void)
         }
 	} else if (guangbiao == FOCUS_SETTING) {
 		switch_window(WINDOW_HOME, WINDOW_SETTING);
-	} else if (guangbiao == FOCUS_HPONE) {
+	} else if (guangbiao == FOCUS_PHONE) {
 		switch_window(WINDOW_HOME, WINDOW_PHONE);
 	}	
 }

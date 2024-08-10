@@ -52,19 +52,19 @@ void ImageSaveFile(int index, char *frame, unsigned int len, const char *format,
     getFileName(index, format, timeStamp);
 
     fid = fopen(file_name, "w+");
-    fflush(stdout);
+    // fflush(stdout);
     ret = fwrite(frame, 1, len, fid);
     if (ret)
     {
     }
-    fflush(fid);
-    frame_counter++;
+    // //fflush(fid);
+    // frame_counter++;
 
-    if (frame_counter > 10)
-    {
-        systemCache();
-        frame_counter = 0;
-    }
+    // if (frame_counter > 10)
+    // {
+    //     systemCache();
+    //     frame_counter = 0;
+    // }
     fclose(fid);
 }
 

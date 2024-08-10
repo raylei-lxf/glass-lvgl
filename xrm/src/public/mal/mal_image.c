@@ -70,6 +70,45 @@ void *mal_load_image(char *path)
 	return NULL;
 }
 
+
+void *mal_load_image_from_mem(char *buffer, int len)
+{
+	int w, h, n;
+  	lv_img_dsc_t *dsc = NULL;
+	unsigned char *data = NULL;
+	
+	dsc = (lv_img_dsc_t *)malloc(sizeof(lv_img_dsc_t));
+	if(NULL == dsc) {
+		com_info("\n");
+		goto err;
+	}
+	memset(dsc, 0, sizeof(lv_img_dsc_t));
+	
+	data = stbi_load_from_memory(buffer, len, &w, &h, &n, 4);
+	if(NULL == data) {
+		com_info("\n");
+		goto err;
+	}
+	data = stbi_convert_rb(data, w, h, 4);
+	dsc->header.w = w;
+	dsc->header.h = h;
+	dsc->header.always_zero = 0;
+	dsc->header.cf = LV_IMG_CF_TRUE_COLOR_ALPHA;
+	dsc->data_size = w * h * 4;
+	dsc->data = data;
+	
+	return dsc;
+	
+	err:
+	if(data) {
+		stbi_image_free(data);
+	}
+	if(dsc) {
+		free(dsc);
+	}
+	return NULL;
+}
+
 int mal_unload_image(void *dsc)
 {
 	if(NULL == dsc) {

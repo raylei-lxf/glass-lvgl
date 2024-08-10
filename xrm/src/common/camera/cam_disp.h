@@ -9,10 +9,11 @@ extern "C"{
 
 #define CAMERA_NUM  4
 
-#define SCREAN_W	LV_HOR_RES_MAX
-#define SCREAN_H	LV_VER_RES_MAX
+// #define SCREAN_W	LV_HOR_RES_MAX
+// #define SCREAN_H	LV_VER_RES_MAX
 
-
+#define SCREAN_W	320
+#define SCREAN_H	240
 #define DISPLAY_FMT		VIDEO_PIXEL_FORMAT_NV21
 
 typedef struct{

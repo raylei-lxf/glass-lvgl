@@ -39,7 +39,7 @@ void phone_ui_create(phone_ui_t *ui)
 
 	ui->img_1 = lv_img_create(ui->cont_main, NULL);
 	lv_obj_set_pos(ui->img_1, 0, 0);
-	lv_obj_set_size(ui->img_1, 480, 357);
+	lv_obj_set_size(ui->img_1, 70, 44);
 	lv_img_set_style(ui->img_1, LV_IMG_STYLE_MAIN, &style0_img_1);
 #endif // LV_USE_IMG
 

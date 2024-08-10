@@ -5,7 +5,7 @@
 
 void *mal_load_image(char *path);
 int mal_unload_image(void *dec);
-
+void *mal_load_image_from_mem(char *buffer, int len);
 lv_img_dsc_t *resize_image(const lv_img_dsc_t* src, int dst_width, int dst_height);
 #endif
 

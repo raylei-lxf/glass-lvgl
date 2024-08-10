@@ -19,21 +19,20 @@ static unsigned int fps;
 
 static  unsigned char *buffer[IMG_BUFF_NUM];
 static unsigned int length;
-static   int isSuccessful;
 
-void V4l2CreateVideo(char *devName, int w, int h, int fps)
+int V4l2CreateVideo(char *devName, int w, int h, int fps)
 {
-    isSuccessful = -1;
+    int isSuccessful = -1;
 
     if (!devName)
     {
-        return;
+        return isSuccessful;
     }
     if ((fd = open(devName, O_RDWR)) < 0)
     {
         DebugErr("open %s failed!!!\n", devName);
         fd = -1;
-        return;
+        return isSuccessful;
     }
 
     DebugInfo("devName = %s\n", devName);
@@ -139,12 +138,12 @@ void V4l2CreateVideo(char *devName, int w, int h, int fps)
     }
     isSuccessful = 0;
 
-    return;
+    return isSuccessful;
 FAILED:
 
     close(fd);
     fd = -1;
-    return;
+    return isSuccessful;
 }
 
 void V4l2DestroyVideo()

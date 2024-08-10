@@ -20,8 +20,8 @@
                         "可拖动drag": false,
                         "名字name": "img_1",
                         "坐标geometry": {
-                            "height": 357,
-                            "width": 480,
+                            "height": 44,
+                            "width": 70,
                             "x": 0,
                             "y": 0
                         },

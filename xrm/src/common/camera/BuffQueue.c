@@ -72,12 +72,12 @@ void BuffQueueDestroy(BuffQ_t *bq)
     {
         free(bq->data[0]);
     }
-
     __db_list_destory(bq->ListEmpty);
     __db_list_destory(bq->ListFull);
 
     pthread_mutex_destroy(&bq->mutex);
     pthread_cond_destroy(&bq->cond);
+
     free(bq);
 }
 

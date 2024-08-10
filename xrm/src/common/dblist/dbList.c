@@ -303,11 +303,12 @@ void __db_list_destory(db_list_t *db_list)
 		com_err("param error\n");
 		return;
 	}
+
 	pthread_mutex_lock(&db_list->list_mutex);
 	list_for_each_entry_safe(db_node, db_node_tmp, &db_list->head, list) {
 		/*maybe need free db_node->data*/
-		free(db_node->data);
-		db_node->data = NULL;
+		// free(db_node->data);
+		// db_node->data = NULL;
 		list_del(&db_node->list);
 		free(db_node);
 	}
@@ -318,4 +319,5 @@ void __db_list_destory(db_list_t *db_list)
 	}
 	pthread_mutex_destroy(&db_list->list_mutex);
 	free(db_list);
+
 }

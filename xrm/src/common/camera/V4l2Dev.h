@@ -16,6 +16,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 #include "xrm_conf.h"
+
 #define IMG_BUFF_NUM 3
 #define V4L2_FORMAT V4L2_PIX_FMT_MJPEG
 #define V4L2_VIDEO_TYPE   V4L2_BUF_TYPE_VIDEO_CAPTURE
@@ -26,7 +27,7 @@
 #define DebugErr    com_err
 /*************************V4L2_PIX_FMT_YUYV V4L2_PIX_FMT_MJPEG****************可以选择*/
 
-void V4l2CreateVideo(char *devName, int w, int h, int fps);
+int V4l2CreateVideo(char *devName, int w, int h, int fps);
 void V4l2DestroyVideo();
 
 int V4l2Start();
