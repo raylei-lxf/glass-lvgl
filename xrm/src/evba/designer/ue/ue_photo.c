@@ -89,7 +89,9 @@ static void photo_play_load_image(void)
     //如果图片太大则resize
     if(dsc->header.w > (LV_HOR_RES_MAX) || dsc->header.h > (LV_VER_RES_MAX))
     {
-        dsc = resize_image(dsc, LV_HOR_RES_MAX, LV_VER_RES_MAX);
+        lv_img_dsc_t *src = dsc;
+        dsc = resize_image(src, LV_HOR_RES_MAX, LV_VER_RES_MAX);
+        mal_unload_image(src);
         app_info("w=%d h=%d\n", dsc->header.w, dsc->header.h);
         photo_play_srcxz[0] = dsc;
     }

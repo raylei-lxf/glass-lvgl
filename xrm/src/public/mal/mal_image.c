@@ -155,7 +155,6 @@ lv_img_dsc_t *resize_image(const lv_img_dsc_t* src, int dst_width, int dst_heigh
             dst_rgba[y * dst_width + x] = src_rgba[src_y * src->header.w + src_x];
         }
     }
-	mal_unload_image(src);
 	return dst;
 }
 

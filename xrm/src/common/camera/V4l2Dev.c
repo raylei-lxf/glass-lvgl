@@ -156,7 +156,7 @@ void V4l2DestroyVideo()
     type = V4L2_VIDEO_TYPE;
     ioctl(fd, VIDIOC_STREAMOFF, &type);
 
-   // V4l2ClearAllFrame();
+    V4l2ClearAllFrame();
     for (n_buffers = 0; n_buffers < req.count; n_buffers++)
     {
         munmap(buffer[n_buffers], length);
@@ -171,8 +171,8 @@ unsigned char *V4l2GetFrame()
     fd_set fdsr;
     int ret;
 
-    timeout.tv_sec = 2;
-    timeout.tv_usec = 0;
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 100000;
     FD_ZERO(&fdsr);
     FD_SET(fd, &fdsr);
 

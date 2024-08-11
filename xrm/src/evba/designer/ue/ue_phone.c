@@ -25,8 +25,8 @@ typedef struct
 } phone_para_t;
 static phone_para_t *para = NULL;
 
-#define CAM_H			640
-#define CAM_W			480
+#define CAM_W			640
+#define CAM_H			480
 #define CAM_FPS			30
 
 static disp_hdl_t disphdl;
@@ -39,10 +39,8 @@ static int running = 1;
 static BuffQ_t *ImageQ;
 
 static lv_task_t *phone_task_id;
-
-static lv_img_dsc_t *play_image = NULL;
-
-static struct timespec img_start;
+static	struct timespec img_start;
+lv_img_dsc_t *play_image = NULL;
 
 /******************************************************************************
 *    functions
@@ -80,23 +78,30 @@ void *lv_phone_image_thread(void * data)
 		}
 	
 		// ImageSaveFile(0, (char *)frame_addr, frame_len, "jpg", frame_len);
-		get_diff_time(&img_start, 1);
-	
 
+		lv_img_dsc_t *rgb_img = mal_load_image_from_mem(frame_addr, V4l2GetFrameLen());
+		
 		BuffFrameInfo_t frame;
-
-		memset(&frame, 0, sizeof(BuffFrameInfo_t));
-		frame.FrameY = (char *)frame_addr;
-		frame.FrameUV=NULL;
-		frame.Yszie = V4l2GetFrameLen();;
-		frame.Width = V4l2GetWidth();
-		frame.Height = V4l2GetHeight();
-		frame.Fps= V4l2GetFps();
+		frame.FrameY = (char *)rgb_img->data;
+		frame.FrameUV = NULL;
+		frame.Yszie =  rgb_img->data_size;
+		frame.UVszie = 0;
 		frame.TimeStamp = V4l2GetTimeStamp();
+		frame.Width = rgb_img->header.w;
+		frame.Height = rgb_img->header.h;
+		frame.Fps = V4l2GetFps();
+
+		//app_info("frame_len = %d  %p %d", V4l2GetFrameLen(), frame.FrameY, rgb_img->data_size);
 
 
-		//app_info("frame_len = %d", frame.Yszie);
-		ImageQueuePushData(ImageQ, frame);
+		int ret = ImageQueuePushData(ImageQ, frame);
+		if(ret < 0)
+		{
+			app_err("Buff queue push error\n");
+		}
+
+		mal_unload_image(rgb_img);
+
 		//void *image1 = mal_load_image_from_mem(frame_addr, frame_len);
 		// lv_img_set_src(photo_play, image1);
 		
@@ -129,29 +134,45 @@ static void phone_task(lv_task_t * param)
 {
 	phone_ui_t *ui = &para->ui;
 
-	BuffFrameInfo_t *buff = ImageQueueGetDataBuff(ImageQ, 0, 1000);
+	BuffFrameInfo_t *buff = ImageQueueGetDataBuff(ImageQ, 0, 50);
 	if(!buff)
 	{
 		return;
 	}
-
-	if(play_image)
+	
+	lv_img_dsc_t rgb_img;
+	memset(&rgb_img, 0, sizeof(lv_img_dsc_t));
+	rgb_img.header.w = buff->Width;
+	rgb_img.header.h = buff->Height;
+	rgb_img.header.always_zero = 0;
+	rgb_img.header.cf = LV_IMG_CF_TRUE_COLOR_ALPHA;
+	rgb_img.data_size = buff->Yszie;
+	rgb_img.data = buff->FrameY;
+	
+    if(rgb_img.header.w > (LV_HOR_RES_MAX) || rgb_img.header.h > (LV_VER_RES_MAX))
 	{
-		mal_unload_image(play_image);
-	}
+		if(play_image)
+		{
+			mal_unload_image(play_image);		
+		}
+		play_image = resize_image(&rgb_img, LV_HOR_RES_MAX, LV_VER_RES_MAX);
+		lv_img_set_src(ui->img_1, play_image);
 
-	play_image = mal_load_image_from_mem(buff->FrameY, buff->Yszie);
-
-    if(play_image->header.w > (LV_HOR_RES_MAX) || play_image->header.h > (LV_VER_RES_MAX))
-	{
-		play_image = resize_image(play_image, LV_HOR_RES_MAX, LV_VER_RES_MAX);
+	}else{
+		lv_img_set_src(ui->img_1, &rgb_img);
 	}
 
 	ImageQueueReleaseDataBuff(ImageQ, buff);
 
-	lv_img_set_src(ui->img_1, play_image);
-	float  dt = get_diff_time(&img_start, 0);
-	app_info("dt = %d\n", (int)(dt*1000));
+	float dt = get_diff_time(&img_start, 0);
+	get_diff_time(&img_start, 1);
+
+	struct timeval s_time = buff->TimeStamp;
+	struct timeval e_time;
+	e_time.tv_sec = img_start.tv_sec;
+	e_time.tv_usec = img_start.tv_nsec/1000;
+	int dt1 = ((int32_t)(e_time.tv_sec - s_time.tv_sec) * 1000000 + (int32_t)(e_time.tv_usec - s_time.tv_usec))/1000;
+ 	app_info("dt = %dms dt1=%dms %p\n", (int)(dt*1000), dt1, buff->FrameY);
 }
 
 static void phone_key_canel_callback(void)
@@ -174,7 +195,7 @@ static int phone_create(void)
 	
 	key_callback_register(LV_KEY_4, phone_key_canel_callback);
 
-	int ret = V4l2CreateVideo("/dev/video0", 	CAM_H, CAM_W, CAM_FPS);
+	int ret = V4l2CreateVideo("/dev/video0", CAM_W, CAM_H, CAM_FPS);
 	if(ret < 0)
 	{
 		app_err("video open failed!!!");
@@ -187,14 +208,14 @@ static int phone_create(void)
 	// disphdl.src_w = CAM_H;
 	// disphdl.src_h = CAM_W;
 	// dispInit(&disphdl);
+ 
+	ImageQ = ImageQueueRequest("PhoneQueue", 3, CAM_W*CAM_H*4, 0);
 
-	ImageQ = ImageQueueRequest("PhoneQueue", 3, CAM_H*CAM_W, 0);
-
-	phone_task_id = lv_task_create(phone_task, 10, LV_TASK_PRIO_MID, NULL);
+	phone_task_id = lv_task_create(phone_task, 5, LV_TASK_PRIO_MID, NULL);
 
 	running = 1;
 	pthread_create(&phone_id, NULL, lv_phone_image_thread, NULL);
-
+	get_diff_time(&img_start, 1);
 
 	return 0;
 }
@@ -202,19 +223,21 @@ static int phone_create(void)
 static int phone_destory(void)
 {
 	app_info("\n");
+
 	running = 0;
+	lv_task_del(phone_task_id);	
 	pthread_join(phone_id, NULL);
-
 	app_info("\n");
-
-	lv_task_del(phone_task_id);
-
-	ImageQueueDestroy(ImageQ);
 
 	V4l2DestroyVideo();
 
-	app_info("\n");
+	ImageQueueDestroy(ImageQ);
 
+	if(play_image)
+	{
+		mal_unload_image(play_image);		
+		play_image = NULL;
+	}
 
 	app_info("\n");
 
