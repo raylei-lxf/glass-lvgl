@@ -5,7 +5,7 @@
 #include <linux/uvcvideo.h>
 #include "V4l2Dev.h"
 
-static  int fd;
+static  int fd = -1;
 static char DevName[64];
 static struct v4l2_streamparm param;
 static struct v4l2_capability cap;

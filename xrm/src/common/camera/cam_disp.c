@@ -3,7 +3,7 @@
 #include "debug.h"
 
 
-int dispInit(disp_hdl_t *hdl)
+int dispInit(disp_hdl_t *hdl, int src_w, int src_h)
 {
 	if(!hdl){
 		return -1;
@@ -14,8 +14,11 @@ int dispInit(disp_hdl_t *hdl)
 
     mPreviewRect.x = 0;
 	mPreviewRect.y = 0;
-	mPreviewRect.width = SCREAN_W;//640;
-	mPreviewRect.height = SCREAN_H;//480;
+	mPreviewRect.width = SCREAN_W;
+	mPreviewRect.height = SCREAN_H;
+	hdl->src_w = src_w;
+	hdl->src_h = src_h;
+
 
 	hdl->DisPort = CreateVideoOutport(0);
 	if(!hdl->DisPort){
@@ -23,9 +26,9 @@ int dispInit(disp_hdl_t *hdl)
 	}
 	hdl->DisPort->init(hdl->DisPort,1,ROTATION_ANGLE_0,&mPreviewRect);
 //	app_info("hlayer = %d\n", hdl->DisPort->hlayer);
-    mPreviewRect.width = hdl->DisPort->getScreenWidth(hdl->DisPort);
-    mPreviewRect.height = hdl->DisPort->getScreenHeight(hdl->DisPort);
-   // app_info("width:%d, height:%d\n", (int)mPreviewRect.width, (int)mPreviewRect.height);
+    // mPreviewRect.width = hdl->DisPort->getScreenWidth(hdl->DisPort);
+    // mPreviewRect.height = hdl->DisPort->getScreenHeight(hdl->DisPort);
+    app_info("width:%d, height:%d\n", (int)mPreviewRect.width, (int)mPreviewRect.height);
 
     /* set Route */
 	hdl->DisPort->setRoute(hdl->DisPort, VIDEO_SRC_FROM_CAM);
@@ -34,14 +37,14 @@ int dispInit(disp_hdl_t *hdl)
 	hdl->DisPort->setRect(hdl->DisPort,&mPreviewRect);
 	param.srcInfo.format = DISPLAY_FMT;
 
-	param.srcInfo.w = hdl->src_w;
-	param.srcInfo.h = hdl->src_h;
+	param.srcInfo.w = src_w;
+	param.srcInfo.h = src_h;
 	hdl->DisPort->allocateVideoMem(hdl->DisPort,&param);
 
-    hdl->DisPort->SetZorder(hdl->DisPort,VIDEO_ZORDER_MIDDLE);
+    hdl->DisPort->SetZorder(hdl->DisPort, VIDEO_ZORDER_MIDDLE);
 	
 	hdl->DisPort->setEnable(hdl->DisPort, 0);
-	hdl->DisPort->setRotateAngel(hdl->DisPort,ROTATION_ANGLE_0);
+	hdl->DisPort->setRotateAngel(hdl->DisPort, ROTATION_ANGLE_0);
 
  //   app_info(" disp init end!\n");
 
@@ -80,6 +83,12 @@ void dispPlay(disp_hdl_t *hdl, char *frame, uint32_t len)
 	paramDisp.srcInfo.format = DISPLAY_FMT;
 	paramDisp.srcInfo.color_space = 0;
 
+	if(hdl->frist_frame == 0)
+	{
+		hdl->frist_frame++;
+	}else{
+		hdl->DisPort->setEnable(hdl->DisPort, 1);
+	}
 
 	hdl->DisPort->writeData(hdl->DisPort, frame, len, &paramDisp);
 
